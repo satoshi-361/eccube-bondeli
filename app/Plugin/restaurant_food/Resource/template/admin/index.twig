@@ -1,0 +1,338 @@
+{# This file is part of EC-CUBE Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved. http://www.ec-cube.co.jp/ For the full copyright and license information, please view the LICENSE file that was distributed with this source code. #} {% extends '@admin/default_frame.twig'
+%} {% set menus = ['product', 'restaurant_list'] %} {% block title %}レストラン{% endblock %} {% block sub_title %}レストラン一覧{% endblock %} {% block stylesheet %}
+<link rel="stylesheet" href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css', 'admin') }}">
+<style type="text/css">
+    .datepicker-days th.dow:first-child,
+    .datepicker-days td:first-child {
+        color: #f00;
+    }
+    
+    .datepicker-days th.dow:last-child,
+    .datepicker-days td:last-child {
+        color: #00f;
+    }
+</style>
+{% endblock stylesheet %} {% block javascript %}
+
+<script>
+    $(function() {
+        $.when(
+            $.getScript("{{ asset('assets/js/vendor/moment.min.js', 'admin') }}"),
+            $.getScript("{{ asset('assets/js/vendor/moment-with-locales.min.js', 'admin') }}"),
+            $.getScript("{{ asset('assets/js/vendor/tempusdominus-bootstrap-4.min.js', 'admin') }}")
+        ).done(function() {
+            // datetimepicker で value が消えてしまうので data-value に保持しておく
+            $('input.datetimepicker-input').each(function() {
+                $(this).data('value', $(this).val());
+            });
+
+            $('input.datetimepicker-input').datetimepicker({
+                locale: '{{ eccube_config.locale }}',
+                format: 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false,
+                buttons: {
+                    showToday: true,
+                    showClose: true
+                },
+            });
+
+            // datetimepicker で value が消えてしまうので更新
+            $('input.datetimepicker-input').each(function() {
+                $(this).val($(this).data('value'));
+            });
+        });
+
+        $('#bulkDelete').on('click', function() {
+
+            var modal = $('#bulkDeleteModal');
+
+            // 削除中のUI変更処理
+            modal.find('button').attr('disabled', 'disabled');
+            $('.modal-body p', modal).text("{{ 'admin.product.permanently_delete__in_progress'|trans }}");
+            $('.progress', modal).show();
+
+            var checkedList = $('input[type=checkbox][data-delete-url]:checked');
+            var totalCount = checkedList.length;
+            var currentCount = 0;
+
+            var promises = checkedList.map(function() {
+                return $.ajax({
+                    'url': $(this).data('delete-url'),
+                    'type': 'delete',
+                    'data': {
+                        '_token': $(this).attr('token-for-anchor')
+                    }
+                }).always(function() {
+                    $('.progress-bar', modal).css('width', (++currentCount / totalCount * 100) + '%');
+                });
+            });
+
+            var addError = function(errorMessage) {
+                $('<li><span class="badge badge-danger">ERROR</span> </li>')
+                    .append($('<span></span>').text(errorMessage))
+                    .appendTo('#bulkErrors');
+            };
+
+            $.when.apply($, promises)
+                .done(function() {
+                    // 削除できなかった場合はエラーメッセージを表示
+                    var args = promises.length === 1 ? [arguments[0]] : [].slice.call(arguments).map(function(result) {
+                        return result[0];
+                    });
+                    args.filter(function(result) {
+                        return result.success === false;
+                    }).forEach(function(result) {
+                        addError(result.message);
+                    });
+                })
+                .fail(function() {
+                    // システムエラー
+                    addError("{{ 'admin.product.permanently_delete__system_error'|trans }}");
+                })
+                .always(function() {
+                    $('.progress', modal).hide();
+                    $('.modal-body p', modal).text("{{ 'admin.product.permanently_delete__complete_message'|trans }}");
+                    modal.find('button').removeAttr('disabled').toggle();
+                })
+        });
+
+        $('#bulkDeleteDone').on('click', function() {
+            location.reload(true);
+        });
+
+        toggleBtnBulk('input[id^="check_"]', '#btn_bulk');
+        $('input[id^="check_"]').on('change', function() {
+            $('#trigger_check_all').prop('checked', false);
+            toggleBtnBulk('input[id^="check_"]', '#btn_bulk');
+        });
+
+        $('#trigger_check_all').on('change', function() {
+            var checked = $(this).prop('checked');
+            if (checked) {
+                $('input[id^="check_"]').prop('checked', true);
+            } else {
+                $('input[id^="check_"]').prop('checked', false);
+            }
+            toggleBtnBulk('input[id^="check_"]', '#btn_bulk');
+        });
+
+        $('#form_bulk').find('.action-submit').on('click', function(event) {
+            event.preventDefault();
+            var form = $(this).closest('form');
+            if (!form.find('input:checkbox[name^="ids"]:checked').length) {
+                alert('please check');
+                return false;
+            }
+
+            $('<input />').attr('type', 'hidden').attr('name', '{{ constant('Eccube\\Common\\Constant::TOKEN_NAME') }}')
+                .val($(this).attr('token-for-anchor'))
+                .appendTo(form);
+            form.attr('action', $(this).data('action')).submit();
+            return false;
+        });
+
+        var dataClass = [];
+        var modalClass = $('#productClassesModal');
+        $('form#form_bulk').on('click', 'table.table button[data-class-url]', function() {
+            var btnClass = $(this);
+            btnClass.attr('disabled', true);
+            var productId = btnClass.data('product-id');
+
+            if (dataClass[productId] != undefined) {
+                renderClass(dataClass[productId], btnClass);
+                return;
+            }
+
+            $.ajax({
+                url: btnClass.data('class-load'),
+                type: 'GET',
+            }).done(function(data) {
+                dataClass[productId] = data;
+                renderClass(dataClass[productId], btnClass);
+            }).fail(function() {
+                alert('Failed');
+            });
+        });
+
+        // Append html and show popup
+        function renderClass(data, btnClass) {
+            $('div.modal-body', modalClass).html(data);
+            $('h5.modal-title', modalClass).text(btnClass.data('message'));
+            $('a.btn-ec-conversion', modalClass).attr('href', btnClass.data('class-url'));
+            modalClass.modal('show');
+            btnClass.attr('disabled', false);
+        }
+
+        $('.remove_restaurant').click(function(e) {
+            e.preventDefault();
+            var del_no = $(this).parent().parent().find('input').val();
+            var action_text = '{{ url("restaurant_del", {del_no: 'value'}) }}';
+            action_text = action_text.replace('value', del_no);
+            $('form').attr('action', action_text);
+            $('form').submit();
+        });
+
+        $('.permit_restaurant').click(function(e) {
+            e.preventDefault();
+            var permit_no = $(this).parent().parent().find('input').val();
+            var action_text = '{{ url("restaurant_permit", {permit_no: 'value'}) }}';
+            action_text = action_text.replace('value', permit_no);
+            $('form').attr('action', action_text);
+            $('form').submit();
+        });
+    });
+</script>
+{% endblock javascript %} {% block main %}
+
+{# {% set Orders = repository('Eccube\\Entity\\Order').findAll() %}
+{% set Restaurants = repository('Plugin\\restaurant_food\\Entity\\Config').findAll() %}
+{% set restaurant_total_price = [] %}
+
+{% for Restaurant in Restaurants %}
+    {{ set restaurant_total_price = restaurant_total_price|merge([{Restaurant.getId(): 0}]) }}
+{% endfor %}
+
+{% for Order in Orders %}
+    {% set temp_id = Order.getOrderItems[0].getProduct().getRestaurant().getId() %}
+    {{ set restaurant_total_price[temp_id] = restaurant_total_price[temp_id] + Order.getTotalPrice() }}
+{% endfor %} #}
+<div class="c-contentsArea__cols">
+    <div class="c-contentsArea__primaryCol">
+        <div class="c-primaryCol">
+            {% if pagination and pagination.totalItemCount %}
+            <form id="form_bulk" method="POST" action="">
+                <div class="card rounded border-0 mb-4 d-block">
+                    <div class="card-body p-0">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="border-top-0 pl-3 pt-2 pb-2">
+                                        <input type="checkbox" name="filter" value="open" id="trigger_check_all">
+                                    </th>
+                                    <th class="border-top-0 pt-2 pb-2">{{ 'admin.product.product_id__short'|trans }}</th>
+                                    <th class="border-top-0 pt-2 pb-2">{{ 'admin.product.image__short'|trans }}</th>
+                                    <th class="border-top-0 pt-2 pb-2">加盟店名</th>
+                                    <th class="border-top-0 pt-2 pb-2">電話番号</th>
+                                    <th class="border-top-0 pt-2 pb-2">メールアドレス</th>
+                                    <th class="border-top-0 pt-2 pb-2">金額合計（月）</th>
+                                    <th class="border-top-0 pt-2 pb-2">状態</th>
+                                    <th class="border-top-0 pt-2 pb-2 pr-3" colspan="3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <form action="">
+                                {% for Restaurant in pagination %}
+                                <tr id="ex-restaurant-{{ Restaurant.id }}"> 
+                                    <td class="align-middle pl-3">
+                                        <input type="checkbox" name="ids[]" value="{{ Restaurant.id }}" id="check_{{ Restaurant.id }}">
+                                    </td>
+                                    <td class="align-middle">{{ Restaurant.id }}</td>
+                                    <td class="align-middle">
+                                        {% if Restaurant.RestaurantImage | length > 0 %}
+                                            {% set restaurant_image_count = Restaurant.RestaurantImage | length %}
+                                            <img width="64" src='{{ asset(Restaurant.RestaurantImage[restaurant_image_count - 1], 'save_image') }}'>
+                                        {% else %}
+                                            <img  width="64" src="{{ asset(''|no_image_product, 'save_image') }}"/>
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle"><a href="{{ url('restaurant_edit', { id : Restaurant.id }) }}">{{ Restaurant.company_name }}</a>
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ Restaurant.phone_number }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ Restaurant.email }}
+                                    </td>
+                                    <td class="align-middle">
+                                        {{ restaurant_total_price[Restaurant.getId()]|number_format() }} 円
+                                    </td>
+                                    <td class="align-middle">
+                                        {% if Restaurant.state == 1 %}
+                                            申請済み
+                                        {% elseif Restaurant.state == 2 %}
+                                            許可された
+                                        {% elseif Restaurant.state == 3 %}
+                                            登録済み
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle">
+                                        <button type="submit" class="btn btn-ec-regular permit_restaurant">許可</button>
+                                        <button type="submit" class="btn btn-ec-regular remove_restaurant">削除</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </form>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if pagination.totalItemCount > 0 %}
+                    <div class="row justify-content-md-center mb-4 pb-4">
+                        {% include "@admin/pager.twig" with { 'pages' : pagination.paginationData, 'routes' : 'restaurant_admin_page' } %}
+                    </div>
+                    {% endif %}
+                </div>
+            </form>
+            {% else %}
+            <div class="card rounded border-0">
+                <div class="card-body p-4">
+                    <div class="text-center text-muted mb-4 h5">{{ 'admin.common.search_no_result'|trans }}</div>
+                    <div class="text-center text-muted">{{ 'admin.common.search_try_change_condition'|trans }}</div>
+                    <div class="text-center text-muted">{{ 'admin.common.search_try_advanced_search'|trans }}</div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 完全に削除の確認モーダル-->
+        <div class="modal fade" id="bulkDeleteModal" tabindex="-1" role="dialog" aria-labelledby="discontinuance" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold">{{ 'admin.product.permanently_delete__confirm_title'|trans }}</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body text-left">
+                        <p class="text-left">{{ 'admin.product.permanently_delete__confirm_message'|trans }}</p>
+                        <ul id="bulkErrors"></ul>
+                        <div class="progress" style="display: none">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-ec-sub" type="button" data-dismiss="modal">{{ 'admin.common.cancel'|trans }}</button>
+                        <button class="btn btn-ec-delete" type="button" id="bulkDelete">{{ 'admin.product.permanently_delete' | trans }}</button>
+                        <button class="btn btn-ec-regular" id="bulkDeleteDone" style="display: none" type="button" data-dismiss="modal">{{ 'admin.product.permanently_delete__complete'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="productClassesModal" tabindex="-1" role="dialog" aria-labelledby="productClassesModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">{# Title #}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+            </div>
+            <div class="modal-body">
+                {# Append data list #}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-v-sub" type="button" data-dismiss="modal">
+                            {{ 'admin.common.cancel'|trans }}
+                        </button>
+                <a class="btn btn-ec-conversion" href="#">
+                            {{ 'admin.product.move_to_product_class'|trans }}
+                        </a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /#productClassesModal -->
+{% endblock %}

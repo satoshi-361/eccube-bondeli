@@ -1,0 +1,130 @@
+{% extends 'default_frame.twig' %}
+{% block javascript %}
+<script>
+    $('.add-cart').on('click', function(event) {
+        event.preventDefault();
+        $form = $('#form1');
+        $.ajax({
+            url: $form.attr('action'),
+            type: $form.attr('method'),
+            data: $form.serialize(),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) {
+                // Buttonを無効にする
+                $('.add-cart').prop('disabled', true);
+            }
+        }).done(function(data) {
+            // レスポンス内のメッセージをalertで表示
+            $.each(data.messages, function() {
+                $('#ec-modal-header').html(this);
+            })
+            $('.ec-modal').show(
+            // カートブロックを更新する
+            $.ajax({
+                url: "{{ url('block_cart') }}",
+                type: 'GET',
+                dataType: 'html'
+            }).done(function(html) {
+                $('.ec-headerRole__cart').html(html);
+            });
+        }).fail(function(data) {
+            alert('{{ 'カートへの追加に失敗しました。'|trans }}');
+        }).always(function(data) {
+            // Buttonを有効にする
+            $('.add-cart').prop('disabled', false);
+        });
+    }
+</script>
+{% endblock %}
+{% block main %}
+
+    <!-- main part -->
+    <main>
+        <section class="banner">
+            <div class="banner_img">
+                <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_pc.png" alt="" class="pc">
+                <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_sp.png" alt="" class="sp">
+            </div>
+        </section>
+
+        <section class="food_introduction">
+            <form action="{{ url('product_add_cart', {id:Product.id}) }}" method="post" id="form1" name="form1">
+                {% if Product.stock_find %}
+                    <div class="ec-productRole__actions">
+                        <div class="ec-numberInput"><span>{{ '数量'|trans }}</span>
+                            {{ form_widget(form.quantity, {attr: { max : "{{ Product.upper_limit }}" }}) }}
+                            {{ form_errors(form.quantity) }}
+                        </div>
+                    </div>
+                    <div class="ec-productRole__btn">
+                        <button type="submit" class="ec-blockBtn--action add-cart">
+                            {{ 'カートに入れる'|trans }}
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="ec-productRole__btn">
+                        <button type="button" class="ec-blockBtn--action" disabled="disabled">
+                            {{ 'ただいま品切れ中です。'|trans }}
+                        </button>
+                    </div>
+                {% endif %}
+            </form>
+        </section>
+
+        <section class="food_content_part">
+            <div class="food_content">
+                <div class="food_part_header">
+                    <h1>おすすめポイント</h1>
+                </div>
+                <div class="food_content_body">
+                    <h6>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+                        テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+                        テキストテキストテキストテキストテキストテキストテキスト</h6>
+                </div>
+            </div>
+            <div class="food_content">
+                <div class="food_part_header">
+                    <h1>お届け内容</h1>
+                </div>
+                <div class="food_content_body">
+                    <h6>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+                        テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+                        テキストテキストテキストテキストテキストテキストテキスト</h6>
+                </div>
+            </div>
+
+            <div class="recommend_food_part">
+                <div class="food_part_header">
+                    <h1>関連する料理</h1>
+                </div>
+                <div class="recommend_food_slider">
+                    <div class="swiper mySwiper3">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide">
+                            <img src="http://bon-deli.com/html/user_data/assets/img/food1.png" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="http://bon-deli.com/html/user_data/assets/img/food-list1.png" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="http://bon-deli.com/html/user_data/assets/img/food-list2.png" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="http://bon-deli.com/html/user_data/assets/img/food-list3.png" />
+                          </div>
+                        </div>
+                        <div class="swiper-button-box">
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+
+    </main>
+    <!-- main part end -->
+
+{% endblock %}

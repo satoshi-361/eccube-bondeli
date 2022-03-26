@@ -1,0 +1,2134 @@
+<script src="https://bon-deli.com/html/user_data/assets/js/other.js"></script>
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    font-family: "Yu Mincho";
+}
+
+@font-face {
+    font-family: "SoukouMincho";
+    src: url("https://bon-deli.com/html/user_data/assets/font/SoukouMincho.ttf");
+}
+
+@font-face {
+    font-family: "Yu Mincho";
+    src: url("https://bon-deli.com/html/user_data/assets/font/yumin.ttf");
+}
+
+*{
+	box-sizing: border-box;
+}
+
+
+main {
+    position: relative;
+}
+
+img {
+    width: 100%;
+}
+
+section {
+    width: 100%;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+a:hover {
+    color: white;
+    border: none;
+}
+
+.fadeIn {
+    animation-name: fadeInAnim;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInAnim {
+    from {
+        transform: translateY(20%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.add-cart {
+    justify-content: center;
+}
+
+.d-block {
+    display: none!important;
+}
+
+
+
+    /* ----------------- common  ------------------ */
+
+    .pc {
+        display: block
+    }
+
+    .sp {
+        display: none
+    }
+
+    .main-container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .ec-role {
+        margin-top: 100px;
+        margin-bottom: 100px;
+        font-family: Yu Mincho;
+        color: rgb(83, 22, 10);
+    }
+    
+    .ec-pageHeader h1 {
+        font-family: Yu Mincho;
+        border:none;
+        text-align: center;
+        margin-bottom: 100px;
+        color: rgb(83, 22, 10);
+    }
+
+    /* header */
+
+    .scrollup {
+        display: block;
+    }
+
+    .scrolldown {
+        display: none;
+    }
+
+    .header {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100px;
+        z-index: 100;
+        padding: 0 80px;
+        align-items: center;
+        color: white;
+        font-size: 16px;
+        top:0;
+    }
+
+    .header .menu>ul {
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        width: 600px;
+        padding: 0;
+        right: 0;
+        overflow: hidden;
+        justify-content: space-around;
+    }
+
+    .header .menu>ul li {
+        margin-right: 10px;
+    }
+
+    .header .menu a {
+        font-size: 18px;
+        text-transform: uppercase;
+        display: inline-block;
+        text-decoration: none;
+        background-image: linear-gradient(to right, white, white);
+        background-position: bottom left;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size .5s ease;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 2px;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 2px;
+    }   
+    
+    .sp-menubar {
+        display: none;
+    }
+
+    /* end header */
+
+
+    /* main */
+
+    /* banner-part */
+
+    .banner_img {
+        position: relative;
+    }
+
+    .banner .banner_img img {
+        height: 80vh;
+    }
+
+    .banner_text {
+        width: 100%;
+        position: absolute;
+        top: 45%;
+        height: auto;
+        transform: translate(-50%,-5%);
+        left: 50%;
+    }
+
+    .banner h1 {
+        font-family: Yu Mincho;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 80px;
+        text-align: center;
+        color: #fff;
+        text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    }
+
+    /* end banner-part */
+
+
+    /* store_information */
+
+    .store_information {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+
+    .store_name h1 {
+        font-family: Yu Mincho;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 80px;
+        text-align: center;
+        color: #000;
+        text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    }
+
+    .store_data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 85%;
+        margin: auto;
+    }
+
+    .store_text {
+        width: 50%;
+    }
+
+    .store_img {
+        width: 40%;
+    }
+
+    .store_img img {
+        border-radius: 50%;
+    }
+
+    .store_text h1,.store_text h2 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 22px;
+        text-align: left;
+        color: #1e1e1e;
+    }
+
+    .store_text h1 {
+        border-bottom:1px solid #707070;
+        padding-bottom: 5px;
+    }
+
+    .store_text h2 {
+        margin: 30px 0 40px 40px;
+    }
+
+    .store_tt span{
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 22px;
+        text-align: left;
+        color: #964b00;
+        border: 1px solid #964b00;
+        padding: 4px 20px;
+
+    }
+
+
+    /* end store_information */
+
+    /* dish */
+
+    .dish {
+        background: #fff8f2;
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+
+    .dish_category ul {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+    }
+
+    .dish_category ul li {
+        width: 25%;
+        text-align: center;
+    }
+
+    .dish_category ul li a {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 25px;
+        text-align: center;
+        color: #964b00;
+        padding: 5px 0;
+    }
+
+    .selected {
+        background-color: #964b00;
+    }
+
+    .selected a {
+        color: white !important;
+    }
+
+    .dish_category .border-right {
+        border-right: 1px solid #964b00;
+    }
+
+    .dish_body {
+        margin-top: 80px;
+    }
+
+    .dish_body1 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    .dish_body_one {
+        width: 30%;
+    }
+
+    .dish_body_one img {
+        height: 300px;
+        border-radius: 5%;
+    }
+
+    .dish_explain {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .dish_explain h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        color: #000;
+    }
+
+    .dish_explain h2 {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 20px;
+        color: #964b00;
+
+    }
+    
+    /* end dish */
+
+    /* store_description */
+
+    .store_description {
+        margin-top: 100px;
+    }
+
+    .description_header h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 28px;
+        text-align: center;
+        color: #000;
+    }
+
+    .description_body {
+        width: 90%;
+        margin: auto;
+        margin-top: 100px;
+    }
+
+    .description_body_one {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .description_title {
+        width: 23%;
+    }
+
+    .description_title h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 22px;
+        text-align: left;
+        color: #000;
+        margin-bottom: 30px;
+    }
+
+    .description_content {
+        width: 70%;
+    }
+
+    .description_content h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        text-align: left;
+        color: #000;
+        margin-bottom: 30px;
+
+    }
+
+    /* end store_description */
+
+    /* food.html */
+
+    .food_introduction {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 120px;   
+    }
+
+    .food_name h1 {
+        font-family: Yu Mincho;
+        font-weight: 600;
+        font-size: 36px;
+        line-height: 80px;
+        text-align: center;
+        color: #531408;
+        text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    }
+
+    .food_introduction .swiper.mySwiper2 {
+        position: relative;
+        height: 600px;
+    }
+
+    .food_introduction .swiper-button-box {
+        height: 50px;
+        position: absolute;
+        bottom: 0;
+        width: 100px;
+        right: 0;
+        z-index: 1;
+        background-color: rgba(36, 36, 36, 0.3);
+    }
+
+    .food_introduction .swiper-button-next, .food_introduction .swiper-button-prev {
+        color: white;
+        width: 50px;
+        height: 50px;
+        top: 22px;
+    }
+
+    .food_introduction .swiper-button-prev {
+        left: 0;
+    }
+
+    .food_introduction .swiper-button-next {
+        right: 0;
+    }
+
+    .food_introduction .swiper-button-next:hover, 
+    .food_introduction .swiper-button-prev:hover {
+        background-color: black;
+        opacity: .5;
+        transition: all .3s ease-in-out;
+    }
+
+    .service-information {
+        display: flex;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .service-information img {
+        width: 25px;
+        margin-right: 5px;
+    }
+
+    .service-information span {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 18px;
+        color: #1e1e1e;
+        padding-right: 40px;
+    }
+
+    .cart-button {
+        margin: 80px auto;
+        max-width: 600px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .add-cart {
+        display: flex;
+        background-color: #964b00;
+        padding: 10px 20px;
+        align-items: center;
+    }
+
+    .add-cart img, .wish-cart img {
+        width: 25px;
+        margin-right: 20px;
+    }
+
+    .add-cart span {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 30px;
+        margin-bottom: 0;
+        color: #fff;
+    }
+
+    .wish-cart {
+        display: flex;
+        background-color: white;
+        padding: 10px 20px;
+        align-items: center;
+        border: 1px solid #964b00;
+    }
+
+    .wish-cart span {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 30px;
+        margin-bottom: 0;
+        color: #964b00;
+    }
+
+    .food_content_part {
+        margin-top: 100px;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .food_part_header {
+        margin-top: 40px;
+    }
+
+    .food_part_header h1 {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 24px;
+        padding-left: 20px;
+        padding-bottom: 10px;
+        color: #1e1e1e;
+        border-bottom: 1px solid #707070;
+        margin: 0;
+    }
+
+    .food_content_body h6 {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 20px;
+        color: #1e1e1e;
+        padding: 30px;
+        margin: 0;
+    }
+
+    .recommend_food_slider{
+        margin-top: 100px;
+    }
+
+    .recommend_food_slider .mySwiper3 {
+        width: 90%;
+        margin: auto;
+    }
+
+    .recommend_food_slider .swiper-slide {
+        padding: 0 20px;
+    }
+
+    .recommend_food_slider .swiper-slide img {
+        border-radius: 8%;
+        height: 350px;
+    }
+
+    .recommend_food_slider .swiper-button-prev {
+        left: 30px;
+    }
+
+    .recommend_food_slider .swiper-button-next {
+        right: 30px;
+    }
+
+    /* end food.html */
+
+ /* restaurant-recruit.html */
+
+ .restaurant-recruit {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.restaurant-recruit-header p {
+    font-family: Yu Mincho;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 80px;
+    text-align: center;
+    color: #53160a;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    margin: 0;
+    margin-top: 120px;
+}
+
+.restaurant-recruit-explain p {
+    font-family: "Yu Mincho";
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    color: #1e1e1e;
+    margin: 0;
+    margin-top: 80px;
+}
+
+.restaurant-recruit-form {
+    margin-top: 240px;
+}
+
+.res-recruit-form-header p {
+    font-family: Yu Mincho;
+    font-weight: normal;
+    font-size: 38px;
+    text-align: center;
+    color: #53160a;
+    margin: 0;
+}
+
+.res-recruit-form-body {
+    margin-top: 80px;
+}
+
+.res-recruit-form1 {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 27.5px;
+    padding-bottom: 22.5px;
+    border-bottom: 1px solid #53160a;
+}
+
+.res-recruit-form1 p {
+    font-family: "Yu Mincho";
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 55px;
+    text-align: left;
+    color: #505050;
+    margin: 0;
+}
+
+.res-recruit-form1 input {
+    width: 65%!important;
+    height: 65px;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid #53160a;
+    padding: 0 20px;
+    font-family: "Yu Mincho";
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 55px;
+    color: #b9b9b9;
+}
+
+.res-recruit-form1 textarea {
+    width: 65%;
+    height: 255px;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid #53160a;
+    padding: 0 20px;
+    font-family: "Yu Mincho";
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 55px;
+    color: #b9b9b9;
+}
+
+.res-recruit-submit {
+    width: 400px;
+    height: 78px;
+    margin: 60px 300px 120px;
+    border: 1px solid #53160a;
+}
+
+.res-recruit-submit p {
+    font-family: Yu Mincho;
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #53160a;
+    margin: auto;
+}
+
+/* end restaurant-recruit.html */
+
+/* driver-recruit.html */
+
+.driver-recruit {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.driver-recruit-header p {
+    font-family: Yu Mincho;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 80px;
+    text-align: center;
+    color: #53160a;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    margin: 120px 0 80px;
+}
+
+p.driver-recruit-explain {
+    font-family: "Yu Mincho";
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 50px;
+    text-align: center;
+    color: #1e1e1e;
+    margin: 0;
+    margin-bottom: 80px;
+}
+
+.driver-recruit-content1 {
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.driver-recruit-content1 p {
+    width: 90%;
+    font-family: "Yu Mincho";
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: left;
+    color: #1e1e1e;
+    margin: 0;
+}
+
+.driver-recruit-content1 img {
+    width: 25px;
+}
+
+.driver-recruit-link {
+    width: 500px;
+    height: 75px;
+    background: #fff;
+    border: 1px solid #53160a;
+    margin: 120px auto;
+}
+
+.driver-recruit-link p {
+    font-family: Yu Mincho;
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #53160a;
+    margin: 18px 0;
+}
+
+/* end driver-recruit.html */
+
+/* term.html */
+    
+    .terms {
+        max-width: 1000px;
+        margin: 100px auto;
+        font-family: "Yu Mincho";
+        color: #1E1E1E;
+    }
+
+    .terms h1 {
+        font-size: 35px;
+        line-height: 40px;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    .terms h2 {
+        font-size: 25px;
+        line-height: 30px;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .terms p {
+        font-size: 16px;
+        line-height: 30px;
+        margin-bottom: 5px;
+    }
+
+    .clause p {
+        margin: 20px 40px;
+    }
+
+    .clause h3 {
+        font-size: 20px;
+        line-height: 40px;
+        padding-left: 20px;
+        font-weight: bold;
+        border-bottom: 1px solid #707070;
+        margin-bottom: 20px;
+    }
+
+    .clause h4 {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 30px;
+        margin: 0 60px;
+    }
+
+    .term1 {
+        margin-bottom: 50px;
+    }
+
+
+    /* end term.html */
+    
+    /* how-to.html */
+
+    .how-to {
+        max-width: 1000px;
+        margin: 100px auto;
+    }
+
+    .how-to-header p {
+        font-size: 40px;
+        text-align: center;
+        margin-bottom: 100px;
+    }
+
+    .how-to1 {
+        position: relative;
+        width: 45%;
+        float: left;
+    }
+
+    .how-to1::before {
+        content: "1";
+        position: absolute;
+        font-size: 120px;
+        left: 20px;
+        top: -80px;
+        color: #e1e1e1;
+    }
+
+    .how-to2 {
+        position: relative;
+        margin-top: 280px;
+        width: 45%;
+        float: right;
+    }
+
+    .how-to2::before {
+        content: "2";
+        position: absolute;
+        font-size: 120px;
+        right: 20px;
+        top: -80px;
+        color: #e1e1e1;
+    }
+
+    .how-to3 {
+        position: relative;
+        width: 45%;
+        float: left;
+        margin-top: 180px;
+        margin-bottom: 100px;
+    }
+
+    .how-to3::before {
+        content: "3";
+        position: absolute;
+        font-size: 120px;
+        left: 20px;
+        top: -80px;
+        color: #e1e1e1;
+    }
+    
+    .how-to1 img, .how-to2 img, .how-to3 img {
+        height: 280px;
+    }
+
+
+    p.how-to-title {
+        font-size: 25px;
+        font-weight: bold;
+        line-height: 40px;
+        /* text-align: center; */
+        color:rgb(83, 22, 10);
+        margin-top: 20px;
+        font-family: "Yu Mincho";
+    }
+
+    p.how-to-content {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 30px;
+        color: rgb(83, 22, 10);
+        font-family: "Yu Mincho";
+    }
+    
+        .d-map-part {
+        position: relative;
+        width: 100%;
+        float: left;
+        margin-bottom: 100px;
+    }
+
+    .deliverable-map {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .d-map-img {
+        width: 80%;
+        margin: auto;
+    }
+
+    p.d-map-title {
+        font-size: 40px;
+        text-align: center;
+        margin-bottom: 100px;
+        color: #53160a;
+    }
+
+
+/* end how-to.html */
+
+
+    /* end main */
+
+
+    /* footer */
+
+    footer {
+        width: 100%;
+        padding-top: 80px;
+        background-color: #FFF8F2;
+    }
+
+    .footer-logo {
+        width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-menu ul {
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+        max-width: 900px;
+        margin: 60px auto;
+    }
+
+    .footer-menu ul li a {
+        font-family: "Yu Mincho";
+        font-size: 14px;
+        line-height: 28px;
+        color: #202020;
+    }
+
+    .follow-link {
+        background-color: #53160A;
+        padding:15px;
+    }
+
+    .footer-follow h1 {
+        font-family: "Yu Mincho";
+        font-weight: bold;
+        font-size: 13px;
+        color: #fff;
+        margin-bottom: 0;
+        padding:0 50px;
+    }
+
+    .copyright {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-follow p {
+        font-family: "Segoe UI";
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 28px;
+        color: #fff;
+        margin: 0;
+        text-align: center;
+    }
+
+    .footer-follow img {
+        width: 22px;
+    }
+
+    /* end footer */
+
+
+
+
+@media only screen and (max-width: 1260px) {
+ 
+    .header {
+        height: 7.93vw;
+        padding: 0 6.35vw;
+        font-size: 1.27vw;
+    }
+
+    .header .logo img {
+        width: 11.11vw;
+    };
+
+    .header .menu>ul {
+        width: 47.61vw;
+    }
+
+    .header .menu>ul li {
+        margin-right: 0.79vw;
+    }
+
+    .header .menu a {
+        font-size: 1.428vw;
+        background-size: 0% 0.158vw;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 0.158vw;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 0.158vw;
+    }   
+
+    .header-text h1 {
+        font-size: 3.17vw;
+        line-height: 6.35vw;
+    }
+
+    /* end header */
+
+
+    /* main */
+
+
+    /* banner-part */
+
+    .banner_img {
+        position: relative;
+    }
+
+    .banner .banner_img img {
+        height: 70vh;
+    }
+
+    .banner_text {
+        width: 100%;
+        position: absolute;
+        top: 45%;
+        height: auto;
+        transform: translate(-50%,-5%);
+        left: 50%;
+    }
+
+    .banner h1 {
+        font-family: Yu Mincho;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 80px;
+        text-align: center;
+        color: #fff;
+        text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    }
+
+    /* end banner-part */
+
+
+    /* store_information */
+
+    .store_information {
+        margin-top: 80px;
+    }
+
+    .store_name h1 {
+        font-family: Yu Mincho;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 80px;
+        text-align: center;
+        color: #000;
+        text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+    }
+
+    .store_data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 85%;
+        margin: auto;
+    }
+
+    .store_text {
+        width: 50%;
+    }
+
+    .store_img {
+        width: 40%;
+    }
+
+    .store_img img {
+        border-radius: 50%;
+    }
+
+    .store_text h1,.store_text h2 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 22px;
+        text-align: left;
+        color: #1e1e1e;
+    }
+
+    .store_text h1 {
+        border-bottom:1px solid #707070;
+        padding-bottom: 5px;
+    }
+
+    .store_text h2 {
+        margin: 30px 0 40px 40px;
+    }
+
+    .store_tt span{
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 22px;
+        text-align: left;
+        color: #964b00;
+        border: 1px solid #964b00;
+        padding: 4px 20px;
+
+    }
+
+
+    /* end store_information */
+
+    /* dish */
+
+    .dish {
+        background: #fff8f2;
+        padding-top: 100px;
+    }
+
+    .dish_category ul {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+    }
+
+    .dish_category ul li {
+        width: 25%;
+        text-align: center;
+    }
+
+    .dish_category ul li a {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 25px;
+        text-align: center;
+        color: #964b00;
+        padding: 5px 0;
+    }
+
+    .selected {
+        background-color: #964b00;
+    }
+
+    .selected a {
+        color: white !important;
+    }
+
+    .dish_category .border-right {
+        border-right: 1px solid #964b00;
+    }
+
+    .dish_body {
+        margin-top: 80px;
+    }
+
+    .dish_body1 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 50px;
+    }
+
+    .dish_body_one {
+        width: 30%;
+    }
+
+    .dish_body_one img {
+        border-radius: 5%;
+    }
+
+    .dish_explain {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .dish_explain h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        color: #000;
+    }
+
+    .dish_explain h2 {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 20px;
+        color: #964b00;
+
+    }
+
+    /* end dish */
+
+    /* store_description */
+
+    .store_description {
+        margin-top: 100px;
+    }
+
+    .description_header h1 {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+        color: #000;
+    }
+
+    .description_body {
+        width: 90%;
+        margin: auto;
+        margin-top: 100px;
+    }
+
+    .description_body_one {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .description_title {
+        width: 20%;
+    }
+
+    .description_title h1 {
+        font-family: "Yu Mincho";
+        font-weight: 600;
+        font-size: 22px;
+        text-align: left;
+        color: #000;
+        margin-bottom: 30px;
+    }
+
+    .description_content {
+        width: 70%;
+    }
+
+    .description_content h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        text-align: left;
+        color: #000;
+        margin-bottom: 30px;
+
+    }
+
+    /* end store_description */
+
+    /* food.html */
+
+    .food_introduction {
+        max-width: 79.36vw;
+        margin-top: 9.523vw;  
+    }
+
+    .food_name h1 {
+        font-size: 2.857vw;
+        line-height: 6.35vw;
+        text-shadow: 0px 0.238vw 0.476vw rgba(0, 0, 0, 0.22);
+    }
+
+    .food_introduction .swiper.mySwiper2 {
+        height: 47.62vw;
+    }
+
+    .food_introduction .swiper-button-box {
+        height: 3.968vw;
+        width: 7.936vw;
+    }
+
+    .food_introduction .swiper-button-next, .food_introduction .swiper-button-prev {
+        width: 3.968vw;
+        height: 3.968vw;
+        bottom: 0;
+    }
+    .food_introduction .swiper-button-prev:after, 
+    .food_introduction .swiper-button-next:after {
+        font-size: 3vw;
+    }
+
+    .service-information {
+        margin-top: 1.587vw;
+    }
+
+    .service-information img {
+        width: 1.984vw;
+        margin-right: 0.396vw;
+    }
+
+    .service-information span {
+        font-size: 1.428vw;
+        padding-right: 3.174vw;
+    }
+
+    .cart-button {
+        margin: 6.35vw auto;
+        width: 47.62vw;
+    }
+
+    .add-cart {
+        padding: 0.793vw 1.587vw;
+    }
+
+    .add-cart img, .wish-cart img {
+        width: 1.984vw;
+        margin-right: 1.587vw;
+    }
+
+    .wish-cart {
+        padding: 0.793vw 1.587vw;
+
+    }
+
+    .add-cart span {
+        font-size: 1.587vw;
+        line-height: 2.38vw;
+    }
+
+    .wish-cart span {
+        font-size: 1.587vw;
+        line-height: 2.38vw;
+
+    }
+
+    .food_content_part {
+        max-width: 79.36vw;
+        margin-top: 7.936vw;
+    }
+
+    .food_part_header {
+        margin-top: 3.174vw;
+    }
+
+    .food_part_header h1 {
+        font-size: 1.904vw;
+        padding-left: 1.587vw;
+        padding-bottom: 0.793vw;
+    }
+
+    .food_content_body h6 {
+
+        font-size: 1.587vw;
+        padding: 2.38vw;
+    }
+
+    .recommend_food_slider{
+        margin-top: 7.936vw;
+    }
+
+    .recommend_food_slider .swiper-slide {
+        padding: 0 1.587vw;
+    }
+
+    .recommend_food_slider .swiper-slide img {
+        border-radius: 8%;
+        height: 27.77vw;
+    }
+
+    .recommend_food_slider .swiper-button-prev {
+        left: 2.38vw;
+    }
+
+    .recommend_food_slider .swiper-button-next {
+        right: 2.38vw;
+    }
+
+    /* end food.html */
+    
+    /* term.html */
+    
+    .terms {
+        width: 90%
+    }
+
+    .terms h1 {
+        font-size: 8vw;
+        line-height: 10vw;
+        margin-bottom: 12vw;
+    }
+
+    .terms h2 {
+        font-size: 6vw;
+        line-height: 8vw;
+        margin-top: 8vw;
+        margin-bottom: 5vw;
+    }
+
+    .terms p {
+        font-size: 4vw;
+        line-height: 7vw;
+        margin-bottom: 1.5vw;
+    }
+
+    .clause p {
+        margin: 4vw 4vw;
+    }
+
+    .clause h3 {
+        font-size: 4.5vw;
+        line-height: 10vw;
+        padding-left: 5vw;
+        margin-bottom: 0;
+    }
+
+    .clause h4 {
+        font-size: 4vw;
+        line-height: 8vw;
+        margin: 0 6vw;
+    }
+
+    .term1 {
+        margin-bottom: 10vw;
+    }
+
+
+    /* end term.html */
+
+
+    /* end main */
+
+    /* footer */
+
+    footer {
+        padding-top: 6.349vw;
+    }
+
+    .footer-logo {
+        width: 19.84vw;
+    }
+
+    .footer-menu ul {
+        max-width: 71.42vw;
+        margin: 4.76vw auto;
+    }
+
+    .footer-menu ul li a {
+        font-size: 1.11vw;
+        line-height: 2.22vw;
+    }
+
+    .follow-link {
+        padding:1.19vw;
+    }
+
+    .footer-follow h1 {
+        font-size: 1.03vw;
+        padding:0 3.968vw;
+    }
+
+    .footer-follow p {
+        font-size: 1.11vw;
+        line-height: 2.22vw;
+    }
+
+    .footer-follow img {
+        width: 1.74vw;
+    }
+
+    /* end footer */
+
+   
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    /* ----------------- common  ------------------ */
+
+    .pc {
+        display: none
+    }
+
+    .sp {
+        display: block
+    }
+
+    .header .logo img {
+        width: 18.25vw;
+    }
+    
+    .sp-header  {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 18vw;
+        top: 0;
+        padding-left: 5%;
+        padding-right: 5%;
+        /* background-color: white; */
+        z-index: 11;
+        /*box-shadow: 0px 5px 15px #99999948;*/
+    }
+
+    .sp-header .logo img {
+        height: 8vw;
+    }
+
+
+    .sp-menubar {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        background-color: #964B00;
+        z-index: 1000;
+        display: none;
+    }
+
+    .sp-menu-logo {
+        width: 30vw;
+    }
+
+    .menu-part {
+        padding: 0 15%;
+        transition: 1s;
+    }
+
+    .sp-menubar .menu-part {
+        margin-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    .sp-menubar .menu-part a h1 {
+        font-size:5vw;
+        line-height: 7vw;
+        letter-spacing: 0.12em;
+        text-align: center;
+        color: white;
+        padding-bottom: 5vw;
+        margin-bottom: 5vw;
+        margin-top: 15vw;
+        border-bottom: 1px solid white;
+    }
+
+    .sp-menu-header {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+
+
+    .close-btn {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    /* end header */
+
+
+    /* main */
+
+    /* banner-part */
+
+    .banner h1 {
+        font-size: 7.5vw;
+        line-height: 10.42vw;
+    }
+    
+    .banner .banner_img img {
+        height: 50vh;
+    }
+
+    /* end banner-part */
+
+
+    /* store_information */
+
+    .store_information {
+        margin-top: 10.42vw;
+        margin-bottom: 10.42vw;
+    }
+
+    .store_name h1 {
+        font-size: 7.5vw;
+        line-height: 10.42vw;
+    }
+
+    .store_data {
+        width: 100%;
+    }
+
+    .store_text {
+        width: 85%;
+        margin: auto;
+    }
+
+    .store_text h1,.store_text h2 {
+        font-size: 4.5vw;
+        line-height: 8vw;
+    }
+
+    .store_text h1 {
+        padding-bottom: 1vw;
+    }
+
+    .store_text h2 {
+        margin: 4vw 0 6vw 6vw;
+    }
+
+    .store_tt span{
+        font-size: 4.5vw;
+        padding: 1vw 4vw;
+
+    }
+
+    /* end store_information */
+
+    /* dish */
+
+    .dish {
+        background: #fff8f2;
+        padding-top: 15vw;
+        padding-bottom: 0;
+    }
+
+    .dish_category ul {
+        width: 95%;
+        justify-content: space-between;
+        margin-left:0;
+        margin-right: 5%;
+        padding: 0;
+    }
+
+    .dish_category ul li a {
+        font-size: 4.5vw;
+        padding: 1.2vw 0;
+    }
+
+    .dish_body {
+        margin-top: 10vw;
+    }
+
+    .dish_body1 {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .dish_body_one {
+        width: 85%;
+        margin: auto;
+    }
+
+    .dish_explain {
+        width: 100%;
+        text-align: center;
+        margin-top: 5vw;
+        margin-bottom: 15vw;
+    }
+
+    .dish_explain h1 {
+        font-weight: 600;
+        letter-spacing: 0.05vw;
+        font-size: 4.5vw;
+    }
+
+    .dish_explain h2 {
+        font-size: 4vw;
+    }
+    
+    /* end dish */
+
+    /* store_description */
+
+    .store_description {
+        margin-top: 15vw;
+    }
+
+    .description_header h1 {
+        font-size: 6vw;
+    }
+
+    .description_body {
+        width: 90%;
+        margin: auto;
+        margin-top: 15vw;
+    }
+
+    .description_body_one {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .description_title {
+        width: 40%;
+    }
+
+    .description_title h1 {
+        font-size: 4.5vw;
+        margin-bottom: 5vw;
+    }
+
+    .description_content {
+        width: 50%;
+    }
+
+    .description_content h1 {
+        font-size: 3.5vw;
+        line-height: 6vw;
+        margin-bottom: 5vw;
+
+    }
+
+    /* end store_description */
+
+    /* food.html */
+
+    .food_introduction {
+        max-width: 85vw;
+        margin-top: 15vw;
+    }
+
+    .food_name h1 {
+        font-size: 6vw;
+        line-height: 10vw;
+        /* text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22); */
+    }
+
+    .food_introduction .swiper.mySwiper2 {
+        height: 51vw;
+    }
+
+    .food_introduction .swiper-button-box {
+        height: 8vw;
+        width: 16vw;
+    }
+
+    .food_introduction .swiper-button-next, .food_introduction .swiper-button-prev {
+        width: 8vw;
+        height: 8vw;
+    }
+
+    .service-information {
+        margin-top: 3vw;
+    }
+
+    .service-information img {
+        width: 3.5vw;
+        margin-right: 0.8vw;
+    }
+
+    .service-information span {
+        font-size: 2.5vw;
+        padding-right: 6vw;
+    }
+
+    .cart-button {
+        margin: 11vw auto;
+        width: 100%;
+    }
+
+    .add-cart {
+        padding: 2vw;
+    }
+
+    .add-cart img, .wish-cart img {
+        width: 4vw;
+        margin-right: 2vw;
+    }
+
+    .add-cart span {
+        font-size: 3.5vw;
+        line-height: 4vw;
+    }
+
+    .wish-cart {
+        padding: 2vw;
+    }
+
+    .wish-cart span {
+        font-size: 3.5vw;
+        line-height: 4vw;
+    }
+
+    .food_content_part {
+        margin-top: 12vw;
+        max-width: 85vw;
+    }
+
+    .food_part_header {
+        margin-top: 4vw;
+    }
+
+    .food_part_header h1 {
+        font-size: 4.5vw;
+        padding-left: 4vw;
+        padding-bottom: 1.2vw;
+    }
+
+    .food_content_body h6 {
+        font-size: 3.5vw;
+        padding: 5vw;
+    }
+
+    .recommend_food_slider{
+        margin-top: 12vw;
+    }
+
+    .recommend_food_slider .mySwiper3 {
+        width: 90%;
+        margin: auto;
+    }
+
+    .recommend_food_slider .swiper-slide {
+        padding: 0;
+    }
+
+    .recommend_food_slider .swiper-slide img {
+        border-radius: 8%;
+        height: 60vw;
+    }
+
+    .recommend_food_slider .swiper-button-prev {
+        left: 1.5vw;
+    }
+
+    .recommend_food_slider .swiper-button-next {
+        right: 1.5vw;
+    }
+
+    /* end food.html */
+
+     /* restaurant-recruit.html */
+
+     .restaurant-recruit {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .restaurant-recruit-header p {
+        font-size: 7vw;
+        margin-top: 20vw;
+    }
+
+    .restaurant-recruit-explain p {
+        font-size: 4vw;
+        line-height: 10vw;
+        margin-top: 10vw;
+    }
+
+    .restaurant-recruit-form {
+        margin-top: 40vw;
+    }
+
+    .res-recruit-form-header p {
+        font-size: 6vw;
+    }
+
+    .res-recruit-form-body {
+        margin-top: 10vw;
+    }
+
+    .res-recruit-form1 {
+        flex-direction: column;
+        padding-top: 8vw;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .res-recruit-form1 p {
+        font-size: 4vw;
+        line-height: 6vw;
+    }
+
+    .res-recruit-form1 input {
+        width: 100%!important;
+        height: 12vw;
+        font-size: 4vw;
+        line-height: 10vw;
+    }
+
+    .res-recruit-form1 textarea {
+        width: 100%;
+        height: 60vw;
+        font-size: 4.5vw;
+    }
+
+    .res-recruit-submit {
+        width: 100%;
+        height: 15vw;
+        margin: 12vw 0 30vw;
+    }
+
+    .res-recruit-submit p {
+        font-size: 5vw;
+    }
+
+/* end restaurant-recruit.html */
+
+/* driver-recruit.html */
+
+.driver-recruit {
+    width: 90%;
+}
+
+.driver-recruit-header p {
+    font-size: 7vw;
+    line-height: 10vw;
+    margin: 15vw 0;
+}
+
+p.driver-recruit-explain {
+    font-size: 5vw;
+    line-height: 8vw;
+    margin-bottom: 15vw;
+}
+
+.driver-recruit-content1 {
+    width: 100%;
+}
+
+.driver-recruit-content1 p {
+    font-size: 4.5vw;
+    line-height: 10vw;
+}
+
+.driver-recruit-content1 img {
+    width: 5vw;
+}
+
+.driver-recruit-link {
+    width: 100%;
+    height: 15vw;
+    margin: 15vw auto 20vw;
+}
+
+.driver-recruit-link p {
+    font-size: 5vw;
+    margin: 3.5vw 0;
+}
+
+/* end driver-recruit.html */
+
+/* how-to.html */
+
+.how-to {
+    width: 90%;
+    margin: 10vw auto;
+}
+
+.how-to-header p {
+    font-size: 7vw;
+    margin-bottom: 20vw;
+}
+
+.how-to1 {
+    width: 100%;
+}
+
+.how-to1::before {
+    font-size: 25vw;
+    left: 3vw;
+    top: -18vw;
+}
+
+.how-to2 {
+    margin-top: 15vw;
+    width: 100%;
+}
+
+.how-to2::before {
+    font-size: 25vw;
+    left: 3vw;
+    top: -18vw;
+}
+
+.how-to3 {
+    width: 100%;
+    margin-top: 15vw;
+    margin-bottom: 15vw;
+}
+
+.how-to3::before {
+    font-size: 25vw;
+    left: 3vw;
+    top: -18vw;
+}
+
+    .how-to1 img, .how-to2 img, .how-to3 img {
+        height: 65vw;
+    }
+
+
+
+p.how-to-title {
+    font-size: 5.5vw;
+    margin-top: 4vw;
+}
+
+p.how-to-content {
+    font-size: 4.5vw;
+}
+
+.d-map-part {
+    margin-bottom: 20vw;
+}
+
+.deliverable-map {
+    max-width: 1000px;
+}
+
+.d-map-img {
+    width: 90%;
+}
+
+p.d-map-title {
+    font-size: 6.5vw;
+    margin-bottom: 10vw;
+}
+
+
+/* end how-to.html */
+
+
+    /* end main */
+
+    /* footer */
+
+    footer {
+        width: 100%;
+        padding-top: 10vw;
+    }
+
+    .footer-logo {
+        width: 30vw;
+        margin-bottom: 10vw;
+    }
+    
+    .footer-menu ul {
+        max-width: 900px;
+        flex-wrap: wrap;
+        width: 90%;
+        margin: 8vw auto;
+        padding: 0;
+    }
+
+    .footer-menu ul li {
+        width: 50%;
+    }
+
+    .footer-menu ul li a {
+        font-family: "Yu Mincho";
+        font-size: 3.5vw;
+        line-height: 7vw;
+        color: #202020;
+    }
+
+    .follow-link {
+        /*display: flex;*/
+        background-color: #53160A;
+        align-items: center;
+        padding:15px;
+    }
+
+    .footer-follow h1 {
+        font-size: 2vw;
+        padding:0 5vw;
+    }
+
+    .footer-follow p {
+        font-size: 3vw;
+        line-height: 3vw;
+    }
+
+    .footer-follow img {
+        width: 3.5vw;
+    }
+
+    /* end footer */
+
+}
+
+</style>

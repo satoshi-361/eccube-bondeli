@@ -1,0 +1,499 @@
+{% block stylesheet %}
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            font-family: "Yu Mincho";
+        }
+        
+        @font-face {
+            font-family: "SoukouMincho";
+            src: url("http://bon-deli.com/html/user_data/asse.footer-menu ul li ats/font/SoukouMincho.ttf");
+        }
+        
+        @font-face {
+            font-family: "Yu Mincho";
+            src: url("http://bon-deli.com/html/user_data/assets/font/yumin.ttf");
+        }
+        
+        *{
+            box-sizing: border-box;
+        }
+        
+        .action-edit {
+            color:#212529!important;
+        }
+        
+        
+        main {
+            position: relative;
+        }
+        
+        img {
+            width: 100%;
+        }
+        
+        section {
+            width: 100%;
+            position: relative;
+        }
+        
+        a {
+            text-decoration: none!important;
+            color: white;
+        }
+        a:hover {
+            color: white;
+            border: none;
+        }
+
+        .pc {
+            display: block
+        }
+    
+        .sp {
+            display: none
+        }
+        
+        .ec-forgotRole {
+            margin-bottom: 50px;
+        }
+    
+        .main-container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .ec-role {
+            margin-top: 100px;
+            margin-bottom: 100px;
+            font-family: Yu Mincho;
+            color: rgb(83, 22, 10);
+        }
+        
+        .ec-pageHeader h1 {
+            font-family: Yu Mincho;
+            border:none;
+            margin-bottom: 48px;
+            padding: 0;
+            text-align: center;
+            color: rgb(83, 22, 10);
+        }
+    
+        /* header */
+    
+        .scrollup {
+            display: block;
+        }
+    
+        .scrolldown {
+            display: none;
+        }
+    
+        .header {
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 100px;
+            z-index: 100;
+            padding: 0 80px;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            top:0;
+        }
+    
+        .header .menu>ul {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            width: 600px;
+            padding: 0;
+            right: 0;
+            overflow: hidden;
+            justify-content: space-around;
+        }
+    
+        .header .menu>ul li {
+            margin-right: 10px;
+        }
+    
+        .header .menu a {
+            font-size: 18px;
+            text-transform: uppercase;
+            display: inline-block;
+            text-decoration: none;
+            background-image: linear-gradient(to right, white, white);
+            background-position: bottom left;
+            background-repeat: no-repeat;
+            background-size: 0% 2px;
+            transition: background-size .5s ease;
+            font-weight: bold;
+        }
+    
+        .header .menu a:hover {
+            background-size: 100% 2px;
+        }
+    
+        .header .menu a:hover {
+            background-size: 100% 2px;
+        }   
+        
+        .sp-menubar {
+            display: none;
+        }
+    
+        /* end header */
+
+        .header {
+            box-shadow: rgb(0 0 0 / 30%) 0px 3px 10px!important;
+            height: 80px!important;
+            background: white!important;
+            color: rgb(33, 34, 35)!important;
+        }
+        
+        .header .menu a {
+            color:#53160a!important;
+            background-image: linear-gradient(to right, #53160a, #53160a)!important;
+        }
+        
+        .scrolldown {
+            display: block!important;
+        }
+        
+        .scrollup {
+            display: none!important;
+        }
+
+        /* footer */
+
+        footer {
+            width: 100%;
+            padding-top: 80px;
+            background-color: #FFF8F2;
+        }
+
+        .footer-logo {
+            width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-menu ul {
+            display: flex;
+            justify-content: space-between;
+            list-style-type: none;
+            max-width: 900px;
+            margin: 60px auto;
+        }
+
+        .footer-menu ul li a {
+            font-family: "Yu Mincho";
+            font-size: 14px;
+            line-height: 28px;
+            color: #202020;
+            text-decoration: none;
+        }
+
+        .follow-link {
+            display: flex;
+            background-color: #53160A;
+            align-items: center;
+            padding:15px;
+        }
+
+        .footer-follow h1 {
+            font-family: "Yu Mincho";
+            font-weight: bold;
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 0;
+            padding:0 50px;
+        }
+
+        .copyright {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-follow span {
+            font-family: "Segoe UI";
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 28px;
+            color: #fff;
+        }
+
+        .footer-follow img {
+            width: 22px;
+        }
+        
+    .footer-follow p {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 28px;
+        color: #fff;
+        margin: 0;
+        text-align: center;
+    }
+
+        /* end footer */
+
+        @media only screen and (max-width: 1260px) {
+ 
+            .header {
+                height: 7.93vw;
+                padding: 0 6.35vw;
+                font-size: 1.27vw;
+            }
+        
+            .header .logo img {
+                width: 11.11vw;
+            };
+        
+            .header .menu>ul {
+                width: 47.61vw;
+            }
+        
+            .header .menu>ul li {
+                margin-right: 0.79vw;
+            }
+        
+            .header .menu a {
+                font-size: 1.428vw;
+                background-size: 0% 0.158vw;
+            }
+        
+            .header .menu a:hover {
+                background-size: 100% 0.158vw;
+            }
+        
+            .header .menu a:hover {
+                background-size: 100% 0.158vw;
+            }   
+        
+            .header-text h1 {
+                font-size: 3.17vw;
+                line-height: 6.35vw;
+            }
+        
+            /* end header */
+
+            /* footer */
+
+            footer {
+                padding-top: 6.349vw;
+            }
+
+            .footer-logo {
+                width: 19.84vw;
+            }
+
+            .footer-menu ul {
+                max-width: 71.42vw;
+                margin: 4.76vw auto;
+            }
+
+            .footer-menu ul li a {
+                font-size: 1.11vw;
+                line-height: 2.22vw;
+            }
+
+            .follow-link {
+                padding:1.19vw;
+            }
+
+            .footer-follow h1 {
+                font-size: 1.03vw;
+                padding:0 3.968vw;
+            }
+
+            .footer-follow span {
+                font-size: 1.11vw;
+                line-height: 2.22vw;
+            }
+
+            .footer-follow img {
+                width: 1.74vw;
+            }
+            
+            .footer-follow p {
+                font-size: 1.11vw;
+                line-height: 2.22vw;
+            }
+
+            /* end footer */
+        }
+
+        @media only screen and (max-width: 767px) {
+
+            /* ----------------- common  ------------------ */
+        
+            .pc {
+                display: none
+            }
+        
+            .sp {
+                display: block
+            }
+
+            .ec-pageHeader h1 {
+                font-size: 6.5vw;
+            }
+
+            .ec-login .ec-login__input {
+                margin-bottom: 5vw;
+            }
+        
+            .header .logo img {
+                width: 18.25vw;
+            }
+
+            .ec-role {
+                margin-top: 25vw;
+                margin-bottom: 13vw;
+            }
+            
+            .sp-header  {
+                position: fixed;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: 18vw;
+                top: 0;
+                padding-left: 5%;
+                padding-right: 5%;
+                background-color: white;
+                z-index: 11;
+                /*box-shadow: 0px 5px 15px #99999948;*/
+            }
+    
+            .sp-header .logo img {
+                height: 8vw;
+            }
+        
+        
+            .sp-menubar {
+                position: fixed;
+                width: 100%;
+                height: 100vh;
+                top: 0;
+                background-color: #964B00;
+                z-index: 1000;
+                display: none;
+            }
+        
+            .sp-menu-logo {
+                width: 30vw;
+            }
+        
+            .menu-part {
+                padding: 0 15%;
+                transition: 1s;
+            }
+        
+            .sp-menubar .menu-part {
+                margin-top: 100px;
+                padding-bottom: 100px;
+            }
+        
+            .sp-menubar .menu-part a h1 {
+                font-size:5vw;
+                line-height: 7vw;
+                letter-spacing: 0.12em;
+                text-align: center;
+                color: white;
+                padding-bottom: 5vw;
+                margin-bottom: 5vw;
+                margin-top: 15vw;
+                border-bottom: 1px solid white;
+            }
+        
+            .sp-menu-header {
+                width: 80%;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 30px;
+            }
+        
+        
+        
+            .close-btn {
+                width: 5vw;
+                height: 5vw;
+            }
+        
+            /* end header */
+    
+            /* footer */
+
+            footer {
+                width: 100%;
+                padding-top: 10vw;
+            }
+
+            .footer-logo {
+                width: 30vw;
+                margin-bottom: 10vw;
+            }
+            
+            .footer-menu ul {
+                max-width: 900px;
+                flex-wrap: wrap;
+                width: 90%;
+                margin: 8vw auto;
+                padding: 0;
+            }
+
+            .footer-menu ul li {
+                width: 50%;
+            }
+
+            .footer-menu ul li a {
+                font-family: "Yu Mincho";
+                font-size: 3.5vw;
+                line-height: 7vw;
+                color: #202020;
+            }
+
+            .follow-link {
+                /*display: flex;*/
+                background-color: #53160A;
+                align-items: center;
+                padding:15px;
+            }
+
+            .footer-follow h1 {
+                font-size: 2vw;
+                padding:0 5vw;
+            }
+
+            .footer-follow span {
+                font-size: 2.1vw;
+                line-height: 3vw;
+            }
+
+            .footer-follow img {
+                width: 3.5vw;
+            }
+            
+            .footer-follow p {
+                font-size: 3vw;
+                line-height: 3vw;
+            }
+    
+                /* end footer */
+
+}
+    </style>
+{% endblock %}

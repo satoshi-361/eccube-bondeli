@@ -1,0 +1,1031 @@
+{% import _self as formMacros %}
+{% macro printProduct(item, TopCategories) %}
+    <div style="border: 1px solid #ddd; margin: 10px 0; padding: 10px;">
+        <div style="display:flex; align-items:center; position: absolute; right: 35px">
+            <div style="margin-right: 15px">
+                {{ form_widget(item.is_visible) }}
+                {{ form_errors(item.is_visible) }}
+            </div>
+            <button type="button" class="btn btn-ec-regular remove_product">削除</button>
+        </div>
+        <div class="row upload-zone-product mt-5">
+            <div class="col-3">
+                <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'tooltip.product.image'|trans }}">
+                    <span>料理画像</span>
+                    <i class="fa fa-question-circle fa-lg ml-1"></i>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div class="progress" style="display: none;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="thumb_product c-form__fileUploadThumbnails clearfix">
+                    {{ form_widget(item.food_image, { attr : { style : "display: none", class: 'food_image'} }) }}
+                </div>
+                <p id="message"></p>
+                <div class="media py-5 border-ec-dashed mb-2 rounded">
+                    <div class="media-body">
+                        <i class="fa fa-cloud-upload fa-3x text-ec-lightGray mx-3 align-middle" aria-hidden="true"></i> {{ 'admin.common.drag_and_drop_image_description'|trans }} {{ form_widget(item.product_image, { attr : { accept
+                        : 'image/*', style : 'display:none;' } }) }} {{ form_errors(item.product_image) }}
+                        <a class="btn btn-ec-regular mr-2 product_image_link">
+                            {{ 'admin.common.file_select'|trans }}
+                        </a>
+                    </div>
+                    <!-- /.media-body -->
+                </div>
+                <!-- /.media -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="d-inline-block">
+                    <span>料理名</span>
+                    <span class="badge badge-primary ml-1">
+                        {{ 'admin.common.required'|trans }}
+                    </span>
+                </div>
+            </div>
+            <div class="col mb-2">
+                {% if item.vars.value != null %} 
+                    <input type='number' id='config_products_{{item.vars.name}}_id' name='config[products][{{item.vars.name}}][id]' value={{ item.vars.value.id }} style='display: none'>
+                {% else %}
+                    <input type='number' id='config_products_{{item.vars.name}}_id' name='config[products][{{item.vars.name}}][id]' value=0 style='display: none'>
+                {% endif %}
+                {{ form_widget(item.name) }} 
+                {{ form_errors(item.name) }}
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-3">
+            <div class="d-inline-block">
+                <span>料理のジャンル</span>
+                <span class="badge badge-primary ml-1">
+                    {{ 'admin.common.required'|trans }}
+                </span>
+            </div>
+        </div>
+        <div class="col mb-2">
+            {# <div class="select-list">
+                <div class="title">料理のジャンル設定</div>
+                <div class="select-options">
+                    {% for Category in TopCategories %}
+                        <div class="option"> 
+                            <input type="checkbox" value="{{ Category.id }}" />
+                            <label>
+                                {{ Category.name }}
+                            </label>
+                        </div>
+                        {% for ChildCategory in Category.children %}
+                            <div class="option"> 
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" value="{{ ChildCategory.id }}" />
+                                <label>{{ ChildCategory.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                {{ form_widget(item.food_type, { attr : { style : "display: none"} }) }}
+            </div> #}
+            <select id='config_products_{{item.vars.name}}_food_type' name='config[products][{{item.vars.name}}][food_type]' class='food_type form-control'>
+            </select>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="d-inline-block">
+                    <span>{{ 'admin.product.sale_price'|trans }}（税抜）</span>
+                    <span class="badge badge-primary ml-1">
+                        {{ 'admin.common.required'|trans }}
+                    </span>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div>
+                    {{ form_widget(item.visible_price) }}
+                    {{ form_errors(item.visible_price) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="d-inline-block">
+                    <span>購入限度</span>
+                    <span class="badge badge-primary ml-1">
+                        {{ 'admin.common.required'|trans }}
+                    </span>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div>
+                    {{ form_widget(item.upper_limit) }}
+                    {{ form_errors(item.upper_limit) }}
+                </div>
+            </div>
+        </div>
+        {# <div class="row">
+            <div class="col-3">
+                <div class="d-inline-block">
+                    <span>配達可能日</span>
+                    <span class="badge badge-primary ml-1">
+                        {{ 'admin.common.required'|trans }}
+                    </span>
+                </div>
+            </div>
+            <div class="col mb-2">
+                {{ form_widget(item.orderable_date) }} 
+                {{ form_errors(item.orderable_date) }}
+            </div>
+        </div> #}
+        <div class="row">
+            <div class="col-3">
+                <div class="d-inline-block">
+                    <span>オプション</span>
+                </div>
+            </div>
+            <div class="col mb-2">
+                {{ form_widget(item.dressing, { attr : { 'data-role' : 'tagsinput', 'class' : 'dressing' } }) }} 
+                {{ form_errors(item.dressing) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="d-inline-block" data-tooltip="true" data-placement="top"
+                    title="{{ 'tooltip.product.description_detail'|trans }}">
+                    <span>料理説明</span>
+                    <i class="fa fa-question-circle fa-lg ml-1"></i>
+                </div>
+            </div>
+            <div class="col">
+                {{ form_widget(item.description_detail, { attr : { rows : "8"} }) }}
+                {{ form_errors(item.description_detail) }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% extends 'default_frame.twig' %}
+{% set body_class = 'front_page' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/app.css', 'admin') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fileupload/jquery.fileupload.css', 'admin') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fileupload/jquery.fileupload-ui.css', 'admin') }}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/tagsinput.css', 'admin') }}">
+    <style>
+        #thumb div {
+            float: left;
+            margin: 4px
+        }
+
+        .ui-state-highlight {
+            height: 70px;
+            width: 70px;
+            border: dashed 1px #ccc;
+            background: #fff;
+        }
+
+        .ec-layoutRole .ec-layoutRole__main {
+            margin:150px auto 100px!important;
+        }
+
+        .c-contentsArea__cols {
+            padding-left:0!important;
+            padding-right:0!important;
+        }
+
+        .select-list {
+            font-family: 'Open Sans', sans-serif;
+            color: #555;
+            background: #fff;
+        }
+        .select-list .title {
+            display: inline-block;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #eaeaec;
+            border-radius: 5px;
+            padding: 10px 15px 10px 15px;
+        }
+        .select-list .title::after {
+            display: inline-block;
+            content: '>';
+            margin-left: 15px;
+            font-size: 11px;
+            transform: rotate(90deg) scale(1, 2);
+        }
+        .select-list .title:hover {
+            background: #eaeaec;
+        }
+        .select-list .select-options {
+            margin-top: 5px;
+            display: none;
+            position: absolute;
+            z-index: 500;
+            border: 1px solid #eaeaec;
+            background: #fff;
+        }
+        .select-list .option {
+            margin-bottom: 3px;
+        }
+        .select-list .select-options .option label {
+            display: inline-block;
+            padding: 0px 30px 0px 10px;
+            margin-bottom: 0.2rem;
+        }
+        .select-list .select-options .option:hover {
+            background: #eaeaec;
+        }
+        .select-list .select-options .option input {
+            margin-left: 15px;
+        }        
+        .bootstrap-tagsinput .badge {
+            font-size: 100%;
+        }
+    </style>
+{% endblock stylesheet %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/js/vendor/fileupload/vendor/jquery.ui.widget.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.iframe-transport.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.fileupload.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.fileupload-process.js', 'admin') }}"></script>
+    <script src="{{ asset('assets/js/vendor/fileupload/jquery.fileupload-validate.js', 'admin') }}"></script>
+    <script>var bootstrapTooltip = $.fn.tooltip.noConflict();</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('assets/js/tagsinput.js', 'admin') }}"></script>
+    <script>
+        $.fn.tooltip = bootstrapTooltip;
+        $(document).on('drop dragover', function(e) {
+            e.preventDefault();
+        });
+
+        $(function() {
+             $('button[type="submit"]').click(function(e) {
+                 e.preventDefault();
+
+                 var date_week = '';
+                 $('#date_week').children().each(function(){
+                     if ($(this).find('input').is(':checked')) {
+                        date_week += $(this).find('input').val();
+                        date_week += ',';
+                     }
+                 });
+                 $('#config_date_week').val(date_week);
+                 console.log($('#config_date_week').val());
+            //     $('.select-list').each(function(index) {
+            //         var value = '';
+            //         $(this).find('.select-options').children('.option').each(function(){
+            //             if ($(this).find('input[type="checkbox"]').is(':checked')) {
+            //                 value += $(this).find('input[type="checkbox"]').val();
+            //                 value += ',';
+            //             }
+            //         });
+            //         $(this).find('input[type="text"]').val(value);
+            //     });
+                 $('form').submit();
+             });
+
+
+            // $(document).on('click', '.select-list .title', function(){
+            //     $(this).parent().find('.select-options').toggle();
+            // });
+            
+            $(document).on('click', '.select-list .option', function(){
+                var checkbox = $(this).find('input[type="checkbox"]');
+                if ($(checkbox).is(':checked')) {
+                    $(checkbox).prop('checked', false);
+                } else {
+                    $(checkbox).prop('checked', true);
+                }
+            });
+            
+            // Todo: fix drag&drop style
+            $("#thumb").sortable({
+                cursor: 'move',
+                opacity: 0.7,
+                placeholder: 'ui-state-highlight',
+                update: function(event, ui) {
+                    updateSortNo();
+                }
+            });
+            var proto_img = '<div class="c-form__fileUploadThumbnail" style="background-image:url(\'__path__\');">' +
+                '<a class="delete-image"><i class="fa fa-times" aria-hidden="true"></i></a>' +
+                '</div>';
+            var proto_add = '{{ form_widget(form.add_images.vars.prototype) }}';
+            var proto_del = '{{ form_widget(form.delete_images.vars.prototype) }}';
+            {% for image in form.images %}
+            var $img = $(proto_img.replace(/__path__/g, '{{ asset(image.vars.value, 'save_image') }}'));
+            var $widget = $('{{ form_widget(image) }}');
+            $widget.val('{{ image.vars.value }}');
+            $("#thumb").append($img.append($widget));
+            {% endfor %}
+            {% for add_image in form.add_images %}
+            var $img = $(proto_img.replace(/__path__/g, '{{ asset(add_image.vars.value, 'save_image') }}'));
+            var $widget = $('{{ form_widget(add_image) }}');
+            $widget.val('{{ add_image.vars.value }}');
+            $("#thumb").append($img.append($widget));
+            {% endfor %}
+            {% for delete_image in form.delete_images %}
+            $("#thumb").append('{{ form_widget(delete_image) }}');
+            {% endfor %}
+            var hideThumbnail = function() {
+                if ($("#thumb div").length > 0) {
+                    $("#icon_no_image").css("display", "none");
+                    $('#message').html("{{ 'admin.common.drag_and_drop_description'|trans }}");
+                } else {
+                    $("#icon_no_image").css("display", "");
+                    $('#message').empty();
+                }
+            };
+            // Todo: fix update sort by drag&drop
+            var updateSortNo = function() {
+                $("#thumb div").each(function(index) {
+                    $(this).find(".sort_no_images").remove();
+                    filename = $(this).find("input[type='hidden']").val();
+                    $sortNo = $('<input type="hidden" class="sort_no_images" name="sort_no_images[]" />');
+                    $sortNo.val(filename + '//' + parseInt(index + 1));
+                    $(this).append($sortNo);
+                });
+            };
+            hideThumbnail();
+            updateSortNo();
+            // Delete of images
+            var count_del = 0;
+            $("#thumb").on("click", '.delete-image', function() {
+                var $new_delete_image = $(proto_del.replace(/__name__/g, count_del));
+                var thumbnail = $(this).parents('div.c-form__fileUploadThumbnail');
+                var src = $(thumbnail).find('input').val();
+                $new_delete_image.val(src);
+                $("#thumb").append($new_delete_image);
+                $(thumbnail).remove();
+                hideThumbnail();
+                updateSortNo();
+                count_del++;
+            });
+            var count_add = {{ form.add_images|length|default(0) }};
+            $('#{{ form.restaurant_image.vars.id }}').fileupload({
+                url: "{{ url('admin_restaurant_image_add') }}",
+                type: "post",
+                sequentialUploads: true,
+                dataType: 'json',
+                dropZone: $('#upload-zone'),
+                done: function(e, data) {
+                    $('.progress-restaurant').hide();
+                    $.each(data.result.files, function(index, file) {
+                        var path = '{{ asset('', 'temp_image') }}' + file;
+                        var $img = $(proto_img.replace(/__path__/g, path));
+                        var $new_img = $(proto_add.replace(/__name__/g, count_add));
+                        $new_img.val(file);
+                        $child = $img.append($new_img);
+                        $('#thumb').append($child);
+                        count_add++;
+                    });
+                    hideThumbnail();
+                    updateSortNo();
+                },
+                fail: function(e, data) {
+                    alert("{{ 'admin.common.upload_error'|trans }}");
+                },
+                always: function(e, data) {
+                    $('.progress-restaurant').hide();
+                    $('.progress-restaurant .progress-bar').width('0%');
+                },
+                start: function(e, data) {
+                    $('.progress-restaurant').show();
+                },
+                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                maxFileSize: 10000000,
+                maxNumberOfFiles: 10,
+                progressall: function(e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('.progress-restaurant .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                },
+                processalways: function(e, data) {
+                    if (data.files.error) {
+                        alert("{{ 'admin.common.upload_error'|trans }}");
+                    }
+                }
+            });
+            // 画像アップロード
+            $('#file_upload').on('click', function() {
+                $('#{{ form.restaurant_image.vars.id }}').click();
+            });
+
+            $(document).on('click', '.product_image_link', function() {
+                $(this).parent().find('input').click();
+                var current_item = $(this);
+                var current_item_container = $(this).parent().parent().parent().parent().parent();
+                var current_item_container_index = $(current_item_container).index();
+                var product_proto_add = '<input type="hidden" id="config_products___name___add_images___name__" name="config[products][__name__][add_images][__name__]" />';
+
+                $('.upload-zone-product .form-control-file').fileupload({
+                url: "{{ url('admin_restaurant_image_add') }}",
+                type: "post",
+                sequentialUploads: true,
+                dataType: 'json',
+                dropZone: $(this).parent().parent(),
+                done: function(e, data) {
+                    $(current_item).parent().parent().parent().find('.progress').hide();
+                    $.each(data.result.files, function(index, file) {
+                        var path = '{{ asset('', 'temp_image') }}' + file;
+                        var $img = $(proto_img.replace(/__path__/g, path));
+                        var $new_img = $(product_proto_add.replace(/__name__/g, 0));
+                        $new_img.val(file);
+                        $child = $img.append($new_img);
+                        $(current_item).parent().parent().parent().find('.thumb_product').append($child);
+                        $(current_item_container).find('.food_image').val(file);
+                    });
+                    hideThumbnail();
+                    updateSortNo();
+                },
+                fail: function(e, data) {
+                    alert("{{ 'admin.common.upload_error'|trans }}");
+                },
+                always: function(e, data) {
+                    $(current_item).parent().parent().parent().find('.progress').hide();
+                    $(current_item).parent().parent().parent().find('.progress .progress-bar').width('0%');
+                },
+                start: function(e, data) {
+                    $(current_item).parent().parent().parent().find('.progress').show();
+                },
+                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                maxFileSize: 10000000,
+                maxNumberOfFiles: 1,
+                progressall: function(e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $(current_item).parent().parent().parent().find('.progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                },
+                processalways: function(e, data) {
+                    if (data.files.error) {
+                        alert("{{ 'admin.common.upload_error'|trans }}");
+                    }
+                }
+            });
+            });
+            $(document).on('click', '.remove_product', function() {
+                $(this).parent().parent().remove();
+            });
+
+            $(".thumb_product").on("click", '.delete-image', function() {
+                var thumbnail = $(this).parents('div.c-form__fileUploadThumbnail');
+                $(this).parents('div.c-form__fileUploadThumbnails').find('.food_image').val(null);
+                $(thumbnail).remove();
+            });
+
+            $(document).on('mouseover', '.food_type', function(e) {
+                e.preventDefault();
+
+                food_type_list = $('#config_food_type_list').val().split(',');
+                let options = [];
+
+                $(this).children().each(function(){
+                    options.push($(this).val());
+                });
+
+                let tag = $(this);
+                food_type_list.forEach(function(value){
+                    if (options.indexOf(value) == -1)
+                        $(tag).append('<option>'+value+'</option>');
+                });
+                return true;
+            });
+
+            $('#config_is_deliverable_one').click(function(){
+                if($(this).is(':checked')) {
+                    $('.deliverable_time2').show();
+                } else {
+                    $('.deliverable_time2').hide();
+                }
+            });
+
+            {% if Restaurant.is_deliverable_one %}
+                $('.deliverable_time2').show();
+            {% else %}
+                $('.deliverable_time2').hide();
+            {% endif %}
+
+            {% set date_week = Restaurant.date_week|split(',') %}
+            {% set date_week_label = ['月', '火', '水', '木', '金', '土', '日', '祝'] %}
+            {% set i = 1 %}
+            {% for i in 1..8 %}
+                {% if i in date_week %}
+                    $('#date_week').append('<div style="margin-right: 10px"><input type="checkbox" value={{ i }} checked style="margin-right: 4px"><label>{{ date_week_label[i-1] }}</label></div>');
+                {% else %}
+                    $('#date_week').append('<div style="margin-right: 10px"><input type="checkbox" value={{ i }}  style="margin-right: 4px"><label>{{ date_week_label[i-1] }}</label></div>');
+                {% endif %}
+            {% endfor %}
+            
+            {% for i, item in Products %}
+                {% if item.food_image != "" %}
+                    console.log("{{ item.food_image }}");
+                    var $img = $(proto_img.replace(/__path__/g, '{{ asset(item.food_image, 'save_image') }}'));
+                    $(".thumb_product").eq({{ i }}).append($img);
+                {% endif %}
+                
+                {% set food_type_val = item.food_type|split(',') %}
+                var value = [];
+                {% for i,item in food_type_val if i < food_type_val|length - 1 %}
+                    value.push({{ item }});
+                {% endfor %}
+
+                // $(".select-list").eq({{ i }}).find('.select-options').children('.option').each(function(){
+                //     var checkbox = $(this).find('input[type="checkbox"]');
+                //     value.find(function(item){
+                //         if (item == $(checkbox).val()) {
+                //             $(checkbox).prop('checked', true);
+                //         }
+                //     });
+                // });
+                food_type_list = [];
+                food_type_list = $('#config_food_type_list').val().split(',');
+
+                food_type_list.forEach(function(value){
+                    if (value == "{{ item.food_type }}")
+                        $(".food_type").eq({{ i }}).append('<option selected>'+value+'</option>');
+                    else
+                        $(".food_type").eq({{ i }}).append('<option>'+value+'</option>');
+                });
+
+                {% set ProductTags = item.getProductTag() %}
+                {% set dressings = '' %}
+
+                {% for ProductTag in ProductTags %}
+                    $('input.dressing').eq({{ i }}).tagsinput('add', '{{ProductTag.getTag().getName()}}');
+                {% endfor %}
+
+            {% endfor %}
+
+            var mainTags = $('#allTags');
+            var adminProductTag = $('#admin_product_Tag');
+            $('input', adminProductTag).each(function() {
+                if ($(this).is(':checked')) {
+                    $('button[data-tag-id="' + $(this).val() + '"]').removeClass('btn-outline-secondary').addClass('btn-outline-primary');
+                }
+            });
+            mainTags.on('click', 'button.btn', function() {
+                var btnTag = $(this);
+                var tagId = btnTag.data('tag-id');
+                if (btnTag.hasClass('btn-outline-primary')) {
+                    btnTag.removeClass('btn-outline-primary').addClass('btn-outline-secondary');
+                    $('input[value="' + tagId + '"]', mainTags).prop('checked', false);
+                } else {
+                    btnTag.removeClass('btn-outline-secondary').addClass('btn-outline-primary');
+                    $('input[value="' + tagId + '"]', mainTags).prop('checked', true);
+                }
+            });
+
+            var confirmFormChange = function(form, target, modal) {
+                var returnLink = form.find('input[type="hidden"][name*="return_link"]'),
+                    saveBtn = modal.find('a[data-action="save"]'),
+                    cancelBtn = modal.find('a[data-action="cancel"]');
+                modal.on('hidden.bs.modal', function() {
+                    returnLink.val('');
+                });
+                saveBtn.on('click', function() {
+                    returnLink.val($(this).data('return-link'));
+                    $(this).addClass('disabled');
+                    form.submit();
+                });
+                target.on('click', function() {
+                    modal.find('.modal-body .screen-name').text($(this).attr('title'));
+                    modal.modal('show');
+                    saveBtn.data('return-link', $(this).attr('href'));
+                    cancelBtn.attr('href', $(this).attr('href'));
+                    return false;
+                });
+            };
+            confirmFormChange($('#form1'), $('a[data-action="confirm"]'), $('#confirmFormChangeModal'))
+        });
+
+        // searchWordの実行
+        $('#search-category').on('input', function () {
+            searchWord($(this).val(), $('.category-li'));
+        });
+
+        // Custom code
+        const addProduct = (e) => {
+           const collectionHolder = document.querySelector('.product_list');
+
+           const item = document.createElement('div');
+           item.innerHTML += collectionHolder
+           .dataset
+           .prototype
+           .replace(/__name__/g, collectionHolder.dataset.index);
+           collectionHolder.appendChild(item);
+
+           collectionHolder.dataset.index++;
+
+            $('input[data-role="tagsinput"]').tagsinput({
+                confirmKeys: [13, 188]
+            });
+
+            $('input[data-role="tagsinput"]').on('keypress', function(e){
+                if (e.keyCode == 13){
+                    e.keyCode = 188;
+                    e.preventDefault();
+                };
+            });
+       };
+
+        document
+           .querySelectorAll('.add_product_list')
+           .forEach(btn => btn.addEventListener("click", addProduct));
+    </script>
+{% endblock javascript %}
+ {% block main %}
+<!-- 移動確認モーダル-->
+<div class="modal fade" id="confirmFormChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmFormChangeModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'admin.common.move_to_confirm_title'|trans }}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <p class="screen-name"></p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-ec-conversion" data-action="save" href="javascript:void(0)">
+                        {{ 'admin.common.move_to_confirm_save_and_move'|trans }}
+                    </a>
+                <a class="btn btn-ec-sub" data-action="cancel" href="javascript:void(0)">
+                        {{ 'admin.common.move_to_confirm_move_only'|trans }}
+                    </a>
+            </div>
+        </div>
+    </div>
+</div>
+<form role="form" method="post" style="max-width: 1360px; margin: auto; padding: 2rem 3%; box-shadow: 0px 0px 30px 10px #dddddd;">
+
+    {{ form_widget(form._token) }}
+    <div class="c-contentsArea__cols">
+        <div class="c-contentsArea__primaryCol">
+            <div class="c-primaryCol">
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block">
+                                    <span class="card-title">
+                                    レストラン情報
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a data-toggle="collapse" href="#basicConfig" aria-expanded="false" aria-controls="basicConfig">
+                                    <i class="fa fa-angle-up fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse show ec-cardCollapse" id="basicConfig">
+                        <div class="card-body">
+                            {% if Restaurant.id %}
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'tooltip.product.product_id'|trans }}">
+                                        <span>レストランID </span>
+                                        <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <p>{{ Restaurant.id }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>お名前</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.name) }} {{ form_errors(form.name) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>レストラン名</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.company_name) }} {{ form_errors(form.company_name) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block" data-tooltip="true" data-placement="top" title="{{ 'tooltip.product.image'|trans }}">
+                                        <span>レストラン画像</span>
+                                        <i class="fa fa-question-circle fa-lg ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <div class="progress progress-restaurant" style="display: none;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div id="thumb" class="c-form__fileUploadThumbnails clearfix"></div>
+                                    <p id="message"></p>
+                                    <div id="upload-zone" class="media py-5 border-ec-dashed mb-2 rounded">
+                                        <div class="media-body">
+                                            <i class="fa fa-cloud-upload fa-3x text-ec-lightGray mx-3 align-middle" aria-hidden="true"></i> {{ 'admin.common.drag_and_drop_image_description'|trans }} {{ form_widget(form.restaurant_image, { attr : { accept
+                                            : 'image/*', style : 'display:none;' } }) }} {{ form_errors(form.restaurant_image) }}
+                                            <a class="btn btn-ec-regular mr-2" onclick="$('#config_restaurant_image').click()">
+                                                {{ 'admin.common.file_select'|trans }}
+                                            </a>
+                                        </div>
+                                        <!-- /.media-body -->
+                                    </div>
+                                    <!-- /.media -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>住所</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <div class="ec-zipInput{{ has_errors(form.postal_code) ? ' error' }}"><span>{{ '〒'|trans }}</span> {{ form_widget(form.postal_code) }}
+                                        <div class="ec-zipInputHelp">
+                                            <a href="https://www.post.japanpost.jp/zipcode/" target="_blank"><span>{{ '郵便番号検索'|trans }}</span></a>
+                                        </div>
+                                        {{ form_errors(form.postal_code) }}
+                                    </div>
+
+                                    <div class="ec-select{{ has_errors(form.address.pref) ? ' error' }}">
+                                        {{ form_widget(form.address.pref) }} {{ form_errors(form.address.pref) }}
+                                    </div>
+                                    <div class="ec-input{{ has_errors(form.address.addr01) ? ' error' }}">
+                                        {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': '市区町村名(例：大阪市北区)' }}) }} {{ form_errors(form.address.addr01) }}
+                                    </div>
+                                    <div class="ec-input{{ has_errors(form.address.addr02) ? ' error' }}">
+                                        {{ form_widget(form.address.addr02, { 'attr': { 'placeholder': '番地・ビル名(例：西梅田1丁目6-8)' }}) }} {{ form_errors(form.address.addr02) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>メールアドレス</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.email) }} {{ form_errors(form.email) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>パスワード</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <div class="ec-input{{ has_errors(form.password.first) ? ' error' }}">
+                                        {{ form_widget(form.password.first, {
+                                            'attr': { 'placeholder': '半角英数記号%min%〜%max%文字'|trans({ '%min%': eccube_config.eccube_password_min_len, '%max%': eccube_config.eccube_password_max_len }) },
+                                            'type': 'password'
+                                        }) }}
+                                        {{ form_errors(form.password.first) }}
+                                    </div>
+                                    <div class="ec-input{{ has_errors(form.password.second) ? ' error' }}">
+                                        {{ form_widget(form.password.second, {
+                                            'attr': { 'placeholder': '確認のためもう一度入力してください'|trans },
+                                            'type': 'password'
+                                        }) }}
+                                        {{ form_errors(form.password.second) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>電話番号</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <div class="ec-telInput{{ has_errors(form.phone_number) ? ' error' }}">
+                                        {{ form_widget(form.phone_number) }} {{ form_errors(form.phone_number) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>店舗説明文</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.explanation) }} {{ form_errors(form.explanation) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>配達可能日</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.deliverable) }} {{ form_errors(form.deliverable) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>配達可能時間1</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <div style="display: flex; align-items: center">
+                                        {{ form_widget(form.deadline_start) }} {{ form_errors(form.deadline_start) }}から
+                                        {{ form_widget(form.deadline_end) }} {{ form_errors(form.deadline_end) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col mb-2">
+                                {{ form_widget(form.is_deliverable_one) }} {{ form_errors(form.is_deliverable_one) }}
+                                </div>
+                            </div>
+                            <div class="row deliverable_time2">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>配達可能時間2</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <div style="display: flex; align-items: center">
+                                        {{ form_widget(form.deadline_start1) }} {{ form_errors(form.deadline_start1) }}から
+                                        {{ form_widget(form.deadline_end1) }} {{ form_errors(form.deadline_end1) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>配達可能曜日</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.date_week, { attr : { 'style' : 'display: none' } }) }} {{ form_errors(form.date_week) }}
+                                    <div id="date_week" style="display:flex; align-items: center"></div>
+                                </div>
+                            </div>
+                            {# <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>振込口座</span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.bank_account) }} {{ form_errors(form.bank_account) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>店舗ごとにバック率</span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.back_rate) }} {{ form_errors(form.back_rate) }}
+                                </div>
+                            </div> #}
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>送料の設定</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <p class="mb-2">たとえば、5〜10Kmに対応して送料を1000円に設定したい場合は、「10：1000」と記入してください。</p>
+                                    {{ form_widget(form.delivery_fees, { attr : { 'data-role' : 'tagsinput' } }) }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>最低注文金額</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.lower_price_limit) }} 
+                                    {{ form_errors(form.lower_price_limit) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>配達エリア</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.deliverable_area, { attr : { 'data-role' : 'tagsinput' } }) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="d-inline-block">
+                                        <span>料理ジャンルのリスト</span>
+                                        <span class="badge badge-primary ml-1">
+                                            {{ 'admin.common.required'|trans }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    {{ form_widget(form.food_type_list, { attr : { 'data-role' : 'tagsinput' } }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card rounded border-0 mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="d-inline-block">
+                                    <span class="card-title">
+                                    料理情報
+                                </span>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a data-toggle="collapse" href="#basicConfig" aria-expanded="false" aria-controls="basicConfig">
+                                    <i class="fa fa-angle-up fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse show ec-cardCollapse" id="">
+                        <div class="card-body">
+                            <div class="product_list" data-index="{{ form.products|length > 0 ? form.products|last.vars.name + 1 : 0 }}" data-prototype="{{ formMacros.printProduct(form.products.vars.prototype, TopCategories)|e('html_attr') }}">
+                            {% for item in form.products %}
+                                {{ formMacros.printProduct(item, TopCategories) }}
+                            {% endfor %}
+                            </div>
+                            <button type="button" class="add_product_list btn btn-ec-regular mr-1" data-collection-holder-class="product_list" style="width:20%">追加</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-end">
+                    <div class="col-auto">
+                        <button class="btn btn-ec-conversion px-5" type="submit">登録</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

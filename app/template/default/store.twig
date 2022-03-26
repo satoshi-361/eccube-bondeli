@@ -1,0 +1,223 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+    <main>
+    <!-- main part -->
+        <section class="banner">
+            <div class="banner_img">
+                {# <img src="http://bon-deli.com/html/user_data/assets/img/store_banner_pc.png" alt="" class="pc">
+                <img src="http://bon-deli.com/html/user_data/assets/img/store_banner_sp.png" alt="" class="sp"> #}
+				{% if Restaurant.RestaurantImage[0] is defined %}
+                    <img src="{{ asset(Restaurant.RestaurantImage[0], 'save_image') }}" alt="" class="pc">
+                    <img src="{{ asset(Restaurant.RestaurantImage[0], 'save_image') }}" alt="" class="sp">
+				{% else %}
+                    <img src="{{ asset(''|no_image_product, 'save_image') }}" alt="" class="pc"/>
+                    <img src="{{ asset(''|no_image_product, 'save_image') }}" alt="" class="sp"/>
+				{% endif %}
+            </div>
+            <div class="banner_text">
+                <h1>{{ Restaurant.company_name }}</h1>
+            </div>
+        </section>
+
+        <!--<section class="store_information">
+            <div class="main-container">
+                <div class="store_name">
+                    <h1>{{ Restaurant.company_name }}</h1>
+                </div>
+                <div class="store_data">
+                    <div class="store_text">
+                        <div>
+                            <h1>住所</h1>
+                            <h2>{{ Restaurant.addr01 }}{{ Restaurant.addr02 }}</h2>
+                        </div>
+                        <div>
+                            <h1>配達可能日</h1>
+                            <h2>
+                                {% if Restaurant.deliverable == 1 %}
+                                    即日
+                                {% elseif Restaurant.deliverable == 2 %}
+                                    1～2日後
+                                {% elseif Restaurant.deliverable == 3 %}
+                                    3～4日後
+                                {% elseif Restaurant.deliverable == 4 %}
+                                    1週間以降
+                                {% elseif Restaurant.deliverable == 5 %}
+                                    2週間以降
+                                {% endif %}
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="store_img pc">
+						{% if Restaurant.RestaurantImage[0] is defined %}
+                        <img src="{{ asset(Restaurant.RestaurantImage[0], 'save_image') }}">
+						{% else %}
+                        <img src="{{ asset(''|no_image_product, 'save_image') }}"/>
+						{% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>-->
+
+        <section class="dish">
+            <div class="main-container">
+                <div class="dish_body">
+                    {% set temp1 = Restaurant.getFoodTypeList()|split(', ') %}
+                    {% set temp2 = Restaurant.getFoodTypeList()|split(',') %}
+
+                    {% if temp1 | length < temp2 | length %}
+                        {% set food_type_list = temp2 %}
+                    {% else %}
+                        {% set food_type_list = temp1 %}
+                    {% endif %}
+
+                    {% if food_type_list|length > 1 %}
+                        {% for food_type in food_type_list %}
+                            <div style="margin-bottom: 1rem; display: flex; align-items: center">
+                            {# {% if food_type == '前菜' %}
+                                <img src="{{ asset('wine.png', 'save_image') }}" style="width: 48px">
+                            {% elseif food_type == 'デザート' %}
+                                <img src="{{ asset('cup.png', 'save_image') }}" style="width: 48px">
+                            {% else %}
+                                <img src="{{ asset('spaguetti.png', 'save_image') }}" style="width: 48px">
+                            {% endif %} #}
+                            <h1 style="margin: 0 1rem;font-size: 3rem; color: brown;  background: rgba(0, 0, 0, 0) linear-gradient(transparent 80%, #fff457 0%) repeat scroll 0 0">
+                                {{ food_type }}
+                            </h1>
+                            </div>
+
+                            <div class="dish_body1">
+                                {% for Product in Restaurant.getProducts() if Product.is_visible and Product.food_type == food_type %}
+                                    <div class="dish_body_one">
+                                        <a href="{{ url('cooking', {id: Product.id}) }}">
+                                            <div class="slide-item"><img src="{{ asset(Product.food_image, 'save_image') }}"></div>
+                                            <div class="dish_explain">
+                                                <h1>{{ Product.name }}</h1>
+                                                <h2>{{ (Product.ProductClasses[0].price02 * 1.1)|price }}（税込）</h2>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="dish_body1">
+                            {% for Product in Restaurant.getProducts() if Product.is_visible %}
+                                <div class="dish_body_one">
+                                    <a href="{{ url('cooking', {id: Product.id}) }}">
+                                        <div class="slide-item"><img src="{{ asset(Product.food_image, 'save_image') }}"></div>
+                                        <div class="dish_explain">
+                                            <h1>{{ Product.name }}</h1>
+                                            <h2>{{ (Product.ProductClasses[0].price02 * 1.1)|price }}（税込）</h2>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class="store_description">
+            <div class="main-container">
+                <div class="store_descriptions">
+                    <div class="description_header">
+                        <h1>{{ Restaurant.company_name }}</h1>
+                    </div>
+                    <div class="description_body">
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>料理ジャンル</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>
+                                    {% for RestaurantCategory in Restaurant.RestaurantCategories %}
+                                        {{ RestaurantCategory.Category.name }}, &nbsp;
+                                    {% endfor %}
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>住所</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>{{ Restaurant.addr01 }}{{ Restaurant.addr02 }}</h1>
+                            </div>
+                        </div>
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>配達可能日</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>
+                                    {% set deliverable = Restaurant.deliverable %}
+                                    {{ "now"|date_modify("+"~deliverable~" day")|date("Y年 m月 d日以降") }}
+                                </h1>
+                            </div>
+                        </div>
+                        {% if Restaurant.is_deliverable_one %}
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>配達可能時間1</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>
+                                    {{ Restaurant.deadline_start|date('H:i') }}から{{ Restaurant.deadline_end|date('H:i') }}
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>配達可能時間2</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>
+                                    {{ Restaurant.deadline_start1|date('H:i') }}から{{ Restaurant.deadline_end1|date('H:i') }}
+                                </h1>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>配達可能時間</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>
+                                    {{ Restaurant.deadline_start|date('H:i') }}から{{ Restaurant.deadline_end|date('H:i') }}
+                                </h1>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>配達可能曜日</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>
+                                    {% set date_week_label = ['月', '火', '水', '木', '金', '土', '日', '祝'] %}
+                                    {% set date_week = Restaurant.date_week|split(',') %}
+                                    {% for i in date_week if i != '' %}
+                                        {{ date_week_label[i - 1] }}&nbsp;
+                                    {% endfor %}
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="description_body_one">
+                            <div class="description_title">
+                                <h1>店舗説明</h1>
+                            </div>
+                            <div class="description_content">
+                                <h1>{{ Restaurant.explanation }}</h1>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </main>
+    <!-- main part end -->
+
+{% endblock %}

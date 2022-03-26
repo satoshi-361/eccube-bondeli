@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 20 26">
+      <image width="20" height="26" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD3SURBVEhLY/wPBAxUBExQmmpg1EDKAfGx/OMjw8efIAY7Az8/B1gIKwAZiA98v7Xuf7W/1n9RUVEIjlv3/yVUDhvA7+UfRxm6A9IZZh17DRUgAkANxg5OT4S6TOt/2MSt/48cOfL/yOWX/79DpbEBIg2M+78Onz+RAPZIebWPoSZtEsOVn48Zjp19DBQQZVCxUmUQA8np5DEsbHFi4AexsQAcYfiR4fGxY1DDQOA1wx0QH4hvi4nhNAwEcBjIzyBrZcVgZSwL5YNcCOQDcaAO2J24AdjjuAAZYTj4s96ogWiAgw+cVKysZPGmPWQwWklRDqhsIAMDAOi1VTLj2yDtAAAAAElFTkSuQmCC"/>
+    </pattern>
+  </defs>
+  <g id="Group_341" data-name="Group 341" transform="translate(-190 -4926.168)">
+    <rect id="Rectangle_3627" data-name="Rectangle 3627" width="22" height="22" transform="translate(190 4926.168)" fill="#fff"/>
+    <rect id="Image_51" data-name="Image 51" width="16" height="22" transform="translate(193 4926.168)" fill="url(#pattern)"/>
+  </g>
+</svg>

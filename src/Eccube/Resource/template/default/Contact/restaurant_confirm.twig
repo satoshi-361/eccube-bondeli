@@ -1,0 +1,135 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+{% block stylesheet %}
+    <style>
+
+        .ec-layoutRole .ec-layoutRole__main {
+            margin:100px 0;
+        }
+
+        .ec-pageHeader h1 {
+            margin:0 0 48px!important;
+        }
+
+        .header {
+            box-shadow: rgb(0 0 0 / 30%) 0px 3px 10px!important;
+            height: 80px!important;
+            background: white!important;
+            color: rgb(33, 34, 35)!important;
+        }
+        
+        .header .menu a {
+            color: rgb(83, 22, 10)!important;
+            background-image: linear-gradient(to right, black, black)!important;
+        }
+        
+        .scrolldown {
+            display: block!important;
+        }
+        
+        .scrollup {
+            display: none!important;
+        }
+
+        .sp-header {
+            background: white!important;           
+        }
+
+        @media only screen and (max-width: 767px) {
+            .ec-pageHeader h1 {
+                font-size:6vw!important;
+            }
+        }
+
+    </style>
+{% endblock %}
+{% block main %}
+    <div class="ec-contactConfirmRole">
+        <div class="ec-pageHeader">
+            <h1>{{ '加盟レストラン募集'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <form method="post" action="{{ url('restaurant_recurit') }}" class="h-adr">
+                    {{ form_widget(form._token) }}
+                    <p>{{ '内容によっては回答をさしあげるのにお時間をいただくこともございます。
+                        また、休業日は翌営業日以降の対応となりますのでご了承ください。
+                        '|trans|nl2br }}</p>
+                    <div class="ec-borderedDefs">
+                        <dl>
+                            <dt>
+                                {{ form_label(form.name, 'お名前', { 'label_attr': { 'class': 'ec-label '}}) }}
+                            </dt>
+                            <dd>
+                                {{ form.name.vars.data }}
+                                {{ form_widget(form.name, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.company_name, '法人名', { 'label_attr': { 'class': 'ec-label '}}) }}
+                            </dt>
+                            <dd>
+                                {{ form.company_name.vars.data }}
+                                {{ form_widget(form.company_name, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.phone_number, '電話番号', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>{{ form.phone_number.vars.data }}
+                                {{ form_widget(form.phone_number, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.email, 'メールアドレス', {'label_attr': {'class': 'ec-label'}}) }}
+                            </dt>
+                            <dd>
+                                {{ form.email.vars.data }}
+                                {{ form_widget(form.email, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.contents, 'お問い合わせ内容', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                {{ form.contents.vars.data|nl2br }}
+                                {{ form_widget(form.contents, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="ec-RegisterRole__actions">
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <button type="submit"
+                                        class="ec-blockBtn--action"
+                                        name="mode"
+                                        value="complete">{{ '送信する'|trans }}
+                                </button>
+                                <button type="submit"
+                                        class="ec-blockBtn--cancel"
+                                        name="mode"
+                                        value="back">{{ '戻る'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

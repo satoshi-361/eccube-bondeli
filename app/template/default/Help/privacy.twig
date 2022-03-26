@@ -1,0 +1,92 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+        <style>
+            .ec-pageHeader h1 {
+                margin-bottom: 50px!important;
+            }
+            
+            .ec-off1Grid .ec-off1Grid__cell p {
+                font-weight: 600;
+            }
+
+            p.policy-header {
+                font-size:16px;
+                font-weight:normal;
+                margin-top: 20px;
+            }
+
+            p.policy-content {
+                font-size:14px;
+                font-weight:normal;
+                line-height: 25px;
+                letter-spacing: 0.12em;
+            }
+
+            p.policy-content11 {
+                font-size:14px;
+                font-weight:normal;
+                margin-left:20px;
+                line-height: 25px;
+                letter-spacing: 0.12em;
+            }
+            
+            @media only screen and (max-width: 767px) {
+                .ec-pageHeader h1 {
+                    font-size: 6vw!important;
+                }
+                
+                .ec-off1Grid .ec-off1Grid__cell {
+                    margin-bottom: 8vw!important;
+                }
+            }
+        </style>
+    {% endblock %}
+{% block main %}
+<section class="banner">
+    <div class="banner_img">
+        <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_pc.png" alt="" class="pc">
+        <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_sp.png" alt="" class="sp">
+    </div>
+</section>
+    <div class="ec-role">
+        <div class="ec-pageHeader">
+            <h1>{{ 'プライバシーポリシー'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <p>
+                    株式会社シノワークス（以下、「当社」といいます。）は，本ウェブサイトBondeli（以下,「Bondeli」といいます。）における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
+                </p>
+            </div>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <p class="policy-header">第1条（個人情報）</p>
+                <p class="policy-content">「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって，当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報及び容貌、指紋、声紋にかかるデータ、及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。</p>
+                <p class="policy-header">第2条（個人情報の収集方法）</p>
+                <p class="policy-content">当社は、ユーザーが利用登録をする際に氏名、性別、住所、電話番号、メールアドレス、クレジットカード番号、などの個人情報をお尋ねすることがあります。また、ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を,当社の提携先（情報提供元、広告主、広告配信先などを含みます。以下、｢提携先｣といいます。）などから収集することがあります。</p>
+                <p class="policy-header">第3条（個人情報を収集・利用する目的）</p>
+                <p class="policy-content">当社が個人情報を収集・利用する目的は、以下のとおりです。</p>
+                <p class="policy-content11">1. 当社サービスの提供・運営のため<br>
+                    2. ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）<br>
+                    3. ユーザーが利用中のサービスの新機能，更新情報，キャンペーン等及び当社が提供する他のサービスの案内のメールを送付するため<br>
+                    4. メンテナンス，重要なお知らせなど必要に応じたご連絡のため<br>
+                    5. 利用規約に違反したユーザーや、不正・不当な目的でサービスを利用しようとするユーザーの特定をし、ご利用をお断りするため<br>
+                    6. ユーザーにご自身の登録情報の閲覧や変更，削除，ご利用状況の閲覧を行っていただくため<br>
+                    7. 有料サービスにおいて、ユーザーに利用料金を請求するため<br>
+                    8. 上記の利用目的に付随する目的<br>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

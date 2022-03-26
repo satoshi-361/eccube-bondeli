@@ -1,0 +1,71 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+    <!-- main part -->
+    <main>
+        <section class="banner">
+            <div class="banner_img">
+                <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_pc.png" alt="" class="pc">
+                <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_sp.png" alt="" class="sp">
+            </div>
+        </section>
+
+        <section class="restaurant-recruit">
+            <div class="restaurant-recruit-header">
+                <p>加盟レストラン募集</p>
+            </div>
+            <div class="restaurant-recruit-explain">
+                <p>自転車・バイクでのフードデリバリーに満足いただいていない貴方、<br class="pc">
+                    「Bondeli」サイトに加盟してみませんか？<br class="pc">
+                    貴店のこだわりの料理を、弊社登録の自動車ドライバーが丁寧にお届けいたします。<br class="pc">
+                    また、個人のお客様だけでなく法人顧客・パーティー需要の顧客様向けに、新たな販路拡大が叶います。<br class="pc">
+                    初期費用・月額利用料金　0円で始められます。<br class="pc">
+                    そして大手デリバリーサイトより、頂く売上手数料も安いため利益率高くご利用いただけます。<br class="pc">
+                    ご興味を頂けましたら、下記フォームからお問合せください。<br class="pc">
+                    ２営業日以内にご連絡させていただきます。</p>
+            </div>
+            <div class="restaurant-recruit-form">
+                <form method="post" action="{{ url('restaurant_recurit') }}" class="h-adr" novalidate>
+                    {{ form_widget(form._token) }}
+                    <div class="res-recruit-form-header">
+                        <p>レストラン登録申請フォーム</p>
+                    </div>
+                    <div class="res-recruit-form-body">
+                        <div class="res-recruit-form1">
+                            <p>{{ form_label(form.name, '*お名前', { 'label_attr': { 'class': 'ec-label' }}) }}</p>
+                            {{ form_widget(form.name, {'attr': { 'placeholder': '山田太郎' }}) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        <div class="res-recruit-form1">
+                            <p>{{ form_label(form.company_name, '*レストラン名', { 'label_attr': { 'class': 'ec-label' }}) }}</p>
+                            {{ form_widget(form.company_name, {'attr': { 'placeholder': 'レストラン山田' }}) }}
+                            {{ form_errors(form.company_name) }}
+                        </div>
+                        <div class="res-recruit-form1">
+                            <p>{{ form_label(form.phone_number, '*電話番号', { 'label_attr': { 'class': 'ec-label' }}) }}</p>
+                            {{ form_widget(form.phone_number, {'attr': { 'placeholder': '03-0000-0000' }}) }}
+                            {{ form_errors(form.phone_number) }}
+                        </div>
+                        <div class="res-recruit-form1">
+                            <p>{{ form_label(form.email, 'メールアドレス', { 'label_attr': { 'class': 'ec-label' }}) }}</p>
+                            {{ form_widget(form.email, {'attr': { 'placeholder': 'sample@yamadahp.jp' }}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                        <div class="res-recruit-form1" style="border: none;">
+                            <p>*お問い合わせ内容（自由記述）</p>
+                            {{ form_widget(form.contents, {'attr': { 'placeholder': 'お問い合わせ内容をご記入ください' }}) }}
+                            {{ form_errors(form.contents) }}
+                        </div>
+                        <button type="submit" class="res-recruit-submit" name="mode" value="confirm">
+                            <p>レストラン登録申請</p>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    <!-- main part end -->
+
+{% endblock %}

@@ -1,0 +1,97 @@
+<footer>
+        <div class="footer-logo">
+            <img src="http://bon-deli.com/html/user_data/assets/img/footer-logo.png" alt="">
+        </div>
+        <div class="footer-menu">
+            <ul>
+                <li>
+                    <a href="http://bon-deli.com/help/agreement">利用規約 </a>
+                </li>
+                <li>
+                    <a href="{{ url('help_privacy') }}">プライバシーポリシー </a>
+                </li>
+                <li>
+                    <a href="{{ url('help_about') }}">会社概要 </a>
+                </li>
+                <li>
+                    <a href="{{ url('contact') }}"> お問い合わせ </a>
+                </li>
+                <li>
+                    <a href="{{ url('restaurant_recurit') }}">加盟レストラン募集 </a>
+                </li>
+                <li>
+                    <a href="{{ url('driver_recurit') }}">ドライバー募集 </a>
+                </li>
+                <li>
+                    <a href="{{ url('store_login') }}">加盟店ログイン </a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-follow">
+            <div class="follow-link">
+                {#<div>#}
+                {#    <a href="">#}
+                {#        <img src="http://bon-deli.com/html/user_data/assets/img/facebook.svg" alt="">#}
+                {#    </a>#}
+                {#    <a href="">#}
+                {#        <img src="http://bon-deli.com/html/user_data/assets/img/twitter.svg" alt="">#}
+                {#    </a>#}
+                {#    <a href="">#}
+                {#        <img src="http://bon-deli.com/html/user_data/assets/img/wantdly.svg" alt="">#}
+                {#    </a>#}
+                {#</div>#}
+                <div class="copyright">
+                    <p>©SHINOWORKS</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+<div class="sp-header sp">
+    <div class="logo">
+        <a href="{{ url('homepage') }}">
+            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="logo" class="scrollup">
+            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrolldown.svg" alt="logo" class="scrolldown">
+        </a>
+    </div>
+    <div class="sp-menu">
+        <img src="http://bon-deli.com/html/user_data/assets/img/sp_menu.svg" alt="" class="scrollup">
+        <img src="http://bon-deli.com/html/user_data/assets/img/sp-menu1.svg" alt="" class="scrolldown">
+    </div>
+</div>
+
+
+<div class="sp-menubar sp">
+    <div class="sp-menu-header">
+        <div class="sp-menu-logo">
+            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="">
+        </div>
+        <div class="close-btn">
+            <img src="http://bon-deli.com/html/user_data/assets/img/close_btn.svg" alt="">
+        </div>
+    </div>
+    <div class="menu-part">
+        {% if Restaurant_id is defined %}
+            <a href="{{ url('restaurant_homepage', {id: Restaurant_id}) }}"><h1>現在の状況</h1></a>
+            <a href="{{ url('restaurant_page', {id: Restaurant_id}) }}"><h1>加盟店編集</h1></a>
+            <a href="{{ url('order_history', {id: Restaurant_id}) }}"><h1>注文履歴</h1></a>
+            <a href="{{ url('store_logout') }}"><h1>ログアウト</h1></a>
+        {% else %}
+            <a href="{{ url('help_guide') }}"><h1>ご利用の流れ</h1></a>
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ url('cart') }}"><h1>{{ 'カート'|trans }}</h1></a>
+                <a href="{{ url('logout') }}"><h1>ログアウト</h1></a>
+                <a href="{{ url('mypage') }}"><h1>マイページ</h1></a>
+            {% else %}
+                <a href="{{ url('entry') }}"><h1>会員登録</h1></a>
+                <a href="{{ url('mypage_login') }}"><h1>ログイン</h1></a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+    <script src="https://bon-deli.com/html/user_data/assets/js/animation.js"></script>
+    <script src="https://bon-deli.com/html/user_data/assets/js/wow.js"></script>

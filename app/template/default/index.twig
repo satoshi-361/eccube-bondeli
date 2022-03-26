@@ -1,0 +1,228 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'front_page' %}
+
+{% set config = repository('Plugin\\CMBlogPro\\Entity\\Config').get() %}
+{% set blogs = repository('Plugin\\CMBlogPro\\Entity\\Blog').getList() %}
+
+{% block stylesheet %}
+    <style>
+
+    </style>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://bon-deli.com/html/user_data/assets/js/top-header.js"></script>
+    <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+{% endblock javascript %}
+
+{% block main %}
+<div class="pic-wrapper">
+    <figure class="pic-1"></figure>
+    <figure class="pic-2"></figure>
+    <figure class="pic-3"></figure>
+</div>
+<div class="header-text">
+    <h1>ワンランク上の<br>
+        ご馳走をご自宅で</h1>
+</div>
+<section class="search-part">
+    <form class="search-part-body h-adr" action="{{ url('restaurant_search') }}" method="post">
+        <span class="p-country-name" style="display:none;">Japan</span>
+        <div class="date-input">
+            <input type="text" name="date" id="datepicker_start1" placeholder="ご注文可能日" value="{{ date }}">
+            <img src="http://bon-deli.com/html/user_data/assets/img/calendar.svg" alt="">
+        </div>
+        <div class="location-select">   
+            <input type="number" name="location" placeholder="郵便番号を入力する" class="p-postal-code" value="{{ location }}">
+            <input type="text" name="p-locality" class="p-locality" style="display: none">
+            {#<select name="location" id="">
+                <option value="ご注文住所" disabled>ご注文住所</option>
+                <option value="中央区">中央区</option>
+                <option value="千代田区">千代田区</option>
+                <option value="港区">港区</option>
+                <option value="江東区">江東区</option>
+                <option value="文京区">文京区</option>
+                <option value="品川区">品川区</option>
+                <option value="目黒区">目黒区</option>
+                <option value="渋谷区">渋谷区</option>
+                <option value="新宿区">新宿区</option>
+            </select>#}
+            <img src="http://bon-deli.com/html/user_data/assets/img/area.svg" alt="">
+        </div>
+        <div class="location-select">
+            <select placeholder="全てのジャンル" name="type" value="{{ type }}">
+                <option value=0>全てのジャンル</option>
+                {% for Category in TopCategories %}
+                    <option value="{{ Category.id }}" {{ Category.id == type ? 'selected' : '' }}> {{ Category.name }} </option>
+                    {% for ChildCategory in Category.children %}
+                        <option value="{{ ChildCategory.id }}" {{ ChildCategory.id == type ? 'selected' : '' }}> &nbsp;&nbsp;&nbsp;&nbsp; {{ ChildCategory.name }} </option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+            <img src="http://bon-deli.com/html/user_data/assets/img/restaurant.svg" alt="">
+        </div>
+        <div>
+            <button type="submit">検 索</button>
+        </div>
+    </form>
+</section>
+
+<section class="store-list-part">
+    <div class="store-header">
+        <div class="line"></div>
+        <div>
+            <h1>加盟店一覧</h1>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="store-list-body">
+            <div class="storelist">
+                {% for item in Restaurants %}
+                <div class="storelist-one">
+                    <a href="{{ url('restaurant', { id: item.id }) }}">
+                        {% if item.RestaurantImage[0] is defined %}
+                        <img src="{{ asset(item.RestaurantImage[0].getFileName(), 'save_image') }}" alt="">
+						{% else %}
+                        <img src="{{ asset(''|no_image_product, 'save_image') }}"/>
+                        {% endif %}
+                        <div class="storelist-text">
+                            <h1>{{ item.company_name }}</h1>
+                            <h2>{{ item.addr01 }}{{ item.addr02 }}</h2>
+                            <h3>
+                                <span>配達可能日</span>
+                                {% set deliverable = item.deliverable %}
+                                {{ "now"|date_modify("+"~deliverable~" day")|date("Y年 m月 d日以降") }}
+                            </h3>
+                            {% if item.is_deliverable_one %}
+                            <h3>
+                                <span>配達可能時間1</span>
+                                {{ item.deadline_start|date('H:i') }}から{{ item.deadline_end|date('H:i') }}
+                            </h3>
+                            <h3>
+                                <span>配達可能時間2</span>
+                                {{ item.deadline_start1|date('H:i') }}から{{ item.deadline_end1|date('H:i') }}
+                            </h3>
+                            {% else %}
+                            <h3>
+                                <span>配達可能時間</span>
+                                {{ item.deadline_start|date('H:i') }}から{{ item.deadline_end|date('H:i') }}
+                            </h3>
+                            {% endif %}
+                            <h3>
+                                <span>配達可能曜日</span>
+                                {% set date_week_label = ['月', '火', '水', '木', '金', '土', '日', '祝'] %}
+                                {% set date_week = item.date_week|split(',') %}
+                                {% for i in date_week if i != '' %}
+                                    {{ date_week_label[i - 1] }}&nbsp;
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+                {% if Restaurants|length == 0 %}
+                    申し訳ございません。
+    　              ご入力いただきました条件に一致するレストランがございません。
+    　              お手数ですが、再度、条件をご変更いただき、検索をお願い申し上げます。
+                {% endif %}
+            </div>
+            <div class="more-button">
+                <a href="">
+                    <span>すべての加盟店を見る</span>
+                    <img src="http://bon-deli.com/html/user_data/assets/img/arrow-left.svg" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="food-list-part">
+    <div class="food-header">
+        <div class="line"></div>
+        <div>
+            <h1>注目料理</h1>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper mySwiper1">
+            <div class="swiper-wrapper">
+                {% for Product in Products %}
+                    <div class="swiper-slide">
+                        {% if Product.getMainListImage() != null %}
+                        <img src="{{ asset(Product.getMainListImage().getFileName(), 'save_image') }}" alt="">
+						{% else %}
+                        <img src="{{ asset(''|no_image_product, 'save_image') }}"/>
+                        {% endif %}
+                        <div class="food-text">
+                        <h1>{{ Product.name }}</h1>
+                        <div class="more-food">
+                            <a href="{{ url('restaurant', {id: Product.Restaurant.id}) }}">
+                                <h6>注文する</h6>
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="blog-part">
+    <div class="blog-header">
+        <div class="line"></div>
+        <div>
+            <h1>Bondeliブログ</h1>
+        </div>
+    </div>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            {% if blogs is defined and blogs|length > 0 %}
+            {% for blog in blogs if blog.is_for_restaurant == 0 %}
+            <div class="swiper-slide">
+	            <a href="{{ url('cm_blog_pro_page_detail', {'id': blog.id}) }}" rel="bookmark">
+                        {% if blog.getMainListImage %}
+                            <img src="{{ asset(blog.getMainListImage|no_image_product, 'save_image') }}"></img>
+                            {% else %}
+                            <img src="{{ asset(''|no_image_product, 'save_image') }}"></img>
+                        {% endif %}
+                    <h2>{{ blog.getTitle|length > 40 ? blog.getTitle|striptags|replace({('&nbsp;'):' '})|slice(0, 40)|raw ~ '...' : blog.getTitle|raw }}</h2>
+                </a>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        {#<div id="countdown">#}
+        {#    <div class="countdown-number">0<span id=countdown-number>1</span></div>#}
+        {#    <svg class="pc">#}
+        {#    <circle r="35" cx="70" cy="70"></circle>#}
+        {#    </svg>#}
+        {#    <svg class="sp">#}
+        {#        <circle r="20" cx="40" cy="40"></circle>#}
+        {#    </svg>#}
+        {#</div>#}
+    </div>
+    
+    <div class="blog-btn">
+        <a href="">
+        <span>テキストテキスト</span>
+        <img src="http://bon-deli.com/html/user_data/assets/img/arrow-left1.svg" alt="">
+        </a>
+    </div>
+</section>
+{% endblock %}

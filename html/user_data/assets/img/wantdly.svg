@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 23 20">
+      <image width="23" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAUCAYAAABmvqYOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGHSURBVEhL7ZQtcsMwEIW3JQ0L8iXU3iBEgUFNiHBJJkTTQ/gGZg4q9Ak8gSG+gcOCMmVBCXKKtvpZS2vHQR2zfjM7Xj/LT9KuRk9ogJF4pucojGrOynKD6/XHZS/TKUxc9hfNYM0dlxJ1kmBiQpcXrzUVpsJrqjg56VQo957IHGun2F+110SKVUOiIZpjg1Uq/CBVoLdCrHPJzGrMZXcyMx0Wymsyb6fzMHNDnaO0RonEMO5UoHKawLVeo3C5xnZz8R+FYT6ia85WIdLK7MVywVJ7rY34je1Wl2Zkl545qx9bXVOltGIbbFehTwJTXmziznyoiWbvodbJe+zHUHM59+d8MoPV56tL99sdHGxyu8L57CSA4xG+bzY5wG67d9J8s4A3l/WgSbqwJtrtxlL5sEc1loo1t8ewOW+izjCjJodQRqPvsbn3PDDvN9GGxOwro2MXtd7R7vDwbpnMVkCl98w3sPxYwmZO7xajLQaLTdAkg4TTYKK9Enj9wzXxgP/7fJARzQF+Ae6/4ZRImZy4AAAAAElFTkSuQmCC"/>
+    </pattern>
+  </defs>
+  <g id="Group_344" data-name="Group 344" transform="translate(-239 -4308)">
+    <rect id="Rectangle_3629" data-name="Rectangle 3629" width="22" height="22" transform="translate(239 4308)" fill="#fff"/>
+    <rect id="Image_53" data-name="Image 53" width="20" height="18" transform="translate(240 4311)" fill="url(#pattern)"/>
+  </g>
+</svg>

@@ -1,0 +1,1562 @@
+<script src="https://bon-deli.com/html/user_data/assets/js/top-header.js"></script>
+<style>
+    html {
+    scroll-behavior: smooth;
+}
+
+@font-face {
+    font-family: "SoukouMincho";
+    src: url("https://bon-deli.com/html/user_data/assets/font/SoukouMincho.ttf");
+}
+
+@font-face {
+   font-family: "Yu Mincho";
+   src: url("https://bon-deli.com/html/user_data/assets/font/yumin.ttf");
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    font-size: 1vw;
+    font-family: "Yu Mincho";
+}
+
+main {
+    position: relative;
+}
+
+img {
+    width: 100%;
+}
+
+section {
+    width: 100%;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+a:hover {
+    color: white;
+    border: none;
+    text-decoration: none;
+    outline: none;
+}
+
+.ec-layoutRole .ec-layoutRole__contents {
+    max-width: none;
+}
+
+
+    /* ----------------- common  ------------------ */
+
+    .pc {
+        display: block
+    }
+
+    .sp {
+        display: none
+    }
+
+    .main-container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* header */
+
+
+     /* ---------fade ------------------- */
+       
+      
+     .pic-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        top: 0;
+      }
+      
+      figure {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        opacity: 0;
+        
+        /*animation*/
+        
+        animation: slideShow 18s linear infinite 0s;
+        /* -o-animation: slideShow 24s linear infinite 0s;
+        -moz-animation: slideShow 24s linear infinite 0s;
+        -webkit-animation: slideShow 24s linear infinite 0s; */
+      }
+      
+      /* figurecaption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: #fff;
+      } */
+
+      .pic-1 {
+        /* position: absolute; */
+        opacity: 1;
+        background: url(http://bon-deli.com/html/user_data/assets/img/food-01.jpeg) no-repeat center center;
+        /* -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover; */
+        background-size: cover;
+      }
+      
+      .pic-2 {
+        /* position: absolute; */
+        animation-delay: 6s;
+        -o-animation-delay: 6s;
+        -moz--animation-delay: 6s;
+        -webkit-animation-delay: 6s;
+        background: url(http://bon-deli.com/html/user_data/assets/img/food-04.jpeg) no-repeat center center;
+        /* -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover; */
+        background-size: cover;
+      }
+      
+      .pic-3 {
+        /* position: absolute; */
+        animation-delay: 12s;
+        -o-animation-delay: 12s;
+        -moz--animation-delay: 12s;
+        -webkit-animation-delay: 12s;
+        background: url(http://bon-deli.com/html/user_data/assets/img/tenpo_chori_071.jpg) no-repeat center center;
+        /* -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover; */
+        background-size: cover;
+      }
+      
+    
+      
+      /* keyframes*/
+      
+      @keyframes 
+      slideShow {  0% {
+       opacity: 0;
+       transform:scale(1.1);
+       -ms-transform:scale(1.1);
+      }
+       5% {
+       opacity: 1
+      }
+       30% {
+       opacity: 1;
+      }
+
+      42%{
+          opacity: 0;
+       transform:scale(1);
+
+      }
+      
+       100% {
+       opacity: 0;
+       transform:scale(1.1);
+       -ms-transformm:scale(1.1);
+      }
+    }
+
+    .scrollup {
+        display: block;
+    }
+
+    .scrolldown {
+        display: none;
+    }
+
+    .header {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100px;
+        z-index: 100;
+        padding: 0 80px;
+        align-items: center;
+        color: white;
+        font-size: 16px;
+        top:0;
+    }
+
+    .header .menu>ul {
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        width: 600px;
+        padding: 0;
+        right: 0;
+        overflow: hidden;
+        justify-content: space-around;
+    }
+
+    .header .menu>ul li {
+        margin-right: 10px;
+    }
+
+    .header .menu a {
+        font-size: 18px;
+        text-transform: uppercase;
+        display: inline-block;
+        text-decoration: none;
+        font-weight: bold;
+        background-image: linear-gradient(to right, white, white);
+        background-position: bottom left;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size .5s ease;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 2px;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 2px;
+    }   
+
+    .header-text {
+        position: absolute;
+        width: 100%;
+        top: 250px;
+        z-index: 1;
+    }
+
+    .header-text h1 {
+        font-family: SoukouMincho;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 80px;
+        text-align: center;
+        color: #fff;
+        text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.22);
+
+    }
+
+
+    /* end header */
+
+
+    /* main */
+
+    /* search-part */
+
+    .search-part {
+        width: 100%;
+        padding: 80px 0;
+        background-color: #D7D0BC;
+    }
+
+    .search-part-body {
+        display: flex;
+        justify-content: space-between;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-part-body .date-input, .search-part-body .location-select {
+        width: 25%;
+    }
+
+    .search-part-body .restaurant-input {
+        width: 28%;
+    }
+
+    .date-input, .location-select, .restaurant-input {
+        position: relative;
+    }
+
+    .date-input img , .location-select img , .restaurant-input img {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        top: 18px;
+        left: 10px;
+    }
+
+    .search-part-body input[type="text"], .search-part-body input[type="date"] {
+        width: 100%;
+        height: 60px;
+        padding: 5px 50px;
+        font-size: 14px;
+        line-height: 39.46px;
+        border: none;
+        border-radius: 2px;
+    }
+    .search-part-body input[type="number"] {
+        width: 100%;
+        height: 60px;
+        padding: 5px 0 5px 40px;
+        font-size: 14px;
+        line-height: 39.46px;
+        border: none;
+        border-radius: 2px;
+    }
+
+    .date-input::before {
+        content: "";
+        position: absolute;
+        width: 21px;
+        height: 54px;
+        top: 3px;
+        right: 2px;
+        background-image: url(http://bon-deli.com/html/user_data/assets/img/select1.svg);
+    }
+
+    .location-select::before {
+        content: "";
+        position: absolute;
+        width: 21px;
+        height: 54px;
+        top: 3px;
+        right: 2px;
+    }
+
+    .location-select select {
+        width: 100%;
+        height: 60px;
+        border: none;
+        border-radius: 2px;
+        padding: 5px 40px;
+        font-size: 14px;
+        line-height: 39.46px;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        /* background: url(../images/Group360.png);
+        background-repeat: no-repeat;
+        background-position-x: 250px;
+        background-position-y: center;
+        background-size:7px 35px; */
+    }
+
+    .search-part-body button {
+        height: 60px;
+        font-size: 16px;
+        color: white;
+        padding: 11px 30px;
+        border: 1px solid #964B00;
+        border-radius: 2px;
+        background-color: #e94545;
+    }
+
+    /* end search-part */
+
+    /* store-list-part */
+
+    .store-list-part {
+        padding-top: 80px;
+        background-color: #F9EBDD;
+        padding-bottom: 80px;
+    }
+
+    .store-header {
+        display:flex;
+        align-items: center;
+    }
+
+    .storelist {
+        margin-bottom: 80px;
+    }
+
+    .store-header .line{
+        width: 80px;
+        height: 1px;
+        background-color: #53160a;
+      }
+
+    .store-header h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        text-align: left;
+        color: #53160a;
+        padding-left: 40px;
+        margin-bottom: 0;
+    }
+
+    .store-list-body {
+        margin-top: 100px;
+    }
+
+    .store-list-body .storelist{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .storelist-one {
+        display: inline-block;
+        width: 30%;
+        margin-right: 2.5%;
+        margin-bottom: 50px;
+    }
+
+    .storelist-one img {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 267px;
+    }
+
+    .storelist-text {
+        height: 200px;
+        padding: 30px 30px 20px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        box-shadow: 0 0 5px #333;
+    }
+
+    .storelist-text h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        text-align: left;
+        color: #1e1e1e;
+    }
+
+    .storelist-text h2 {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 18px;
+        text-align: left;
+        color: #1e1e1e;
+        margin-left: 10px;
+    }
+
+    .storelist-text h3 {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 14px;
+        text-align: left;
+        color: #53160a;
+    }
+
+    .storelist-text h3 span{
+        color: #1e1e1e;
+        background-color: #fff;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin-right: 20px;
+    }
+
+    .more-button {
+        width: 300px;
+        border: 1px solid #1E1E1E;
+        right: 0;
+        padding: 15px 20px;
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    .more-button a {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .more-button span {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 20px;
+        text-align: left;
+        color: #1e1e1e;
+    }
+
+    .more-button img {
+        width: 38px;
+    }
+
+    /* end store-list-part */
+
+    /* food-list-part */
+
+    .food-list-part {
+        margin-top: 80px;
+    }
+
+    .food-header {
+        display: flex;
+        align-items: center;
+    }
+
+    .food-header .line{
+        width: 80px;
+        height: 1px;
+        background-color: #53160a;
+      }
+
+    .food-header h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        text-align: left;
+        color: #53160a;
+        padding-left: 40px;
+        margin-bottom: 0;
+    }
+
+
+    .food-list-part .swiper {
+        width: 100%;
+        height: 100%;
+        margin-top: 80px;
+      }
+
+      .food-list-part .swiper-slide {
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: block;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .food-list-part .swiper-slide img {
+        width: 95%;
+        height: 310px;
+        margin: 0 20px;
+        object-fit: cover;
+      }
+
+      .food-list-part .swiper-button-next, .swiper-button-prev {
+          color: #AE4F3F;
+      }
+
+      .food-list-part .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+        opacity: 0.2;
+    }
+
+    .food-list-part .swiper-button-prev {
+        left: 10%;
+    }
+
+    .food-list-part .swiper-button-next {
+        right: 9%;
+    }
+
+    .food-list-part .swiper .food-text {
+        padding: 60px 40px 40px 60px;
+        margin-left: 20px;
+        background-color: #FFFBF2;
+    }
+
+    .food-list-part .swiper h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        color: #1e1e1e;
+        margin-bottom: 20px;
+    }
+
+    .food-text span {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 15px;
+        color: #1e1e1e;
+    }
+
+    .more-food {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .food-text a h6{
+        font-family: "Yu Mincho";
+        font-size: 14px;
+        color: #1E1E1E;
+        padding: 10px 20px;
+        border: 1px solid #964B00;
+        margin-bottom: 0;
+        text-align: center;
+
+    }
+
+    /* end food-list-part */
+
+    /* blog-part */
+
+    .blog-part {
+        width: 90%;
+        margin-right: 10%;
+        margin-top: 50px;
+    }
+    
+    .blog-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 100px;
+    }
+    
+    .blog-header .line {
+        width: 80px;
+        height: 1px;
+        background-color: #53160a;
+    }
+    
+    .blog-header h1 {
+        font-family: "Yu Mincho";
+        font-weight: 500;
+        font-size: 20px;
+        text-align: left;
+        color: #53160a;
+        padding-left: 40px;
+        margin-bottom: 0;
+    }
+
+    .blog-part .swiper {
+        width: 100%;
+    }
+
+    .blog-part .swiper-slide {
+        color: white;
+    }
+
+    .blog-part .swiper-slide img {
+        object-fit: cover;
+    }
+    
+    .blog-part .swiper-slide img::before {
+        content: "";
+        position: absolute;
+        background-color: 
+        
+    }
+
+    .blog-part .swiper-slide h2 {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        padding: 20px;
+        margin-bottom: 0;
+        font-size: 20px;
+        color: white;
+        background-color: rgb(83 22 10 / 30%);
+    }
+
+    #countdown {
+        position: relative;
+        margin-left: 10%;
+        margin-top: 20px;
+        height: 80px;
+        width: 80px;
+        text-align: center;
+      }
+
+      div.countdown-number {
+        display: inline-block;
+        font-size: 40px;
+        color: white;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+      
+      
+      svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 110px;
+        height: 110px;
+        transform: rotateY(-180deg) rotateZ(-90deg);
+      }
+      
+      svg circle {
+        stroke-dasharray: 219.8px;
+        stroke-dashoffset: 0px;
+        stroke-linecap: round;
+        stroke-width: 3px;
+        stroke: white;
+        fill: none;
+        animation: countdown 6s linear infinite forwards;
+      }
+      
+      @keyframes countdown {
+        from {
+          stroke-dashoffset: 0px;
+        }
+        to {
+          stroke-dashoffset: 219.8px;
+        }
+      }
+
+    .blog-btn {
+        width: 250px;
+        margin:50px 7% 0 auto;
+    }
+
+    .blog-btn span {
+        color: white;
+        font-size: 20px;
+    }
+
+    .blog-btn img {
+        width: 37px;
+        margin-left: 20px;
+    }
+
+    /* end blog-part */
+
+
+    /* end main */
+
+    /* footer */
+
+    footer {
+        width: 100%;
+        padding-top: 80px;
+        background-color: #FFF8F2;
+    }
+
+    .footer-logo {
+        width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-menu ul {
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+        max-width: 900px;
+        margin: 60px auto;
+    }
+
+    .footer-menu ul li a {
+        font-family: "Yu Mincho";
+        font-size: 14px;
+        line-height: 28px;
+        color: #202020;
+    }
+
+    .follow-link {
+        background-color: #53160A;
+        padding:15px;
+    }
+
+    .footer-follow h1 {
+        font-family: "Yu Mincho";
+        font-weight: bold;
+        font-size: 13px;
+        color: #fff;
+        margin-bottom: 0;
+        padding:0 50px;
+    }
+
+    .copyright {
+        margin-left: auto;
+        margin-right: 50px;
+    }
+
+    .footer-follow p {
+        font-family: "Yu Mincho";
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 28px;
+        color: #fff;
+        margin: 0;
+        text-align: center;
+    }
+
+    .footer-follow img {
+        width: 22px;
+    }
+
+    /* end footer */
+
+
+
+
+@media only screen and (max-width: 1260px) {
+ 
+    .header {
+        height: 7.93vw;
+        padding: 0 6.35vw;
+        font-size: 1.27vw;
+    }
+
+    .header .logo img {
+        width: 11.11vw;
+    };
+
+    .header .menu>ul {
+        width: 47.61vw;
+    }
+
+    .header .menu>ul li {
+        margin-right: 0.79vw;
+    }
+
+    .header .menu a {
+        font-size: 1.428vw;
+        background-size: 0% 0.158vw;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 0.158vw;
+    }
+
+    .header .menu a:hover {
+        background-size: 100% 0.158vw;
+    }   
+
+    .header-text h1 {
+        font-size: 3.17vw;
+        line-height: 6.35vw;
+    }
+    
+    
+
+
+    /* end header */
+
+
+    /* main */
+
+    /* search-part */
+
+    /* .search-part {
+        width: 35.71vw;
+    }
+
+    .search-part .select {
+        margin-bottom: 3.96vw;
+    }
+
+    .search-part .select img {
+        width: 3.17vw;
+    }
+
+    .search-part .select select, .search-part input {
+        position: relative;
+        width: 25.77vw;
+        height: 3.96vw;
+        padding: 0.396vw 1.587vw;
+        font-size: 1.587vw;
+    }
+
+    .search-part .select .select-option::after {
+        padding: 0.793vw 1.19vw;
+        font-size: 1.587vw;
+        margin: 0.079vw;
+    } */
+
+    /* end search-part */
+
+    /* store-list-part */
+
+    .store-list-part {
+        padding-top: 6.35vw;
+        padding-bottom: 6.35vw;
+    }
+
+    .storelist {
+        margin-bottom: 6.349vw;
+    }
+
+    .store-header .line{
+        width: 6.349vw;
+        height: 0.079vw;
+      }
+
+    .store-header h1 {
+        font-size: 1.587vw;
+        padding-left: 3.174vw;
+    }
+
+    .store-list-body {
+        margin-top: 7.93vw;
+    }
+
+    .storelist-one img {
+        border-top-left-radius: 1.19vw;
+        border-top-right-radius: 1.19vw;
+        height21.2vw:
+    }
+
+    .storelist-text {
+        height: 15.87vw;
+        padding: 2.38vw 2.38vw 1.587vw;
+        border-bottom-left-radius: 1.19vw;
+        border-bottom-right-radius: 1.19vw;
+        box-shadow: 0 0 5px #333;
+    }
+
+    .storelist-text h1 {
+        font-size: 1.587vw;
+    }
+
+    .storelist-text h2 {
+        font-size: 1.428vw;
+        margin-left: 0.396vw;
+    }
+
+    .storelist-text h3 {
+        font-size: 1.11vw;
+    }
+
+    .storelist-text h3 span{
+        border-radius: 0.238vw;
+        padding: 0.1587vw 0.793vw;
+        margin-right: 1.587vw;
+    }
+
+    .more-button {
+        width: 23.8vw;
+        padding: 1.19vw 1.587vw;
+    }
+
+
+    .more-button span {
+        font-size: 1.587vw;
+    }
+
+    .more-button img {
+        width: 3.015vw;
+    }
+
+    /* end store-list-part */
+
+    /* food-list-part */
+
+    .food-list-part {
+        margin-top: 6.349vw;
+    }
+
+    .food-header .line{
+        width: 6.349vw;
+      }
+
+    .food-header h1 {
+        font-size: 1.587vw;
+        padding-left: 3.174vw;
+    }
+
+
+    .food-list-part .swiper {
+        width: 100%;
+        height: 100%;
+        margin-top: 6.349vw;
+      }
+
+      .swiper-slide img {
+        height: 24.6vw;
+        margin: 0 1.587vw;
+      }
+
+    .swiper .food-text {
+        padding: 4.76vw 3.17vw 3.17vw 4.76vw;
+        margin-left: 1.59vw;
+        
+    }
+
+    .swiper h1 {
+        font-size: 1.587vw;
+        margin-bottom: 1.587vw;
+    }
+
+    .food-text span {
+        font-size: 1.19vw;
+    }
+
+    .more-food {
+        margin-top: 1.587vw;
+    }
+
+    .food-text a h6{
+        font-size: 1.11vw;
+        padding: 0.79vw 1.587vw;
+    }
+
+    /* end food-list-part */
+
+    /* blog-part */
+
+    .blog-part {
+        margin-top: 3.968vw;
+    }
+
+
+    .blog-part .swiper-slide h1 {
+        font-size: 2.5vw;
+        margin-bottom: 1.587vw;
+    }
+
+    .blog-part .swiper-slide h2 {
+        font-size: 2vw;
+    }
+
+    .blog-btn {
+        width: 15.87vw;
+        margin:3.968vw 7% 0 auto;
+    }
+
+    .blog-btn span {
+        font-size: 1.5vw;
+    }
+
+    .blog-btn img {
+        width: 2.93vw;
+        margin-left: 1.587vw;
+    }
+
+    /* end blog-part */
+
+
+    /* end main */
+
+    /* footer */
+
+    footer {
+        padding-top: 6.349vw;
+    }
+
+    .footer-logo {
+        width: 19.84vw;
+    }
+
+    .footer-menu ul {
+        max-width: 71.42vw;
+        margin: 4.76vw auto;
+    }
+
+    .footer-menu ul li a {
+        font-size: 1.11vw;
+        line-height: 2.22vw;
+    }
+
+    .follow-link {
+        padding:1.19vw;
+    }
+
+    .footer-follow h1 {
+        font-size: 1.03vw;
+        padding:0 3.968vw;
+    }
+
+    .copyright {
+        margin-right: 3.968vw;
+    }
+
+    .footer-follow p {
+        font-size: 1.11vw;
+        line-height: 2.22vw;
+    }
+
+    .footer-follow img {
+        width: 1.74vw;
+    }
+
+    /* end footer */
+
+   
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    /* ----------------- common  ------------------ */
+    
+    body {
+        font-size: 5vw;
+    }
+
+    .pc {
+        display: none
+    }
+
+    .sp {
+        display: block
+    }
+
+      /*.pic-1 {*/
+      /*  background: url(http://bon-deli.com/html/user_data/assets/img/banner1-sp.png) no-repeat center center;*/
+      /*}*/
+      
+      /*.pic-2 {*/
+      /*  background: url(http://bon-deli.com/html/user_data/assets/img/ScrollGroup14.png) no-repeat center center;*/
+      /*}*/
+      
+      /*.pic-3 {*/
+      /*  background: url(http://bon-deli.com/html/user_data/assets/img/ScrollGroup13.png) no-repeat center center;*/
+      /*}*/
+      
+      figure {
+          height: 50vh;
+      }
+      
+      .pic-wrapper {
+          height: 50vh;
+      }
+
+    .header .logo img {
+        width: 18.25vw;
+    }
+
+    .header-text {
+        position: absolute;
+        width: 100%;
+        top: 150px;
+    }
+
+    .header-text h1 {
+        font-size: 5.33vw;
+        line-height: 10.66vw;
+    }
+    
+    .sp-menu {
+        width: 7vw;
+    }
+
+    .sp-header  {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 18vw;
+        top: 0;
+        padding-left: 5%;
+        padding-right: 5%;
+        /* background-color: white; */
+        z-index: 11;
+        /*box-shadow: 0px 5px 15px #99999948;*/
+    }
+
+    .sp-header .logo img {
+        height: 8vw;
+    }
+
+
+    .sp-menubar {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        background-color: #964B00;
+        z-index: 1000;
+        display: none;
+    }
+
+    .sp-menu-logo {
+        width: 30vw;
+    }
+
+    .menu-part {
+        padding: 0 15%;
+        transition: 1s;
+    }
+
+    .sp-menubar .menu-part {
+        margin-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    .sp-menubar .menu-part a h1 {
+        font-size:5vw;
+        line-height: 7vw;
+        letter-spacing: 0.12em;
+        text-align: center;
+        color: white;
+        padding-bottom: 5vw;
+        margin-bottom: 5vw;
+        margin-top: 15vw;
+        border-bottom: 1px solid white;
+    }
+
+    .sp-menu-header {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+
+
+    .close-btn {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    /* end header */
+
+
+    /* main */
+
+    /* search-part */
+
+    .search-part {
+        width: 100%;
+        padding: 20vw 7.5%;
+    }
+
+    .search-part-body {
+        flex-direction: column;
+    }
+
+    .search-part-body .date-input, .search-part-body .location-select {
+        width: 100%;
+        margin-bottom: 10vw;
+    }
+
+    .search-part-body .restaurant-input {
+        width: 100%;
+        margin-bottom: 10vw;
+    }
+
+    .search-part-body button {
+        width: 100%;
+    }
+
+
+
+    /* end search-part */
+
+    /* store-list-part */
+
+    .store-list-part {
+        padding-top: 20vw;
+        padding-bottom: 10vw;
+    }
+
+    .storelist {
+        margin-bottom: 10.43vw;
+    }
+
+    .store-header .line{
+        width: 10.43vw;
+        height: 1px;
+      }
+
+    .store-header h1 {
+        font-size: 5.5vw;
+        padding-left: 6.21vw;
+    }
+
+    .store-list-body {
+        margin-top: 10vw;
+    }
+
+    .store-list-body .storelist{
+        width: 85%;
+        margin-left: 7.5%;
+        margin-right: 7.5%;
+        flex-direction: column;
+        font-size: 4.5vw;
+        text-align: center;
+    }
+
+    .storelist-one {
+        width: 100%;
+        margin-left: 0%;
+        margin-right: 0%;
+        margin-bottom: 8vw;
+    }
+
+    .storelist-one img {
+        border-top-left-radius: 1.955vw;
+        border-top-right-radius: 1.955vw;
+        height: 70.66vw;
+    }
+
+    .storelist-text {
+        height: 45vw;
+        padding: 6vw 3.91vw 2.607vw;
+        border-bottom-left-radius: 1.955vw;
+        border-bottom-right-radius: 1.955vw;
+        box-shadow: 0 0 0.65vw #333;
+    }
+
+    .storelist-text h1 {
+        font-size: 4.9vw;
+        margin-bottom: 3vw;
+    }
+
+    .storelist-text h2 {
+        margin-top: 1vw;
+        font-size: 4vw;
+        margin-left: 10px;
+    }
+
+    .storelist-text h3 {
+        font-size: 3.2vw;
+    }
+
+    .storelist-text h3 span{
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin-right: 20px;
+    }
+
+    .more-button {
+        width: 80%;
+        margin-top: 10vw;
+        padding: 3vw 2.607vw;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 5vw;
+    }
+
+
+    .more-button span {
+        font-size: 4vw;
+    }
+
+    .more-button img {
+        width: 9vw;
+    }
+
+    /* end store-list-part */
+
+    /* food-list-part */
+
+    .food-list-part {
+        margin-top: 15vw;
+    }
+
+    .food-header .line{
+        width: 10vw;
+      }
+
+    .food-header h1 {
+        font-size: 5vw;
+        padding-left: 6.21vw;
+    }
+
+
+    .food-list-part .swiper {
+        margin-top: 10vw;
+      }
+
+      .food-list-part .swiper-slide img {
+        width: 80%;
+        height: 300px;
+        margin: 0 10%;
+      }
+
+      .swiper-button-next, .swiper-button-prev {
+          color: #AE4F3F;
+      }
+
+      .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+        opacity: 0.2;
+    }
+
+    .swiper-button-prev {
+        left: 5px;
+    }
+
+    .swiper-button-next {
+        right: 0;
+    }
+
+    .swiper .food-text {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .swiper h1 {
+        font-size: 4vw;
+        color: #1e1e1e;
+        margin-bottom: 3vw;
+    }
+
+    .food-text span {
+        font-size: 4vw;
+    }
+
+    .more-food {
+        width: 100%;
+        margin: 3vw 0 0;
+    }
+
+    .food-text a h6{
+        font-size: 4vw;
+        padding: 2vw 4vw;
+
+    }
+
+    /* end food-list-part */
+
+    /* blog-part */
+
+    .blog-part {
+        width: 100%;
+        margin-top: 50px;
+    }
+
+    .blog-part .swiper {
+        width: 100%;
+    }
+
+    .blog-part .swiper-slide {
+        color: white;
+        width: 80%;
+        padding: 8vw 10% 5vw;
+    }
+
+    .blog-part .swiper-slide h1 {
+        font-size: 3.38vw;
+        margin-bottom: 2vw;
+    }
+
+    .blog-part .swiper-slide h2 {
+        font-size: 2.5vw;
+    }
+
+    #countdown {
+        position: relative;
+        margin-left: 10%;
+        margin-top: 0;
+        height: 50px;
+        width: 50px;
+        text-align: center;
+      }
+
+    div.countdown-number {
+        display: inline-block;
+        font-size: 25px;
+        color: white;
+        margin-top: 7px;
+        margin-bottom: 0;
+    }
+      
+      
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 65px;
+        height: 65px;
+        transform: rotateY(-180deg) rotateZ(-90deg);
+    }
+      
+    svg circle {
+        stroke-dasharray: 125.6px;
+        stroke-dashoffset: 0px;
+        stroke-linecap: round;
+        stroke-width: 2px;
+        stroke: white;
+        fill: none;
+        animation: countdown 6s linear infinite forwards;
+    }
+      
+    @keyframes countdown {
+    from {
+        stroke-dashoffset: 0px;
+    }
+    to {
+        stroke-dashoffset: 125.6px;
+    }
+    }
+
+    .blog-btn {
+        position: absolute;
+        bottom: 10vw;
+        right: 0;
+        width: 40vw;
+        margin:0 7% 0 auto;
+    }
+
+    .blog-btn span {
+        color: white;
+        font-size: 3vw;
+    }
+
+    .blog-btn img {
+        width: 6vw;
+        margin-left: 3vw;
+    }
+
+    /* end blog-part */
+
+
+    /* end main */
+
+    /* footer */
+
+    footer {
+        width: 100%;
+        padding-top: 10vw;
+    }
+
+    .footer-logo {
+        width: 30vw;
+        margin-bottom: 10vw;
+    }
+    
+    .footer-menu ul {
+        max-width: 900px;
+        flex-wrap: wrap;
+        width: 90%;
+        margin: 8vw auto;
+        padding: 0;
+    }
+
+    .footer-menu ul li {
+        width: 50%;
+    }
+
+    .footer-menu ul li a {
+        font-family: "Yu Mincho";
+        font-size: 3.5vw;
+        line-height: 7vw;
+        color: #202020;
+    }
+
+    .follow-link {
+        /*display: flex;*/
+        background-color: #53160A;
+        align-items: center;
+        padding:3vw;
+    }
+
+    .footer-follow h1 {
+        font-size: 3vw;
+        padding:0 3vw 0 0;
+    }
+
+    .copyright {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .footer-follow p {
+        font-size: 3vw;
+        line-height: 3vw;
+    }
+
+    .footer-follow img {
+        width: 3.5vw;
+    }
+
+    /* end footer */
+
+}
+ 
+</style>

@@ -1,0 +1,48 @@
+﻿{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{% block javascript %}
+    <script>
+      $(function() {
+        $('#id').val({{ id }});
+        $('textarea').val('');
+      });
+    </script>
+{% endblock javascript %}
+
+{% block main %}
+    <div class="ec-registerRole">
+        <div class="ec-pageHeader">
+            <h1>{{ 'お客様のご注文をお受けできない場合は、理由を記載してください。'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <form method="post" action="{{ url('order_reject') }}" novalidate class="h-adr">
+                    <div class="ec-input">
+                        <input type="hidden" name="id" id="id">
+                        <textarea id="reject_message" name="reject_message" rows="4" value="">
+                        </textarea>
+                    </div>
+                    <div class="ec-registerRole__actions">
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <button class="ec-blockBtn--action" type="submit">{{ '送信する'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

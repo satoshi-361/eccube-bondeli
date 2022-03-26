@@ -1,0 +1,328 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'registration_page' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+        <style>
+            .ec-layoutRole {
+                background: transparent;
+            }
+            
+            .ec-role {
+                margin: 150px auto 0;
+                color: white;
+            }
+
+            .registration_page {
+                background-color: #000;
+                background-repeat: no-repeat;
+            }
+
+            .registration_page::before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                opacity: 0.5;
+                background:url('http://bon-deli.com/html/user_data/assets/img/banner1-pc.png') no-repeat center center;
+                background-size: cover;
+            }
+
+            .ec-registerRole {
+                color: white;
+                font-family: "Yu Mincho";
+            }
+
+            .ec-off1Grid .ec-off1Grid__cell {
+                width: 60%;
+                margin: 100px auto 200px;
+                padding: 0 5% 5%;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+            }
+
+            .register-header h2 {
+                margin: 30px 0;
+                font-weight: 600;
+                font-size: 28px;
+                text-align: center;
+                color: #fff;
+            }
+            
+            .ec-halfInput input[type='text'] {
+                width: 47%;
+            }
+
+            .ec-telInput input {
+                max-width: none;
+            }
+            .ec-input input, .ec-halfInput input, .ec-numberInput input, .ec-zipInput input, .ec-telInput input, .ec-select input, .ec-birth input{
+                background: transparent;
+                color: white;
+                border-radius: 5px;
+            }
+            
+            .ec-halfInput input:focus:focus:focus, .ec-numberInput input:focus:focus, .ec-zipInput input:focus, 
+            .ec-telInput input:focus:focus:focus, .ec-select input:focus:focus, .ec-birth input:focus {
+                background: white;
+                color: black;
+            }
+            
+            .ec-select select,.ec-birth select {
+                background: transparent;
+                color: white;
+            }
+
+            .ec-select select option,.ec-birth select option {
+                background: rgba(0, 0, 0, 0.5);
+            }
+
+            .ec-off4Grid .ec-off4Grid__cell {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .ec-blockBtn--action {
+                background-color: #812f10!important;
+                border: none;
+                border-radius: 5px;
+                height: 50px;
+                line-height: 40px;
+            }
+
+            .ec-blockBtn--action:hover, .ec-blockBtn--action:focus {
+                background-color: #812f10!important;
+                border: none;
+                outline: none!important;
+            }
+
+            .ec-blockBtn--cancel {
+                background-color: #525263!important;
+                border: none;
+                border-radius: 5px;
+                height: 50px;
+                line-height: 40px;
+            }
+
+            .ec-blockBtn--cancel:hover, .ec-blockBtn--cancel:focus {
+                background-color: #525263!important;
+                border: none;
+                outline: none!important;
+            }
+
+            .ec-halfInput input#entry_nickname, .ec-halfInput input#entry_company_name, .ec-halfInput input#entry_phone_number, select#entry_job{
+                width: 100%;
+            }
+            
+            .ec-zipInputHelp span {
+                color: white;
+            }
+            
+            .ec-zipInputHelp .ec-zipInputHelp__icon {
+                top: -8px;
+            }
+
+            .error.ec-input input {
+                background: transparent;
+            }
+            .ec-input input:focus {
+                color: white;
+            }
+
+        @media only screen and (max-width: 767px) {
+
+            .ec-off1Grid .ec-off1Grid__cell {
+                width: 95%;
+                margin: 100px auto 200px;
+            }
+
+            .register-header h2 {
+                padding: 8vw 0;
+                margin: 0;
+            }
+
+            .ec-halfInput input#entry_nickname, .ec-halfInput input#entry_company_name, .ec-halfInput input#entry_phone_number, select#entry_job{
+                width: 100%;
+            }
+
+        }
+            
+                
+        </style>
+    {% endblock %}
+
+{% block javascript %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+{% endblock javascript %}
+
+{% block main %}
+    <div class="ec-registerRole">
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <form method="post" action="{{ url('entry') }}" novalidate class="h-adr">
+                    <span class="p-country-name" style="display:none;">Japan</span>
+                    {{ form_widget(form._token) }}
+                    <div class="register-header">
+                        <h2>ご登録</h2>
+                    </div>
+                    <div class="ec-borderedDefs">
+                        <dl>
+                            <dt>
+                                {{ form_label(form.name, 'お名前', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-halfInput{{ has_errors(form.name.name01, form.name.name02) ? ' error'}}">
+                                    {{ form_widget(form.name.name01, { 'attr': { 'placeholder': '姓' }}) }}
+                                    {{ form_widget(form.name.name02, { 'attr': { 'placeholder': '名' }}) }}
+                                    {{ form_errors(form.name.name01) }}
+                                    {{ form_errors(form.name.name02) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.kana, 'お名前(カナ)', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-halfInput{{ has_errors(form.kana.kana01, form.kana.kana02) ? ' error'}}">
+                                    {{ form_widget(form.kana.kana01, { 'attr': { 'placeholder': 'セイ' }}) }}
+                                    {{ form_widget(form.kana.kana02, { 'attr': { 'placeholder': 'メイ' }}) }}
+                                    {{ form_errors(form.kana.kana01) }}
+                                    {{ form_errors(form.kana.kana02) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.phone_number, '電話番号', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-telInput{{ has_errors(form.phone_number) ? ' error' }}">
+                                    {{ form_widget(form.phone_number) }}
+                                    {{ form_errors(form.phone_number) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.email, 'メールアドレス', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-input{{ has_errors(form.email.first) ? ' error' }}">
+                                    {{ form_widget(form.email.first, { 'attr': { 'placeholder': '例：ec-cube@example.com' }}) }}
+                                    {{ form_errors(form.email.first) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.email.second) ? ' error' }}">
+                                    {{ form_widget(form.email.second, { 'attr': { 'placeholder': '確認のためもう一度入力してください' }}) }}
+                                    {{ form_errors(form.email.second) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.password, 'パスワード', { 'label_attr': {'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-input{{ has_errors(form.password.first) ? ' error' }}">
+                                    {{ form_widget(form.password.first, {
+                                        'attr': { 'placeholder': '半角英数記号%min%〜%max%文字'|trans({ '%min%': eccube_config.eccube_password_min_len, '%max%': eccube_config.eccube_password_max_len }) },
+                                        'type': 'password'
+                                    }) }}
+                                    {{ form_errors(form.password.first) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.password.second) ? ' error' }}">
+                                    {{ form_widget(form.password.second, {
+                                        'attr': { 'placeholder': '確認のためもう一度入力してください'|trans },
+                                        'type': 'password'
+                                    }) }}
+                                    {{ form_errors(form.password.second) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.address, 'common.address', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </dt>
+                            <dd>
+                                <div class="ec-zipInput{{ has_errors(form.postal_code) ? ' error' }}"><span>{{ 'common.postal_symbol'|trans }}</span>
+                                    {{ form_widget(form.postal_code) }}
+                                    <div class="ec-zipInputHelp">
+                                        <div class="ec-zipInputHelp__icon">
+                                            <div class="ec-icon"><img
+                                                        src="{{ asset('assets/icon/question-white.svg') }}" alt="">
+                                            </div>
+                                        </div><a href="https://www.post.japanpost.jp/zipcode/" target="_blank"><span>{{ 'common.search_postal_code'|trans }}</span></a>
+                                    </div>
+                                    {{ form_errors(form.postal_code) }}
+                                </div>
+
+                                <div class="ec-select{{ has_errors(form.address.pref) ? ' error' }}">
+                                    {{ form_widget(form.address.pref) }}
+                                    {{ form_errors(form.address.pref) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.address.addr01) ? ' error' }}">
+                                    {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': 'common.address_sample_01' }}) }}
+                                    {{ form_errors(form.address.addr01) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.address.addr02) ? ' error' }}">
+                                    {{ form_widget(form.address.addr02,  { 'attr': { 'placeholder': 'common.address_sample_02' }}) }}
+                                    {{ form_errors(form.address.addr02) }}
+                                </div>
+                            </dd>
+                        </dl>
+                        {# エンティティ拡張の自動出力 #}
+                        {% for f in form if f.vars.eccube_form_options.auto_render %}
+                            {% if f.vars.eccube_form_options.form_theme %}
+                                {% form_theme f f.vars.eccube_form_options.form_theme %}
+                                {{ form_row(f) }}
+                            {% else %}
+                                <dl>
+                                    <dt>
+                                        {{ form_label(f) }}
+                                    </dt>
+                                    <dd>
+                                        <div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+                                            {{ form_widget(f) }}
+                                            {{ form_errors(f) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="ec-registerRole__actions">
+                        <div class="ec-off4Grid">
+                            <div class="ec-off4Grid__cell">
+                                <div class="ec-checkbox{{ has_errors(form.user_policy_check) ? ' error' }}">
+                                    <label>
+                                        {{ form_widget(form.user_policy_check) }}
+                                        {{ '<a class="ec-link" href="%url%" target="_blank">利用規約</a>に同意してお進みください'|trans({ '%url%': url('help_agreement') })|raw }}
+                                    </label>
+                                    {{ form_errors(form.user_policy_check) }}
+                                </div>
+                                <button class="ec-blockBtn--action" type="submit" name="mode" value="confirm">{{ '同意する'|trans }}</button>
+                                <a class="ec-blockBtn--cancel" href="{{ url('homepage') }}">{{ '同意しない'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

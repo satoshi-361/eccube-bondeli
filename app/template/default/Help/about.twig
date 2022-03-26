@@ -1,0 +1,95 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <style>
+@media only screen and (max-width: 767px) {
+    .ec-pageHeader h1 {
+        margin-bottom: 5vw!important;
+        font-size:5vw;
+    }
+    
+    .ec-role {
+        margin-bottom: 10vw!important;
+        margin-top: 15vw!important;
+    }
+    
+    .ec-borderedDefs dl {
+        flex-wrap: unset;
+    }
+    
+    .ec-label {
+        font-size: 3.5vw;
+    }
+    
+    .ec-borderedDefs dd {
+        font-size: 3.5vw;
+    }
+    
+}
+    </style>
+{% endblock %}
+{% block main %}
+<section class="banner">
+    <div class="banner_img">
+        <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_pc.png" alt="" class="pc">
+        <img src="http://bon-deli.com/html/user_data/assets/img/food_page_banner_sp.png" alt="" class="sp">
+    </div>
+</section>
+<div class="ec-role">
+    <div class="ec-pageHeader">
+        <h1>{{ '会社概要'|trans }}</h1>
+    </div>
+    <div class="ec-off1Grid">
+        <div class="ec-off1Grid__cell">
+            <div class="ec-borderedDefs">
+                <dl>
+                    <dt>
+                        <label class="ec-label">{{ '会社名'|trans }}</label>
+                    </dt>
+                    <dd>株式会社シノワークス</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <label class="ec-label">{{ '代表者'|trans }}</label>
+                    </dt>
+                    <dd>篠　昌彦</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <label class="ec-label">{{ '設立'|trans }}</label>
+                    </dt>
+                    <dd>2020年5月</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <label class="ec-label">{{ '所在地'|trans }}</label>
+                    </dt>
+                    <dd>東京都渋谷区渋谷1-10-7</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <label class="ec-label">{{ 'お問い合わせ先'|trans }}</label>
+                    </dt>
+                    <dd>shinoiorks007@gmail.com</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <label class="ec-label">{{ '電話番号'|trans }}</label>
+                    </dt>
+                    <dd>03-6427-6422</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

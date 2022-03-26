@@ -1,0 +1,43 @@
+<div class="sp-header sp">
+    <div class="logo">
+        <a href="{{ url('homepage') }}">
+            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="logo" class="scrollup">
+            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrolldown.svg" alt="logo" class="scrolldown">
+        </a>
+    </div>
+    <div class="sp-menu">
+        <img src="http://bon-deli.com/html/user_data/assets/img/sp_menu.svg" alt="" class="scrollup">
+        <img src="http://bon-deli.com/html/user_data/assets/img/sp-menu1.svg" alt="" class="scrolldown">
+    </div>
+</div>
+
+
+<div class="sp-menubar sp">
+    <div class="sp-menu-header">
+        <div class="sp-menu-logo">
+            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="">
+        </div>
+        <div class="close-btn">
+            <img src="http://bon-deli.com/html/user_data/assets/img/close_btn.svg" alt="">
+        </div>
+    </div>
+    <div class="menu-part">
+        <a href="{{ url('help_guide') }}"><h1>ご利用の流れ</h1></a>
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ url('logout') }}"><h1>ログアウト</h1></a>
+            <a href="{{ url('mypage') }}"><h1>マイページ</h1></a>
+        {% else %}
+            <a href="{{ url('entry') }}"><h1>会員登録</h1></a>
+            <a href="{{ url('mypage_login') }}"><h1>ログイン</h1></a>
+        {% endif %}
+    </div>
+</div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://bon-deli.com/html/user_data/assets/js/animation.js"></script>
+    <script src="https://bon-deli.com/html/user_data/assets/js/wow.js"></script>
+    <script>
+        new WOW().init();
+    </script>
