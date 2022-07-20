@@ -262,59 +262,6 @@ class ProductController extends AbstractController
     /**
      * 商品詳細画面.
      *
-     * @Route("/meal/{id}", name="cooking", requirements={"id" = "\d+"})
-     * @Template("Product/detail.twig")
-     * @ParamConverter("Product", options={"repository_method" = "findWithSortedClassCategories"})
-     *
-     * @param Request $request
-     * @param Product $Product
-     *
-     * @return array
-     */
-    public function meal(Request $request, Product $Product)
-    {
-        if (!$this->checkVisibility($Product)) {
-            throw new NotFoundHttpException();
-        }
-
-        $builder = $this->formFactory->createNamedBuilder(
-            '',
-            AddCartType::class,
-            null,
-            [
-                'product' => $Product,
-                'id_add_product_id' => false,
-            ]
-        );
-
-        $event = new EventArgs(
-            [
-                'builder' => $builder,
-                'Product' => $Product,
-            ],
-            $request
-        );
-        $this->eventDispatcher->dispatch(EccubeEvents::FRONT_PRODUCT_DETAIL_INITIALIZE, $event);
-
-        $is_favorite = false;
-        if ($this->isGranted('ROLE_USER')) {
-            $Customer = $this->getUser();
-            $is_favorite = $this->customerFavoriteProductRepository->isFavorite($Customer, $Product);
-        }
-
-        return [
-            'title' => $this->title,
-            'subtitle' => $Product->getName(),
-            'form' => $builder->getForm()->createView(),
-            'Product' => $Product,
-            'is_favorite' => $is_favorite,
-        ];
-    }
-
-
-    /**
-     * 商品詳細画面.
-     *
      * @Route("/products/detail/{id}", name="product_detail", methods={"GET"}, requirements={"id" = "\d+"})
      * @Template("Product/detail.twig")
      * @ParamConverter("Product", options={"repository_method" = "findWithSortedClassCategories"})
@@ -425,6 +372,7 @@ class ProductController extends AbstractController
         if (!$this->checkVisibility($Product)) {
             throw new NotFoundHttpException();
         }
+
         $builder = $this->formFactory->createNamedBuilder(
             '',
             AddCartType::class,

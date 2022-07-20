@@ -1,6 +1,6 @@
 <footer>
         <div class="footer-logo">
-            <img src="http://bon-deli.com/html/user_data/assets/img/footer-logo.png" alt="">
+            <img src="{{ asset('assets/img/footer-logo.png', 'user_data') }}" alt="">
         </div>
         <div class="footer-menu">
             <ul>
@@ -50,13 +50,13 @@
 <div class="sp-header sp">
     <div class="logo">
         <a href="{{ url('homepage') }}">
-            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="logo" class="scrollup">
-            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrolldown.svg" alt="logo" class="scrolldown">
+            <img src="{{ asset('assets/img/logo-scrollup.svg', 'user_data') }}" alt="logo" class="scrollup">
+            <img src="{{ asset('assets/img/logo-scrolldown.svg', 'user_data') }}" alt="logo" class="scrolldown">
         </a>
     </div>
     <div class="sp-menu">
-        <img src="http://bon-deli.com/html/user_data/assets/img/sp_menu.svg" alt="" class="scrollup">
-        <img src="http://bon-deli.com/html/user_data/assets/img/sp-menu1.svg" alt="" class="scrolldown">
+        <img src="{{ asset('assets/img/sp_menu.svg', 'user_data') }}" alt="" class="scrollup">
+        <img src="{{ asset('assets/img/sp-menu1.svg', 'user_data') }}" alt="" class="scrolldown">
     </div>
 </div>
 
@@ -64,10 +64,10 @@
 <div class="sp-menubar sp">
     <div class="sp-menu-header">
         <div class="sp-menu-logo">
-            <img src="http://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="">
+            <img src="{{ asset('assets/img/logo-scrollup.svg', 'user_data') }}" alt="">
         </div>
         <div class="close-btn">
-            <img src="http://bon-deli.com/html/user_data/assets/img/close_btn.svg" alt="">
+            <img src="{{ asset('assets/img/close_btn.svg', 'user_data') }}" alt="">
         </div>
     </div>
     <div class="menu-part">
@@ -93,5 +93,6 @@
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
-    <script src="https://bon-deli.com/html/user_data/assets/js/animation.js"></script>
-    <script src="https://bon-deli.com/html/user_data/assets/js/wow.js"></script>
+    <script src="{{ asset('assets/js/animation.js', 'user_data') }}"></script>
+    <script src="{{ asset('assets/js/wow.js', 'user_data') }}"></script>
+    <script src="{{ asset('assets/js/function.js') }}"></script>

@@ -214,6 +214,7 @@ class EntryController extends AbstractController
                     }
             }
         }
+
         return [
             'form' => $form->createView(),
         ];

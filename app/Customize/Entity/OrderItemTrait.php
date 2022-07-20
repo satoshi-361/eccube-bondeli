@@ -11,28 +11,28 @@ use Eccube\Annotation\EntityExtension;
 trait OrderItemTrait
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="additional_price", type="integer")
+     * @ORM\Column(name="additional_option", type="string", nullable=true)
      */
-    private $additional_price = 0;
+    private $additional_option = 0;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getAdditionalPrice()
+    public function getAdditionalOption()
     {
-        return $this->additional_price;
+        return $this->additional_option;
     }
 
     /**
-     * @param  integer  $additional_price
+     * @param  string  $additional_option
      *
      * @return CartItem
      */
-    public function setAdditionalPrice($additional_price)
+    public function setAdditionalOption($additional_option)
     {
-        $this->additional_price = $additional_price;
+        $this->additional_option = $additional_option;
         
         return $this;
     }

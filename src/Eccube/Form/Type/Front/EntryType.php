@@ -62,9 +62,6 @@ class EntryType extends AbstractType
                 'required' => true,
             ])
             ->add('kana', KanaType::class, [])
-            ->add('nickname', TextType::class, [
-                'required' => true,
-            ])
             ->add('company_name', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -73,20 +70,13 @@ class EntryType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('postal_code', PostalType::class, [
-                'required' => false
-            ])
-            ->add('address', AddressType::class, [
-                'required' => false
-            ])
+            ->add('postal_code', PostalType::class)
+            ->add('address', AddressType::class)
             ->add('phone_number', PhoneNumberType::class, [
                 'required' => true,
             ])
             ->add('email', RepeatedEmailType::class)
             ->add('password', RepeatedPasswordType::class)
-            ->add('credit_card', TextType::class, [
-                'required' => true,
-            ])
             ->add('birth', BirthdayType::class, [
                 'required' => false,
                 'input' => 'datetime',

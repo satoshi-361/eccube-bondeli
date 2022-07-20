@@ -1,59 +1,59 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.google.com">
-    <link rel="preconnect" href="https://fonts.adobe.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="https://bon-deli.com/html/user_data/assets/css/animate.css"/>
-    
-    <header>
-        <div class="header pc">
-            <div class="logo">
-                <a href="{{ url('homepage') }}">
-                    <img src="https://bon-deli.com/html/user_data/assets/img/logo-scrollup.svg" alt="logo" class="scrollup">
-                    <img src="https://bon-deli.com/html/user_data/assets/img/logo-scrolldown.svg" alt="logo" class="scrolldown">
-                </a>
-            </div>
-            <div class="menu">
-                <ul>
-                    {% if Restaurant_id is defined %}
-                        <li><a href="{{ url('restaurant_homepage', {id: Restaurant_id}) }}"><span>現在の状況</span></a></li>
-                        <li><a href="{{ url('restaurant_page', {id: Restaurant_id}) }}"><span>加盟店編集</span></a></li>
-                        <li><a href="{{ url('order_history', {id: Restaurant_id}) }}"><span>注文履歴</span></a></li>
-                        <li><a href="{{ url('store_logout') }}"><span>ログアウト</span></a></li>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.google.com">
+<link rel="preconnect" href="https://fonts.adobe.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="{{ asset('assets/css/animate.css', 'user_data') }}"/>
+
+<header>
+    <div class="header pc">
+        <div class="logo">
+            <a href="{{ url('homepage') }}">
+                <img src="{{ asset('assets/img/logo-scrollup.svg', 'user_data') }}" alt="logo" class="scrollup">
+                <img src="{{ asset('assets/img/logo-scrolldown.svg', 'user_data') }}" alt="logo" class="scrolldown">
+            </a>
+        </div>
+        <div class="menu">
+            <ul>
+                {% if Restaurant_id is defined %}
+                    <li><a href="{{ url('restaurant_homepage', {id: Restaurant_id}) }}"><span>現在の状況</span></a></li>
+                    <li><a href="{{ url('restaurant_page', {id: Restaurant_id}) }}"><span>加盟店編集</span></a></li>
+                    <li><a href="{{ url('order_history', {id: Restaurant_id}) }}"><span>注文履歴</span></a></li>
+                    <li><a href="{{ url('store_logout') }}"><span>ログアウト</span></a></li>
+                {% else %}
+                    <li>
+                        <a href="{{ url('help_guide') }}">ご利用の流れ</a>
+                    </li>
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="ec-headerRole__cart">
+                            {{ include('Block/custom_cart.twig') }}
+                        </li>
+                        <li>
+                            <a href="{{ url('logout') }}">
+                                <i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>
+                                <span class="ec-headerNav__itemLink">{{ 'ログアウト'|trans }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('mypage') }}">
+                                <i class="ec-headerNav__itemIcon fas fa-user fa-fw"></i>
+                                <span class="ec-headerNav__itemLink">{{ 'マイページ'|trans }}</span>
+                            </a>
+                        </li>
                     {% else %}
                         <li>
-                            <a href="{{ url('help_guide') }}">ご利用の流れ</a>
+                            <a href="{{ url('entry') }}"><i class="ec-headerNav__itemIcon fas fa-user fa-fw"></i>会員登録</a>
                         </li>
-                        {% if is_granted('ROLE_USER') %}
-                            <li>
-                                <a href="{{ url('cart') }}">{{ 'カート'|trans }}</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('logout') }}">
-                                    <i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>
-                                    <span class="ec-headerNav__itemLink">{{ 'ログアウト'|trans }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('mypage') }}">
-                                    <i class="ec-headerNav__itemIcon fas fa-user fa-fw"></i>
-                                    <span class="ec-headerNav__itemLink">{{ 'マイページ'|trans }}</span>
-                                </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ url('entry') }}"><i class="ec-headerNav__itemIcon fas fa-user fa-fw"></i>会員登録</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('mypage_login') }}"><i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>ログイン</a>
-                            </li>
-                        {% endif %}
+                        <li>
+                            <a href="{{ url('mypage_login') }}"><i class="ec-headerNav__itemIcon fas fa-lock fa-fw"></i>ログイン</a>
+                        </li>
                     {% endif %}
-                </ul>
-            </div>
+                {% endif %}
+            </ul>
         </div>
-    </header>
+    </div>
+</header>

@@ -23,7 +23,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -179,26 +178,18 @@ class ShippingType extends AbstractType
                     }
                 }
 
-                $year = date('Y');
-                $month = date('m');
-                $date = date('d');
-
                 $form = $event->getForm();
                 $form
                     ->add(
                         'shipping_delivery_date',
-                        DateType::class,
+                        ChoiceType::class,
                         [
-                            'data' => new \DateTime()
+                            'choices' => array_flip($deliveryDurations),
+                            'required' => false,
+                            'placeholder' => 'common.select__unspecified',
+                            'mapped' => false,
+                            'data' => $Shipping->getShippingDeliveryDate() ? $Shipping->getShippingDeliveryDate()->format('Y/m/d') : null,
                         ]
-                        // ChoiceType::class,
-                        // [
-                        //     'choices' => array_flip($deliveryDurations),
-                        //     'required' => false,
-                        //     'placeholder' => 'common.select__unspecified',
-                        //     'mapped' => false,
-                        //     'data' => $Shipping->getShippingDeliveryDate() ? $Shipping->getShippingDeliveryDate()->format('Y/m/d') : null,
-                        // ]
                     );
             }
         );
@@ -231,62 +222,18 @@ class ShippingType extends AbstractType
 
                 $form = $event->getForm();
                 $form->add(
-                    // 'DeliveryTime',
-                    'shipping_delivery_time',
-                    ChoiceType::class,
+                    'DeliveryTime',
+                    EntityType::class,
                     [
-                        'choices' => 
-                        [                        
-                            '06:00' => '06:00',
-                            '06:30' => '06:30',
-                            '07:00' => '07:00',
-                            '07:30' => '07:30',
-                            '08:00' => '08:00',
-                            '08:30' => '08:30',
-                            '09:00' => '09:00',
-                            '09:30' => '09:30',
-                            '10:00' => '10:00',
-                            '10:30' => '10:30',
-                            '11:00' => '11:00',
-                            '11:30' => '11:30',
-                            '12:00' => '12:00',
-                            '12:30' => '12:30',
-                            '13:00' => '13:00',
-                            '13:30' => '13:30',
-                            '14:00' => '14:00',
-                            '14:30' => '14:30',
-                            '15:00' => '15:00',
-                            '15:30' => '15:30',
-                            '16:00' => '16:00',
-                            '16:30' => '16:30',
-                            '17:00' => '17:00',
-                            '17:30' => '17:30',
-                            '18:00' => '18:00',
-                            '18:30' => '18:30',
-                            '19:00' => '19:00',
-                            '19:30' => '19:30',
-                            '20:00' => '20:00',
-                            '20:30' => '20:30',
-                            '21:00' => '21:00',
-                            '21:30' => '21:30',
-                            '22:00' => '22:00',
-                            '22:30' => '22:30',
-                            '23:00' => '23:00',
-                            '23:30' => '23:30',
-                            '24:00' => '24:00',
-                        ]
+                        'label' => 'front.shopping.delivery_time',
+                        'class' => 'Eccube\Entity\DeliveryTime',
+                        'choice_label' => 'deliveryTime',
+                        'choices' => $DeliveryTimes,
+                        'required' => false,
+                        'placeholder' => 'common.select__unspecified',
+                        'mapped' => false,
+                        'data' => $ShippingDeliveryTime,
                     ]
-                    // EntityType::class,
-                    // [
-                    //     'label' => 'front.shopping.delivery_time',
-                    //     'class' => 'Eccube\Entity\DeliveryTime',
-                    //     'choice_label' => 'deliveryTime',
-                    //     'choices' => $DeliveryTimes,
-                    //     'required' => false,
-                    //     'placeholder' => 'common.select__unspecified',
-                    //     'mapped' => false,
-                    //     'data' => $ShippingDeliveryTime,
-                    // ]
                 );
             }
         );
@@ -299,7 +246,6 @@ class ShippingType extends AbstractType
             $form = $event->getForm();
             /** @var Delivery $Delivery */
             $Delivery = $form['Delivery']->getData();
-            
             if ($Delivery) {
                 $Shipping->setShippingDeliveryName($Delivery->getName());
             } else {
@@ -307,20 +253,15 @@ class ShippingType extends AbstractType
             }
             $DeliveryDate = $form['shipping_delivery_date']->getData();
             if ($DeliveryDate) {
-                // $Shipping->setShippingDeliveryDate(new \DateTime($DeliveryDate));
-                $Shipping->setShippingDeliveryDate($DeliveryDate);
+                $Shipping->setShippingDeliveryDate(new \DateTime($DeliveryDate));
             } else {
                 $Shipping->setShippingDeliveryDate(null);
             }
 
-            // $DeliveryTime = $form['DeliveryTime']->getData();
-            $DeliveryTime = $form['shipping_delivery_time']->getData();
+            $DeliveryTime = $form['DeliveryTime']->getData();
             if ($DeliveryTime) {
-                // $Shipping->setShippingDeliveryTime($DeliveryTime->getDeliveryTime());
-                // $Shipping->setTimeId($DeliveryTime->getId());
-                
-                $Shipping->setShippingDeliveryTime($DeliveryTime);
-                $Shipping->setTimeId(null);
+                $Shipping->setShippingDeliveryTime($DeliveryTime->getDeliveryTime());
+                $Shipping->setTimeId($DeliveryTime->getId());
             } else {
                 $Shipping->setShippingDeliveryTime(null);
                 $Shipping->setTimeId(null);

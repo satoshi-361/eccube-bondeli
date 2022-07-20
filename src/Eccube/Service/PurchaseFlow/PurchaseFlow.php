@@ -116,23 +116,19 @@ class PurchaseFlow
     {
         $context->setFlowType($this->flowType);
 
-        $this->calculateAll($itemHolder); 
+        $this->calculateAll($itemHolder);
 
         $flowResult = new PurchaseFlowResult($itemHolder);
 
         foreach ($itemHolder->getItems() as $item) {
-            // $price = $item->getPriceIncTax();
-
             foreach ($this->itemValidators as $itemValidator) {
                 $result = $itemValidator->execute($item, $context);
                 $flowResult->addProcessResult($result);
             }
-
-            // $item->setPrice($price);
         }
 
         $this->calculateAll($itemHolder);
-        
+
         foreach ($this->itemHolderValidators as $itemHolderValidator) {
             $result = $itemHolderValidator->execute($itemHolder, $context);
             $flowResult->addProcessResult($result);
@@ -179,6 +175,92 @@ class PurchaseFlow
         }
 
         return $flowResult;
+    }
+
+    /**
+     * @param ItemHolderInterface $itemHolder
+     */
+    protected function calculateAll(ItemHolderInterface $itemHolder)
+    {
+        // if ($itemHolder instanceof Order)
+        //     $this->custom_calculate_delivery($itemHolder);
+        // else
+            $this->calculateDeliveryFeeTotal($itemHolder);
+        $this->calculateCharge($itemHolder);
+        $this->calculateDiscount($itemHolder);
+        $this->calculateSubTotal($itemHolder); // Order の場合のみ
+        $this->calculateTax($itemHolder);
+        $this->calculateTotal($itemHolder);
+    }
+
+    /**
+     * @param ItemHolderInterface $itemHolder
+     */
+    protected function custom_calculate_delivery(ItemHolderInterface $itemHolder) {
+        $total = 0;
+        $array = array();
+
+        $customer_postal = $itemHolder->getPostalCode();
+        $Restaurant = null;
+
+        foreach($itemHolder->getProductOrderItems() as $orderItem) {
+            array_push($array, $orderItem->getProduct()->getRestaurant()->getPostalCode());
+            $Restaurant = $orderItem->getProduct()->getRestaurant();
+        }
+
+        $temp = explode(',', $Restaurant->getDeliveryFees());
+        $delivery_fees = [];
+        $delivery_fees[0]['distance'] = 0;
+        $delivery_fees[0]['fee'] = 0;
+        if (count($temp) > 0) {
+            foreach($temp as $key => $item) {
+                $delivery_fees[$key + 1] = [];
+                $delivery_fees[$key + 1]['distance'] = intval(explode(':', $item)[0]);
+                $delivery_fees[$key + 1]['fee'] = intval(explode(':', $item)[1]);
+                try {
+                    $delivery_fees[$key + 1]['distance'] = intval(explode(':', $item)[0]);
+                } catch(\Exception $e) {
+
+                }
+                try {
+                    $delivery_fees[$key + 1]['fee'] = intval(explode(':', $item)[1]);
+                } catch(\Exception $e) {
+                    
+                }
+            }
+        }
+        
+        $array = array_unique($array, SORT_REGULAR);
+
+        foreach($array as $item) {
+            
+            $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='.$customer_postal.',japan&destinations='.$item.',japan&mode=driving&language=en-EN&sensor=false&key=AIzaSyAG8m2VY_81-1Al2IZAOsPf09re4gZsgGk';
+            $data   = @file_get_contents($url);
+            $result = json_decode($data, true);
+
+            $distance = 0;
+            
+            try {
+                $distance = $result["rows"][0]["elements"][0]["distance"]["value"] / 1000;
+            } catch (\Exception $e) {
+
+            }
+            
+            if ( $distance > 0 && $distance <= 3 ) $total += 500;
+            else if ( $distance > 3 && $distance <= 6 ) $total += 1000;
+            else if ( $distance > 6 && $distance ) $total += 1500;
+
+            if (count($delivery_fees) == 1) $total += 1000;
+            else {
+                foreach($delivery_fees as $fee) {
+                    if($distance <= $fee['distance']) {
+                        $total += $fee['fee'];
+                        break;
+                    }
+                }
+            }
+        }
+        $itemHolder->setDeliveryFeeTotal($total);
     }
 
     /**
@@ -271,16 +353,10 @@ class PurchaseFlow
     protected function calculateTotal(ItemHolderInterface $itemHolder)
     {
         $total = array_reduce($itemHolder->getItems()->toArray(), function ($sum, ItemInterface $item) {
-            $sum += ($item->getPriceIncTax() + $item->getAdditionalPrice()) * $item->getQuantity();
-            // $item->setPrice($item->getPriceIncTax());
+            $sum += $item->getPriceIncTax() * $item->getQuantity();
 
             return $sum;
         }, 0);
-
-        if ($itemHolder instanceof Order) {
-            $total = $total + $itemHolder->getDeliveryFeeTotal() - 1000;
-        }
-
         $itemHolder->setTotal($total);
         // TODO
         if ($itemHolder instanceof Order) {
@@ -294,7 +370,7 @@ class PurchaseFlow
         $total = $itemHolder->getItems()
             ->getProductClasses()
             ->reduce(function ($sum, ItemInterface $item) {
-                $sum += ($item->getPriceIncTax() + $item->getAdditionalPrice()) * $item->getQuantity();
+                $sum += $item->getPriceIncTax() * $item->getQuantity();
 
                 return $sum;
             }, 0);
@@ -303,80 +379,6 @@ class PurchaseFlow
             // Order の場合は SubTotal をセットする
             $itemHolder->setSubTotal($total);
         }
-    }
-
-    /**
-     * @param ItemHolderInterface $itemHolder
-     */
-    protected function custom_calculate_delivery(ItemHolderInterface $itemHolder) {
-        $total = 0;
-        $array = array();
-
-        $customer_postal = $itemHolder->getPostalCode();
-        $Restaurant = null;
-        // print_r($customer_postal); exit;
-
-        foreach($itemHolder->getProductOrderItems() as $orderItem) {
-            array_push($array, $orderItem->getProduct()->getRestaurant()->getPostalCode());
-            $Restaurant = $orderItem->getProduct()->getRestaurant();
-        }
-
-        $temp = explode(',', $Restaurant->getDeliveryFees());
-        $delivery_fees = [];
-        $delivery_fees[0]['distance'] = 0;
-        $delivery_fees[0]['fee'] = 0;
-        if (count($temp) > 0) {
-            foreach($temp as $key => $item) {
-                $delivery_fees[$key + 1] = [];
-                $delivery_fees[$key + 1]['distance'] = intval(explode(':', $item)[0]);
-                $delivery_fees[$key + 1]['fee'] = intval(explode(':', $item)[1]);
-                // try {
-                //     $delivery_fees[$key + 1]['distance'] = intval(explode(':', $item)[0]);
-                // } catch(\Exception $e) {
-
-                // }
-                // try {
-                //     $delivery_fees[$key + 1]['fee'] = intval(explode(':', $item)[1]);
-                // } catch(\Exception $e) {
-                    
-                // }
-            }
-        }
-
-        $array = array_unique($array, SORT_REGULAR);
-
-        foreach($array as $item) {
-            // print_r($item);exit;
-            $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='.$customer_postal.',japan&destinations='.$item.',japan&mode=driving&language=en-EN&sensor=false&key=AIzaSyARTz7O22IZDcHqU9_GwA0RA-tXpZjZPPw';
-            // $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=5420067,japan&destinations=2210802,japan&mode=driving&language=en-EN&sensor=false&key=AIzaSyBAeKfY_uXe72WlCb01zCiH25FqzI7F0uo';
-            
-            // $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=5420067,japan&destinations=2210802,japan&mode=driving&language=en-EN&sensor=false&key=AIzaSyARTz7O22IZDcHqU9_GwA0RA-tXpZjZPPw';
-            $data   = @file_get_contents($url);
-            $result = json_decode($data, true);
-
-            $distance = 0;
-            
-            try {
-                $distance = $result["rows"][0]["elements"][0]["distance"]["value"] / 1000;
-            } catch (\Exception $e) {
-
-            }
-            
-            // if ( $distance > 0 && $distance <= 3 ) $total += 500;
-            // else if ( $distance > 3 && $distance <= 6 ) $total += 1000;
-            // else if ( $distance > 6 && $distance ) $total += 1500;
-
-            if (count($delivery_fees) == 1) $total += 1000;
-            else {
-                foreach($delivery_fees as $fee) {
-                    if($distance <= $fee['distance']) {
-                        $total += $fee['fee'];
-                        break;
-                    }
-                }
-            }
-        }
-        $itemHolder->setDeliveryFeeTotal($total);
     }
 
     /**
@@ -391,7 +393,6 @@ class PurchaseFlow
 
                 return $sum;
             }, 0);
-
         $itemHolder->setDeliveryFeeTotal($total);
     }
 
@@ -442,22 +443,6 @@ class PurchaseFlow
                 return $sum;
             }, 0);
         $itemHolder->setTax($total);
-    }
-
-    /**
-     * @param ItemHolderInterface $itemHolder
-     */
-    protected function calculateAll(ItemHolderInterface $itemHolder)
-    {
-        if ($itemHolder instanceof Order)
-            $this->custom_calculate_delivery($itemHolder);
-        else
-            $this->calculateDeliveryFeeTotal($itemHolder);
-        $this->calculateCharge($itemHolder);
-        $this->calculateDiscount($itemHolder);
-        $this->calculateSubTotal($itemHolder); // Order の場合のみ
-        $this->calculateTax($itemHolder);
-        $this->calculateTotal($itemHolder);
     }
 
     /**

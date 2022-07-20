@@ -12,6 +12,16 @@ file that was distributed with this source code.
 
 {% set body_class = 'registration_page' %}
 
+{% block stylesheet %}
+    <style>
+        .ec-layoutRole .ec-layoutRole__contents {
+            margin-top: 130px
+        }
+        .ec-registerRole .ec-registerRole__actions {
+            padding: 40px 0;
+        }
+    </style>
+{% endblock %}
 {% block javascript %}
     <script>
       $(function() {
@@ -31,7 +41,7 @@ file that was distributed with this source code.
                 <form method="post" action="{{ url('order_reject') }}" novalidate class="h-adr">
                     <div class="ec-input">
                         <input type="hidden" name="id" id="id">
-                        <textarea id="reject_message" name="reject_message" rows="4" value="">
+                        <textarea id="reject_message" name="reject_message" rows="10" value="">
                         </textarea>
                     </div>
                     <div class="ec-registerRole__actions">

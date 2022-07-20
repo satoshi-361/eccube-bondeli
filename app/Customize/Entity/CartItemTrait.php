@@ -11,9 +11,36 @@ use Eccube\Annotation\EntityExtension;
 trait CartItemTrait
 {
     /**
+     * @var string
+     *
+     * @ORM\Column(name="additional_option", type="string", nullable=true)
+     */
+    private $additional_option;
+
+    /**
+     * @return string
+     */
+    public function getAdditionalOption()
+    {
+        return $this->additional_option;
+    }
+
+    /**
+     * @param  string  $additional_option
+     *
+     * @return CartItem
+     */
+    public function setAdditionalOption($additional_option)
+    {
+        $this->additional_option = $additional_option;
+        
+        return $this;
+    }
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="additional_price", type="integer")
+     * @ORM\Column(name="additional_price", type="integer", nullable=true)
      */
     private $additional_price = 0;
 

@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eccube\Form\Type\Front;
+namespace Customize\Form\Type\Front;
 
 use Eccube\Common\EccubeConfig;
 use Eccube\Form\Type\KanaType;

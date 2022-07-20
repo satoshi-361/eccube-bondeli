@@ -17,12 +17,10 @@ use Eccube\Entity\Customer;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Form\Type\Front\ContactType;
-use Eccube\Form\Type\Front\RestaurantRecuritType;
 use Eccube\Service\MailService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Plugin\restaurant_food\Entity\Config as Restaurant;
 
 class ContactController extends AbstractController
 {
@@ -129,73 +127,5 @@ class ContactController extends AbstractController
     public function complete()
     {
         return [];
-    }
-
-    /**
-     * 加盟レストラン募集
-     * 
-     * @Route("/restaurant_recurit", name="restaurant_recurit")
-     * @Template("Contact/restaurant_recurit.twig")
-     */
-
-    public function restaurantRecurit(Request $request)
-    {
-        $builder = $this->formFactory->createBuilder(RestaurantRecuritType::class);
-
-        $event = new EventArgs(
-            [
-                'builder' => $builder
-            ],
-            $request
-        );
-        $this->eventDispatcher->dispatch(EccubeEvents::FRONT_CONTACT_INDEX_INITIALIZE, $event);
-
-        $form = $builder->getForm();
-        $form->handleRequest($request);
-		
-        if ($form->isSubmitted() && $form->isValid()) {
-            switch ($request->get('mode')) {
-                case 'confirm':
-                    $form = $builder->getForm();
-                    $form->handleRequest($request);
-
-                    return $this->render('Contact/restaurant_confirm.twig', [
-                        'form' => $form->createView(),
-                    ]);
-                case 'complete':
-                    $data = $form->getData();
-
-                    $Restaurant = new Restaurant();
-                    $Restaurant->setName($data['name']);
-                    $Restaurant->setCompanyName($data['company_name']);
-                    $Restaurant->setPhoneNumber($data['phone_number']);
-                    $Restaurant->setEmail($data['email']);
-                    $Restaurant->setContent($data['contents']);
-                    $Restaurant->setState(1);
-
-                    $this->entityManager->persist($Restaurant);
-                    $this->entityManager->flush();
-
-                    $event = new EventArgs(
-                        [
-                            'form' => $form,
-                            'data' => $data,
-                        ],
-                        $request
-                    );
-                    $this->eventDispatcher->dispatch(EccubeEvents::FRONT_CONTACT_INDEX_COMPLETE, $event);
-
-                    $data = $event->getArgument('data');
-
-                    // メール送信
-                    $this->mailService->sendRestaurantApplyMail($data);
-
-                    return $this->redirect($this->generateUrl('contact_complete'));
-            }
-        }
-
-        return [
-            'form' => $form->createView(),
-        ];
     }
 }

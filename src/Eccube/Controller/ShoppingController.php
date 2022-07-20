@@ -139,7 +139,6 @@ class ShoppingController extends AbstractShoppingController
         return [
             'form' => $form->createView(),
             'Order' => $Order,
-            '_ENV' => $_ENV
         ];
     }
 
@@ -225,7 +224,6 @@ class ShoppingController extends AbstractShoppingController
         return [
             'form' => $form->createView(),
             'Order' => $Order,
-            '_ENV' => $_ENV
         ];
     }
 
@@ -313,7 +311,6 @@ class ShoppingController extends AbstractShoppingController
         return [
             'form' => $form->createView(),
             'Order' => $Order,
-            '_ENV' => $_ENV
         ];
     }
 
@@ -417,7 +414,6 @@ class ShoppingController extends AbstractShoppingController
             // メール送信
             log_info('[注文処理] 注文メールの送信を行います.', [$Order->getId()]);
             $this->mailService->sendOrderMail($Order);
-            $this->mailService->sendOrder2Restaurant($Order);
             $this->entityManager->flush();
 
             log_info('[注文処理] 注文処理が完了しました. 購入完了画面へ遷移します.', [$Order->getId()]);
@@ -794,66 +790,5 @@ class ShoppingController extends AbstractShoppingController
 
             return $this->redirectToRoute('shopping_error');
         }
-    }
-
-    /**
-     * @Route("/shopping/card", name="process-card", methods={"POST"})
-     */
-    public function process_card(Request $request) {
-
-        $access_token = ($_ENV["USE_PROD"] == 'false')  ?  $_ENV["PROD_ACCESS_TOKEN"]
-                                               :  $_ENV["SANDBOX_ACCESS_TOKEN"];
-
-        # Set 'Host' url to switch between sandbox env and production env
-        # sandbox: https://connect.squareupsandbox.com
-        # production: https://connect.squareup.com
-        $host_url = ($_ENV["USE_PROD"] == 'false')  ?  "https://connect.squareup.com"
-                                                :  "https://connect.squareupsandbox.com";
-
-        $api_config = new \SquareConnect\Configuration();
-        $api_config->setHost($host_url);
-        # Initialize the authorization for Square
-        $api_config->setAccessToken($access_token);
-        $api_client = new \SquareConnect\ApiClient($api_config);
-
-        # Helps ensure this code has been reached via form submission
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return new Response('false');
-        }
-
-        # Fail if the card form didn't send a value for `nonce` to the server
-        $nonce = $_POST['nonce'];
-        if (is_null($nonce)) {
-            return new Response('false');
-        }
-
-        $payments_api = new \SquareConnect\Api\PaymentsApi($api_client);
-        # To learn more about splitting payments with additional recipients,
-        # see the Payments API documentation on our [developer site]
-        # (https://developer.squareup.com/docs/payments-api/overview).
-        $request_body = array (
-            "source_id" => $nonce,
-            # Monetary amounts are specified in the smallest unit of the applicable currency.
-            # This amount is in cents. It's also hard-coded for $1.00, which isn't very useful.
-            "amount_money" => array (
-                "amount" => intval($_POST['total']),
-                "currency" => "JPY"
-            ),
-            # Every payment you process with the SDK must have a unique idempotency key.
-            # If you're unsure whether a particular payment succeeded, you can reattempt
-            # it with the same idempotency key without worrying about double charging
-            # the buyer.
-            "idempotency_key" => uniqid()
-        );
-
-        $result = '';
-        # The SDK throws an exception if a Connect endpoint responds with anything besides
-        # a 200-level HTTP code. This block catches any exceptions that occur from the request.
-        try {
-            $result = $payments_api->createPayment($request_body);
-        } catch (\SquareConnect\ApiException $e) {
-            return new Response('false');
-        }
-        return new Response('true');
     }
 }

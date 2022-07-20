@@ -2,22 +2,23 @@
     <style>
         html {
             scroll-behavior: smooth;
+            font-family: "kozuka-gothic-pro";
         }
         
         body {
             overflow-x: hidden;
             width: 100%;
-            font-family: "Yu Mincho";
+            font-family: "kozuka-gothic-pro";
         }
         
         @font-face {
             font-family: "SoukouMincho";
-            src: url("http://bon-deli.com/html/user_data/asse.footer-menu ul li ats/font/SoukouMincho.ttf");
+            src: url("https://bon-deli.com/html/user_data/asse.footer-menu ul li ats/font/SoukouMincho.ttf");
         }
         
         @font-face {
             font-family: "Yu Mincho";
-            src: url("http://bon-deli.com/html/user_data/assets/font/yumin.ttf");
+            src: url("https://bon-deli.com/html/user_data/assets/font/yumin.ttf");
         }
         
         *{
@@ -494,6 +495,30 @@
     
                 /* end footer */
 
+    }
+
+.ec-cartNavi__badge {
+    display: inline-block;
+    min-width: 17px;
+    position: relative;
+    left: 0;
+    top: 4px;
+    border-radius: 99999px;
+    box-sizing: border-box;
+    padding: 5px;
+    height: 17px;
+    font-size: 10px;
+    line-height: 0.7;
+    vertical-align: top;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #DE5D50;
+}
+
+.btn-ec-regular:hover {
+    background-color: #eee !important;
 }
     </style>
+    
 {% endblock %}

@@ -170,8 +170,8 @@ file that was distributed with this source code.
                                                     <br>{{ ProductClass.ClassCategory2.ClassName.name }}：{{ ProductClass.ClassCategory2 }}
                                                 {% endif %}
                                             </div>
-                                            <div class="ec-cartRow__unitPrice">{{ (CartItem.price + CartItem.additional_price) |price }}（税込）</div>
-                                            <div class="ec-cartRow__sutbtotalSP">{{ '小計：'|trans }}{{ (CartItem.price + CartItem.additional_price)|price }}</div>
+                                            <div class="ec-cartRow__unitPrice">{{ CartItem.price | price }}（税込）</div>
+                                            <div class="ec-cartRow__sutbtotalSP">{{ '小計：'|trans }}{{ CartItem.price | price }}</div>
                                         </div>
                                     </li>
                                     <li class="ec-cartRow__amountColumn">
@@ -193,8 +193,8 @@ file that was distributed with this source code.
                                         </div>
                                     </li>
                                     <li class="ec-cartRow__subtotalColumn">
-                                        {# <div class="ec-cartRow__sutbtotal">{{ CartItem.total_price|price }}</div> #}
-                                        <div class="ec-cartRow__sutbtotal">{{ ((CartItem.price + CartItem.additional_price) * CartItem.quantity)|price }}</div>
+                                        <div class="ec-cartRow__sutbtotal">{{ CartItem.total_price|price }}</div>
+                                        {# <div class="ec-cartRow__sutbtotal">{{ ((CartItem.price + CartItem.additional_price) * CartItem.quantity)|price }}</div> #}
                                     </li>
                                 </ul>
                             {% endfor %}

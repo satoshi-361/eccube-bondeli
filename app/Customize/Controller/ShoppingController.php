@@ -40,12 +40,6 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Eccube\Controller\AbstractShoppingController;
 use Eccube\Entity\Master\OrderStatus;
-use GuzzleHttp\Client as CuzzleClient;
-use Infobip\Configuration as InfoConfig;
-use Infobip\Model\SmsDestination;
-use Infobip\Model\SmsTextualMessage;
-use Infobip\Model\SmsAdvancedTextualRequest;
-use Infobip\Api\SendSmsApi;
 
 class ShoppingController extends AbstractShoppingController
 {
@@ -474,27 +468,40 @@ class ShoppingController extends AbstractShoppingController
             $this->entityManager->persist($Order);
             $this->entityManager->flush();
 
-            $configuration = (new InfoConfig())
-            ->setHost('xr22nl.api.infobip.com')
-            ->setApiKeyPrefix('Authorization', 'App')
-            ->setApiKey('Authorization', '96108df245c017d4471380fcfe0efeb6-8d9116af-8dff-4680-8ea9-8a4757fbeaa6');
-    
-            $client = new CuzzleClient();
+            $Product = $Order->getMergedProductOrderItems()[0]->getProduct();
+            $Restaurant = $Product->getRestaurant();
 
-            $sendSmsApi = new SendSmsApi($client, $configuration);
-            $destination = (new SmsDestination())->setTo('19312699922');
-            $message = (new SmsTextualMessage())
-                ->setFrom('InfoSMS')
-                ->setText('This is a dummy SMS message sent using infobip-api-php-client')
-                ->setDestinations([$destination]);
-            $request = (new SmsAdvancedTextualRequest())
-                ->setMessages([$message]);
+            /**--------  start SMS ------- */
 
-            try {
-                  $smsResponse = $sendSmsApi->sendSmsMessage($request);
-              } catch (Throwable $apiException) {
-                  // HANDLE THE EXCEPTION
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, 'https://api.smslink.jp/');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"contacts\": [{\"phone_number\":\"$Restaurant->getPhoneNumber();\"}],\"text_message\": \"bondeliサイトから新しい注文が入りました。 受注番号：$Order->getId()　メール内容のご確認をお願いします。\"}");
+            
+            $data = [
+                'contacts' => [
+                    'phone_number' => $Restaurant->getPhoneNumber()
+                ],
+                'text_message' => 'bondeliサイトから新しい注文が入りました。 受注番号：' . $Order->getId() . '　メール内容のご確認をお願いします。'
+            ];
+            
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+            $headers = array();
+            $headers[] = 'Accept: application/json';
+            $headers[] = 'Token: e0116558-e0b1-4d29-90cf-6c58ce19cf4b';
+            $headers[] = 'Content-Type: application/json';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                echo 'Error:' . curl_error($ch);
             }
+            curl_close($ch);
+
+            /**--------  end SMS ------- */
             
             $this->mailService->sendOrderMail($Order);
             $this->mailService->sendOrder2Restaurant($Order);
@@ -899,13 +906,13 @@ class ShoppingController extends AbstractShoppingController
 
         # Helps ensure this code has been reached via form submission
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return new Response('false1');
+            return new Response('購入時にエラーが発生しました。 大変申し訳ございませんが、もう一度お試しください。');
         }
 
         # Fail if the card form didn't send a value for `nonce` to the server
         $nonce = $_POST['nonce'];
         if (is_null($nonce)) {
-            return new Response('false2');
+            return new Response('購入時にエラーが発生しました。 大変申し訳ございませんが、もう一度お試しください。');
         }
         $order_id = $_POST['orderId'];
 
@@ -934,7 +941,7 @@ class ShoppingController extends AbstractShoppingController
         try {
             $result = $payments_api->createPayment($request_body);
         } catch (\SquareConnect\ApiException $e) {
-            return new Response('false3');
+            return new Response('購入時にエラーが発生しました。 大変申し訳ございませんが、もう一度お試しください。');
         }
 
         $Order = $this->orderRepository->find($order_id);
@@ -959,16 +966,40 @@ class ShoppingController extends AbstractShoppingController
 
           $this->mailService->sendAcceptMail($Order);
 
-          return $this->render('Order/order_accept.twig');
+        //   return $this->render('Order/order_accept.twig');
+          return $this->redirectToRoute('order_accept');
         } else if (strpos($url, '_reject') !== false) {
           $order_id = substr($url, 0, strpos($url, '_reject'));
 
-          return $this->render('Order/order_reject.twig', ['id' => $order_id]);
+        //   return $this->render('Order/order_reject.twig', ['id' => $order_id]);
+          return $this->redirectToRoute('order_refuse', ['id' => $order_id]);
         }
 
         return $this->redirectToRoute('shopping_error');
     }
     
+    /**
+     * @Route("/order/reject", name="order_refuse")
+     * @Template("Order/order_reject.twig")
+     */
+    public function orderRefuse(Request $request)
+    {
+        $id = $request->get('id');
+
+        return [
+            'id' => $id
+        ];
+    }
+    
+    /**
+     * @Route("/order/accept", name="order_accept")
+     * @Template("Order/order_accept.twig")
+     */
+    public function orderAccept(Request $request)
+    {
+        return [ ];
+    }
+
     /**
      * @Route("/order/reject", name="order_reject")
      */

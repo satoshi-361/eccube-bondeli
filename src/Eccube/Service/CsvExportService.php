@@ -260,8 +260,6 @@ class CsvExportService
             $row[] = $Csv->getDispName();
         }
 
-        $row[] = '加盟店名';
-
         $this->fopen();
         $this->fputcsv($row);
         $this->fclose();
@@ -300,17 +298,10 @@ class CsvExportService
      *
      * @return string|null
      */
-    public function getData(Csv $Csv, $entity, $custom_entity_name = null)
+    public function getData(Csv $Csv, $entity)
     {
         // エンティティ名が一致するかどうかチェック.
         $csvEntityName = str_replace('\\\\', '\\', $Csv->getEntityName());
-
-        if(gettype($entity) != 'object'){
-            if($custom_entity_name == 'restaurant_name')
-                return $entity;
-            return null;
-        }
-
         $entityName = ClassUtils::getClass($entity);
         if ($csvEntityName !== $entityName) {
             return null;

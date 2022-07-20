@@ -67,7 +67,6 @@ class CustomerType extends AbstractType
             ->add('kana', KanaType::class, [
                 'required' => true,
             ])
-            ->add('nickname', TextType::class)
             ->add('company_name', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -94,9 +93,6 @@ class CustomerType extends AbstractType
                 'attr' => [
                     'placeholder' => 'common.mail_address_sample',
                 ],
-            ])
-            ->add('credit_card', TextType::class, [
-                'required' => true
             ])
             ->add('sex', SexType::class, [
                 'required' => false,

@@ -27,7 +27,7 @@ use Eccube\Repository\BaseInfoRepository;
 use Eccube\Repository\CustomerFavoriteProductRepository;
 use Eccube\Repository\Master\ProductListMaxRepository;
 use Eccube\Repository\ProductRepository;
-use Eccube\Service\CartService;
+use Customize\Service\CartService;
 use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Eccube\Service\PurchaseFlow\PurchaseFlow;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
@@ -480,19 +480,19 @@ class ProductController extends AbstractController
         $ProductClass = $this->entityManager->getRepository(ProductClass::class)->find($addCartData['product_class_id']);
         
         $additional_price = 0;
+        $additional_option = '';
 
         if (!is_null($request->get('dressing'))) {
-            // $Product->setDressing($request->get('dressing'));
             $plus_pos = strpos($request->get('dressing'), '+');
             $yen_pos = strpos($request->get('dressing'), '円');
             if ($plus_pos != FALSE && $yen_pos != FALSE) {
                 $additional_price = substr($request->get('dressing'), $plus_pos + 1, $yen_pos - $plus_pos - 1);
-                $ProductClass->setPrice02IncTax($ProductClass->getPrice02() * 1.1 + intval($additional_price));
             }
+            $additional_option = substr($request->get('dressing'), 0, $plus_pos);
         }
 
         // カートへ追加
-        $this->cartService->addProduct($ProductClass, $addCartData['quantity'], $additional_price);
+        $this->cartService->addProduct($ProductClass, $addCartData['quantity'], $additional_option, $additional_price);
 
         // 明細の正規化
         $Carts = $this->cartService->getCarts();

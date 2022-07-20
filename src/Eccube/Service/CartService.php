@@ -329,7 +329,7 @@ class CartService
      *
      * @return bool 商品を追加できた場合はtrue
      */
-    public function addProduct($ProductClass, $quantity = 1, $additional_price = 0)
+    public function addProduct($ProductClass, $quantity = 1)
     {
         if (!$ProductClass instanceof ProductClass) {
             $ProductClassId = $ProductClass;
@@ -353,9 +353,7 @@ class CartService
         $newItem = new CartItem();
         $newItem->setQuantity($quantity);
         $newItem->setPrice($ProductClass->getPrice02IncTax());
-        // $newItem->setPrice($ProductClass->getPrice02());
         $newItem->setProductClass($ProductClass);
-        $newItem->setAdditionalPrice($additional_price);
 
         $allCartItems = $this->mergeAllCartItems([$newItem]);
         $this->restoreCarts($allCartItems);

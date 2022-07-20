@@ -11,7 +11,19 @@ file that was distributed with this source code.
 {% extends 'default_frame.twig' %}
 
 {% set body_class = 'registration_page' %}
-
+{% block stylesheet %}
+    <style>
+        .ec-layoutRole__contents {
+            height: 65vh;
+        }
+        .ec-layoutRole__main {
+            margin-top: 150px;
+        }
+        .btn.btn-ec-regular {
+            font-size: 14px;
+        }
+    </style>
+{% endblock %}
 {% block main %}
     <div class="ec-registerRole">
         <div class="ec-pageHeader">

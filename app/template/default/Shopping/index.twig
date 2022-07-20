@@ -42,9 +42,9 @@ file that was distributed with this source code.
                         $('#shopping-form').submit();
                     }
                     else {
-                        // alert('もう一度お試しください。');
+                        alert('購入時にエラーが発生しました。 大変申し訳ございませんが、もう一度お試しください。');
 
-                        alert(result);
+                        // alert(result);
                         $('#shopping-form').attr('action', '{{ url("shopping_redirect_to") }}').submit();
                     }
                 }, 5000);
@@ -343,8 +343,7 @@ file that was distributed with this source code.
                                                 {% if orderItem.productClass is not null and orderItem.productClass.classCategory2 %}
                                                     <p>{{ orderItem.productClass.classCategory2.className.name }}：{{ orderItem.productClass.classCategory2 }}</p>
                                                 {% endif %}
-                                                {# <p>{{ orderItem.priceIncTax|price }} × {{ orderItem.quantity|number_format }}<span>{{ '小計：'|trans }}{{ orderItem.totalPrice|price }}</span></p> #}
-                                                <p>{{ (orderItem.priceIncTax + orderItem.additional_price)|price }} × {{ orderItem.quantity|number_format }}<span>{{ '小計：'|trans }}{{ (orderItem.priceIncTax + orderItem.additional_price) * orderItem.quantity }}</span></p>
+                                                <p>{{ orderItem.priceIncTax|price }} × {{ orderItem.quantity|number_format }}<span>{{ '小計：'|trans }}{{ orderItem.totalPrice|price }}</span></p>
                                             </div>
                                         </div>
                                     </li>
@@ -371,8 +370,8 @@ file that was distributed with this source code.
                                 </div>
                                 <div class="ec-select ec-select__time">
                                     <label>{{ 'お届け時間'|trans }}</label>
-                                    {{ form_widget(form.Shippings[idx].shipping_delivery_time, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.Shippings[idx].shipping_delivery_time) }}
+                                    {{ form_widget(form.Shippings[idx].DeliveryTime, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.Shippings[idx].DeliveryTime) }}
                                 </div>
                             </div>
                         </div>
@@ -457,7 +456,7 @@ file that was distributed with this source code.
                         <dd class="ec-totalBox__specTotal">{{ Order.subtotal|price }}</dd>
                     </dl>
                     <dl class="ec-totalBox__spec">
-                        <dt>{{ '手数料'|trans }}</dt>
+                        <dt>{{ '手数料'|trans }}（追加金額）</dt>
                         <dd>{{ Order.charge|price }}</dd>
                     </dl>
                     <dl class="ec-totalBox__spec">
@@ -470,15 +469,13 @@ file that was distributed with this source code.
                         <dd>{{ Order.taxable_discount|price }}</dd>
                     </dl>
                     {% endif %}
-                    {# <div class="ec-totalBox__total">{{ '合計'|trans }}<span class="ec-totalBox__price">{{ Order.taxable_total|price }}</span><span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span></div> #}
                     <div class="ec-totalBox__total">{{ '合計'|trans }}<span class="ec-totalBox__price">{{ Order.payment_total|price }}</span><span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span></div>
-                    {# {% for rate, total in Order.taxable_total_by_tax_rate %}
+                    {% for rate, total in Order.taxable_total_by_tax_rate %}
                     <dl class="ec-totalBox__taxRate">
-                        <dt>{{ '税率 %rate% %対象'|trans({ '%rate%': rate }) }}</dt> #}
-                        {# <dd>{{ total|price }}</dd> #}
-                        {# <dd>{{ Order.payment_total|price }}</dd>
+                        <dt>{{ '税率 %rate% %対象'|trans({ '%rate%': rate }) }}</dt>
+                        <dd>{{ Order.payment_total|price }}</dd>
                     </dl>
-                    {% endfor %} #}
+                    {% endfor %}
                     {% for item in Order.tax_free_discount_items %}
                         {% if loop.first %}<div class="ec-totalBox__total"></div>{% endif %}
                         <dl class="ec-totalBox__spec">
@@ -501,10 +498,10 @@ file that was distributed with this source code.
                     {% endif %}
                     <div class="ec-totalBox__btn">
                         {% if Order.taxable_total < lower_price_limit %}
-                            <p style="color: #151515;"> お支払い合計が5,000円以上でないと、購入できません。 </p>
+                            <p style="color: #DE5D50;"> お支払い合計が5,000円以上でないと、購入できません。 </p>
                         {% endif %}
-                        {# <button type="submit" class="ec-blockBtn--action" {% if Order.taxable_total < 5000 %} disabled {% endif %}>{{ '確認する'|trans }}</button> #}
-                        <button type="submit" class="ec-blockBtn--action">{{ '確認する'|trans }}</button>
+                        <button type="submit" class="ec-blockBtn--action" {% if Order.taxable_total < 5000 %} disabled {% endif %}>{{ '確認する'|trans }}</button>
+                        {# <button type="submit" class="ec-blockBtn--action">{{ '確認する'|trans }}</button> #}
                         <a href="{{ url("cart") }}" class="ec-blockBtn--cancel">{{ 'カートに戻る'|trans }}</a>
                     </div>
                 </div>

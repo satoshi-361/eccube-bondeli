@@ -338,18 +338,15 @@ class OrderHelper
             $ProductClass = $item->getProductClass();
             /* @var $Product \Eccube\Entity\Product */
             $Product = $ProductClass->getProduct();
-            $OrderItem = new OrderItem();
 
-            $additional_price = ($item->getPriceIncTax() - $ProductClass->getPrice02() * 1.1) / 1.1;
+            $OrderItem = new OrderItem();
             $OrderItem
                 ->setProduct($Product)
                 ->setProductClass($ProductClass)
                 ->setProductName($Product->getName())
                 ->setProductCode($ProductClass->getCode())
-                // ->setPrice($ProductClass->getPrice02() + $additional_price)
                 ->setPrice($ProductClass->getPrice02())
                 ->setQuantity($item->getQuantity())
-                ->setAdditionalPrice($item->getAdditionalPrice())
                 ->setOrderItemType($ProductItemType);
 
             $ClassCategory1 = $ProductClass->getClassCategory1();

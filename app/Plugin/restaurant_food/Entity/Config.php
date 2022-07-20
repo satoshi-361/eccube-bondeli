@@ -94,28 +94,28 @@ class Config extends \Eccube\Entity\AbstractEntity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deadline_start", type="datetimetz")
+     * @ORM\Column(name="deadline_start", type="datetimetz", nullable=true)
      */
     private $deadline_start;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deadline_end", type="datetimetz")
+     * @ORM\Column(name="deadline_end", type="datetimetz", nullable=true)
      */
     private $deadline_end;
 
         /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deadline_start1", type="datetimetz")
+     * @ORM\Column(name="deadline_start1", type="datetimetz", nullable=true)
      */
     private $deadline_start1;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deadline_end1", type="datetimetz")
+     * @ORM\Column(name="deadline_end1", type="datetimetz", nullable=true)
      */
     private $deadline_end1;
 

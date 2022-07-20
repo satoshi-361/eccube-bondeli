@@ -172,7 +172,7 @@ file that was distributed with this source code.
                     <dd class="ec-totalBox__specTotal">{{ Order.subtotal|price }}</dd>
                 </dl>
                 <dl class="ec-totalBox__spec">
-                    <dt>{{ '手数料'|trans }}</dt>
+                    <dt>{{ '手数料'|trans }}（追加金額）</dt>
                     <dd>{{ Order.charge|price }}</dd>
                 </dl>
                 <dl class="ec-totalBox__spec">
@@ -185,15 +185,14 @@ file that was distributed with this source code.
                     <dd>{{ Order.taxable_discount|price }}</dd>
                 </dl>
                 {% endif %}
-                {# <div class="ec-totalBox__total">{{ '合計'|trans }}<span class="ec-totalBox__price">{{ Order.taxable_total|price }}</span><span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span></div> #}
-                <div class="ec-totalBox__total">{{ '合計'|trans }}<span class="ec-totalBox__price">{{ Order.payment_total|price }}</span><span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span></div>
-                {# {% for rate, total in Order.taxable_total_by_tax_rate %}
+                <div class="ec-totalBox__total">{{ '合計'|trans }}<span class="ec-totalBox__price">{{ Order.taxable_total|price }}</span><span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span></div>
+                {# <div class="ec-totalBox__total">{{ '合計'|trans }}<span class="ec-totalBox__price">{{ Order.payment_total|price }}</span><span class="ec-totalBox__taxLabel">{{ '税込'|trans }}</span></div> #}
+                {% for rate, total in Order.taxable_total_by_tax_rate %}
                     <dl class="ec-totalBox__taxRate">
                         <dt>{{ '税率 %rate% %対象'|trans({ '%rate%': rate }) }}</dt>
-                        <dd>{{ total|price }}</dd>
                         <dd>{{ Order.payment_total|price }}</dd>
                     </dl>
-                {% endfor %} #}
+                {% endfor %}
                 {% for item in Order.tax_free_discount_items %}
                     {% if loop.first %}<div class="ec-totalBox__total"></div>{% endif %}
                     <dl class="ec-totalBox__spec">
